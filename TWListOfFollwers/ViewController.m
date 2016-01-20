@@ -82,7 +82,11 @@
 {
     NSDictionary *userInfo = [notif userInfo];
     NSArray *unfavoritedList = userInfo[@"unfavoritedList"];
-    [self.followingsList addObjectsFromArray:unfavoritedList];
+    
+    NSIndexSet *indexes = [NSIndexSet indexSetWithIndexesInRange:
+                           NSMakeRange(0,[unfavoritedList count])];
+    [self.followingsList insertObjects:unfavoritedList atIndexes:indexes];
+
     [self.friendsTableView reloadData];
 }
 
@@ -209,7 +213,8 @@
     
     [self.favoritesManager addToFavorites:self.favoritesList];
     [self.followingsList removeObjectsInArray:self.favoritesList];
-
+    [self.favoritesList removeAllObjects];
+    
     [self.friendsTableView deleteRowsAtIndexPaths:selectedIndexPaths withRowAnimation:UITableViewRowAnimationTop];
 }
 

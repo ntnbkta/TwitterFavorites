@@ -70,6 +70,7 @@
 {
     //Send out UnfavoritedList
     [[NSNotificationCenter defaultCenter] postNotificationName:kTWFavoritesListUpdated object:self userInfo:@{@"unfavoritedList":self.unFavoritedList}];
+    [self.unFavoritedList removeAllObjects];
 }
 
 @end
