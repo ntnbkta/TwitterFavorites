@@ -28,7 +28,7 @@
 
 @property (nonatomic, strong) NSMutableArray *followingsList;
 @property (nonatomic, strong) NSArray *searchedList;
-@property (nonatomic, strong) NSMutableArray *selectedIndices;
+@property (nonatomic, strong) NSMutableArray *favoritesList;
 @property (nonatomic, assign) BOOL shouldStopFetchingNextPage;
 @property (nonatomic, strong) TWAccountManager *accountManager;
 @property (nonatomic, strong) TWResultsTableViewController *resultsTVController;
@@ -53,7 +53,7 @@
     [self.searchController.searchBar sizeToFit];
 
     self.friendsTableView.tableHeaderView = self.searchController.searchBar;
-
+    
     self.definesPresentationContext = YES;
 
     if(!_followingsList)
@@ -61,10 +61,9 @@
         _followingsList = [NSMutableArray new];
     }
     
-    if (!_selectedIndices) {
-        self.selectedIndices = [NSMutableArray new];
+    if (!_favoritesList) {
+        _favoritesList = [NSMutableArray new];
     }
-    
     [self setUpAccountStore];
     [self requestAccessforTwitterAccount];
     
@@ -187,8 +186,14 @@
 
 - (IBAction)addToFavorites:(id)sender
 {
-//    [self.followingsList objectsAtIndexes:(nonnull NSIndexSet *)];
-//    NSLog(@"********* FOLLOWINGS : %@",self.followingsList);
+    NSArray *selectedIndexPaths =  [self.friendsTableView indexPathsForSelectedRows];
+
+    [selectedIndexPaths enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSIndexPath *indexPath = (NSIndexPath *)obj;
+        [self.favoritesList addObject:[self.followingsList objectAtIndex:indexPath.row]];
+    }];
+    NSLog(@"******* FAVORITES LIST : %@",self.favoritesList);
+
 }
 
 
@@ -208,15 +213,11 @@
     [cell.userName setText:[friend username]];
     [cell.userProfilePic sd_setImageWithURL:friend.profileImageURL placeholderImage:[UIImage imageNamed:@"placeholderImage"]];
     
-    if ([self.selectedIndices containsObject:indexPath])
-    {
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    if (cell.isSelected) {
+        [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
     }
     else
-    {
-        cell.accessoryType = UITableViewCellAccessoryNone;
-        
-    }
+        [cell setAccessoryType:UITableViewCellAccessoryNone];
 
     if (indexPath.row >= self.followingsList.count-1 && !_shouldStopFetchingNextPage) {
         //Get next setOfFriends
@@ -231,22 +232,19 @@
     return 50;
 }
 
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    if ([self.selectedIndices containsObject:indexPath])
-    {
-        [self.selectedIndices removeObject:indexPath];
-    }
-    else
-    {
-        [self.selectedIndices addObject:indexPath];
-    }
-    [tableView reloadData];
+    UITableViewCell *tableViewCell = [tableView cellForRowAtIndexPath:indexPath];
+    tableViewCell.accessoryView.hidden = NO;
+    tableViewCell.accessoryType = UITableViewCellAccessoryCheckmark;
 }
 
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *tableViewCell = [tableView cellForRowAtIndexPath:indexPath];
+    tableViewCell.accessoryView.hidden = YES;
+    tableViewCell.accessoryType = UITableViewCellAccessoryNone;
+}
 
 #pragma mark - UISearchResultsUpdating Methods
 
