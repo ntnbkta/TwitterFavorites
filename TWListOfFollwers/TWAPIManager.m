@@ -103,7 +103,8 @@
     [listOfUsers enumerateObjectsUsingBlock:^(NSDictionary *userDictionary, NSUInteger idx, BOOL * _Nonnull stop) {
         TWUserAccount *user = [TWUserAccount new];
         user.userID = userDictionary[@"id"];
-        user.username = userDictionary[@"screen_name"];
+        user.username = userDictionary[@"name"];
+        user.handlerName = [NSString stringWithFormat:@"@%@",userDictionary[@"screen_name"]];
         user.profileImageURL = [NSURL URLWithString:userDictionary[@"profile_image_url"]];
         
         [returnArray addObject:user];

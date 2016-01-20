@@ -12,6 +12,7 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *userProfilePic;
 @property (weak, nonatomic) IBOutlet UILabel *userName;
+@property (weak, nonatomic) IBOutlet UILabel *handlerName;
 @property (weak, nonatomic) IBOutlet UIButton *addToFavorites;
 
 @end

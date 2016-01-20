@@ -78,6 +78,12 @@
     
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.navigationItem.rightBarButtonItem setEnabled:NO];
+
+}
 - (void)handleUnfavoritedList:(NSNotification *)notif
 {
     NSDictionary *userInfo = [notif userInfo];
@@ -240,9 +246,10 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     TableViewCell *cell = (TableViewCell *)[tableView dequeueReusableCellWithIdentifier:CELL_REUSEIDENTIFIER forIndexPath:indexPath];
-    
+        
     TWUserAccount *friend = [self.followingsList objectAtIndex:indexPath.row];
     [cell.userName setText:[friend username]];
+    [cell.handlerName setText:[friend handlerName]];
     [cell.userProfilePic sd_setImageWithURL:friend.profileImageURL placeholderImage:[UIImage imageNamed:@"placeholderImage"]];
     
     if (cell.isSelected) {
@@ -257,11 +264,6 @@
     }
     
     return cell;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 50;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

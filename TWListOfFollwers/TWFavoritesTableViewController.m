@@ -57,6 +57,7 @@
     
     TWUserAccount *friend = [self.favoritesList objectAtIndex:indexPath.row];
     [cell.userName setText:[friend username]];
+    [cell.handlerName setText:[friend handlerName]];
     [cell.userProfilePic sd_setImageWithURL:friend.profileImageURL placeholderImage:[UIImage imageNamed:@"placeholderImage"]];
 
     return cell;

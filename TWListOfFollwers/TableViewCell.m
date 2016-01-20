@@ -12,7 +12,16 @@
 
 - (void)awakeFromNib {
     // Initialization code
+    [self.userProfilePic.layer setCornerRadius:3.0f];
+    [self.userProfilePic.layer setMasksToBounds:YES];
+    
+    [self.userName setFont:[UIFont boldSystemFontOfSize:15.0]];
+    [self.userName setTextAlignment:NSTextAlignmentLeft];
+    [self.userName setTextColor:[UIColor blackColor]];
+    [self.userName setAutoresizingMask:(UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight)];
+
 }
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];

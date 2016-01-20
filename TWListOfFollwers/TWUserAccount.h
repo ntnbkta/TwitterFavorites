@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) NSString *userID;
 @property (nonatomic, strong) NSString *username;
+@property (nonatomic, strong) NSString *handlerName;
 @property (nonatomic, strong) NSURL *profileImageURL;
 
 @end
