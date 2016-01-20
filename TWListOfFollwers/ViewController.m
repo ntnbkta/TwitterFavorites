@@ -14,6 +14,7 @@
 #import "TWAccountManager.h"
 #import "TableViewCell.h"
 #import "TWResultsTableViewController.h"
+#import "TWFavoritesTableViewController.h"
 
 #import <SDWebImage/UIImageView+WebCache.h>
 
@@ -197,6 +198,18 @@
 }
 
 
+#pragma mark - Seque Methods
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([[segue identifier] isEqualToString:@"showFavorites"])
+    {
+        UINavigationController *navController = (UINavigationController *)[segue destinationViewController];
+        TWFavoritesTableViewController *favoritesController =  (TWFavoritesTableViewController *)[navController topViewController];
+        [favoritesController setFavoritesList:self.favoritesList];
+    }
+}
+
 #pragma mark - UITableViewDataSource Methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -237,6 +250,10 @@
     UITableViewCell *tableViewCell = [tableView cellForRowAtIndexPath:indexPath];
     tableViewCell.accessoryView.hidden = NO;
     tableViewCell.accessoryType = UITableViewCellAccessoryCheckmark;
+    
+    if ([[tableView indexPathsForSelectedRows] count] > 0) {
+        [self.navigationItem.rightBarButtonItem setEnabled:YES];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -244,6 +261,11 @@
     UITableViewCell *tableViewCell = [tableView cellForRowAtIndexPath:indexPath];
     tableViewCell.accessoryView.hidden = YES;
     tableViewCell.accessoryType = UITableViewCellAccessoryNone;
+    
+    if ([[tableView indexPathsForSelectedRows] count] == 0) {
+        [self.navigationItem.rightBarButtonItem setEnabled:NO];
+    }
+
 }
 
 #pragma mark - UISearchResultsUpdating Methods
