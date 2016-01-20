@@ -118,7 +118,7 @@
         <scene sceneID="qCa-82-kgy">
             <objects>
                 <tableViewController storyboardIdentifier="FavoritesTableViewController" id="ojh-U6-wfz" customClass="TWFavoritesTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="95j-Pc-hBh">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="95j-Pc-hBh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -153,17 +153,16 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Favorites" id="0gm-ja-LDU">
-                        <barButtonItem key="backBarButtonItem" title="Done" id="ZJe-gm-MJH"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="C4j-L1-DeP">
                             <connections>
-                                <action selector="doneButtonTapped:" destination="ojh-U6-wfz" id="jnf-BB-rDM"/>
+                                <action selector="doneButtonTapped:" destination="ojh-U6-wfz" id="7Cu-xX-IGw"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oZO-ju-YzP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1853.5" y="1187.5"/>
+            <point key="canvasLocation" x="1686.5" y="1187.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="i5S-Tl-bfq">

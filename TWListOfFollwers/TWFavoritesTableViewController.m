@@ -11,9 +11,14 @@
 #import "TWUserAccount.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
+#import "TWFavoritesManager.h"
+
 #define CELL_REUSEIDENTIFIER @"TWUserCell"
 
 @interface TWFavoritesTableViewController ()
+
+@property (nonatomic, strong) TWFavoritesManager *favoritesManager;
+@property (nonatomic, strong) NSMutableArray *favoritesList;
 
 @end
 
@@ -23,14 +28,17 @@
     [super viewDidLoad];
     
     if (!_favoritesList) {
-        _favoritesList = [NSArray new];
+        _favoritesList = [NSMutableArray new];
     }
     
+    self.favoritesManager = [TWFavoritesManager sharedManager];
+    self.favoritesList = [[self.favoritesManager getFavoritesList] mutableCopy];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (IBAction)doneButtonTapped:(id)sender
+{
+    [self.favoritesManager saveChanges];
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Table view data source
@@ -59,10 +67,15 @@
     return 50;
 }
 
-- (IBAction)doneButtonTapped:(id)sender
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        //Remove From Favorites and Add them back in Friends
+        TWUserAccount *favorite = [self.favoritesList objectAtIndex:indexPath.row];
+        [self.favoritesList removeObject:favorite];
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationTop];
+        [self.favoritesManager unfavoriteObject:favorite];
+    }
 }
-
 
 @end

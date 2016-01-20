@@ -20,6 +20,7 @@
 		760FE8281C47C245008F131F /* TWAccountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 760FE8271C47C245008F131F /* TWAccountManager.m */; };
 		760FE82B1C47D13C008F131F /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 760FE82A1C47D13C008F131F /* TableViewCell.m */; };
 		761A76D81C4F851700007C35 /* TWFavoritesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 761A76D71C4F851700007C35 /* TWFavoritesTableViewController.m */; };
+		761A76DC1C4FA2EB00007C35 /* TWFavoritesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 761A76DB1C4FA2EB00007C35 /* TWFavoritesManager.m */; };
 		7684FC461C4E0D8100E3A1C3 /* TWResultsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7684FC451C4E0D8100E3A1C3 /* TWResultsTableViewController.m */; };
 		87327EC5F401D708B1D5A16B /* libPods-TWListOfFollwers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81E0AF0DC1363F047B0A012F /* libPods-TWListOfFollwers.a */; };
 /* End PBXBuildFile section */
@@ -47,6 +48,8 @@
 		760FE82A1C47D13C008F131F /* TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewCell.m; sourceTree = "<group>"; };
 		761A76D61C4F851700007C35 /* TWFavoritesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWFavoritesTableViewController.h; sourceTree = "<group>"; };
 		761A76D71C4F851700007C35 /* TWFavoritesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWFavoritesTableViewController.m; sourceTree = "<group>"; };
+		761A76DA1C4FA2EB00007C35 /* TWFavoritesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWFavoritesManager.h; sourceTree = "<group>"; };
+		761A76DB1C4FA2EB00007C35 /* TWFavoritesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWFavoritesManager.m; sourceTree = "<group>"; };
 		7684FC441C4E0D8100E3A1C3 /* TWResultsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWResultsTableViewController.h; sourceTree = "<group>"; };
 		7684FC451C4E0D8100E3A1C3 /* TWResultsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWResultsTableViewController.m; sourceTree = "<group>"; };
 		81E0AF0DC1363F047B0A012F /* libPods-TWListOfFollwers.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TWListOfFollwers.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -99,6 +102,7 @@
 		760FE7FF1C477891008F131F /* TWListOfFollwers */ = {
 			isa = PBXGroup;
 			children = (
+				761A76D91C4FA2D100007C35 /* TWManagers */,
 				7684FC3A1C4CC0A400E3A1C3 /* TWControllers */,
 				760FE8031C477891008F131F /* AppDelegate.h */,
 				760FE8041C477891008F131F /* AppDelegate.m */,
@@ -125,6 +129,15 @@
 				760FE8011C477891008F131F /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		761A76D91C4FA2D100007C35 /* TWManagers */ = {
+			isa = PBXGroup;
+			children = (
+				761A76DA1C4FA2EB00007C35 /* TWFavoritesManager.h */,
+				761A76DB1C4FA2EB00007C35 /* TWFavoritesManager.m */,
+			);
+			name = TWManagers;
 			sourceTree = "<group>";
 		};
 		7684FC3A1C4CC0A400E3A1C3 /* TWControllers */ = {
@@ -275,6 +288,7 @@
 				760FE82B1C47D13C008F131F /* TableViewCell.m in Sources */,
 				760FE8081C477891008F131F /* ViewController.m in Sources */,
 				760FE81D1C479D66008F131F /* TWAPIManager.m in Sources */,
+				761A76DC1C4FA2EB00007C35 /* TWFavoritesManager.m in Sources */,
 				760FE8281C47C245008F131F /* TWAccountManager.m in Sources */,
 				760FE8051C477891008F131F /* AppDelegate.m in Sources */,
 				7684FC461C4E0D8100E3A1C3 /* TWResultsTableViewController.m in Sources */,

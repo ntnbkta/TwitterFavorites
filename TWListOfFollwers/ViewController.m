@@ -15,10 +15,13 @@
 #import "TableViewCell.h"
 #import "TWResultsTableViewController.h"
 #import "TWFavoritesTableViewController.h"
+#import "TWFavoritesManager.h"
 
 #import <SDWebImage/UIImageView+WebCache.h>
 
 #define CELL_REUSEIDENTIFIER @"TWUserCell"
+#define kTWFavoritesListUpdated @"TWFavoritesListUpdated"
+
 @interface ViewController () <UISearchResultsUpdating>
 @property (weak, nonatomic) IBOutlet UITableView *friendsTableView;
 @property (strong, nonatomic) UISearchController *searchController;
@@ -32,6 +35,7 @@
 @property (nonatomic, strong) NSMutableArray *favoritesList;
 @property (nonatomic, assign) BOOL shouldStopFetchingNextPage;
 @property (nonatomic, strong) TWAccountManager *accountManager;
+@property (nonatomic, strong) TWFavoritesManager *favoritesManager;
 @property (nonatomic, strong) TWResultsTableViewController *resultsTVController;
 
 
@@ -57,6 +61,8 @@
     
     self.definesPresentationContext = YES;
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUnfavoritedList:) name:kTWFavoritesListUpdated object:nil];
+    
     if(!_followingsList)
     {
         _followingsList = [NSMutableArray new];
@@ -65,9 +71,19 @@
     if (!_favoritesList) {
         _favoritesList = [NSMutableArray new];
     }
+    
+    self.favoritesManager = [TWFavoritesManager sharedManager];
     [self setUpAccountStore];
     [self requestAccessforTwitterAccount];
     
+}
+
+- (void)handleUnfavoritedList:(NSNotification *)notif
+{
+    NSDictionary *userInfo = [notif userInfo];
+    NSArray *unfavoritedList = userInfo[@"unfavoritedList"];
+    [self.followingsList addObjectsFromArray:unfavoritedList];
+    [self.friendsTableView reloadData];
 }
 
 - (void)setUpAccountStore
@@ -180,10 +196,7 @@
     }];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+#pragma mark - IBAction Methods
 
 - (IBAction)addToFavorites:(id)sender
 {
@@ -193,8 +206,11 @@
         NSIndexPath *indexPath = (NSIndexPath *)obj;
         [self.favoritesList addObject:[self.followingsList objectAtIndex:indexPath.row]];
     }];
-    NSLog(@"******* FAVORITES LIST : %@",self.favoritesList);
+    
+    [self.favoritesManager addToFavorites:self.favoritesList];
+    [self.followingsList removeObjectsInArray:self.favoritesList];
 
+    [self.friendsTableView deleteRowsAtIndexPaths:selectedIndexPaths withRowAnimation:UITableViewRowAnimationTop];
 }
 
 
@@ -204,11 +220,9 @@
 {
     if([[segue identifier] isEqualToString:@"showFavorites"])
     {
-        UINavigationController *navController = (UINavigationController *)[segue destinationViewController];
-        TWFavoritesTableViewController *favoritesController =  (TWFavoritesTableViewController *)[navController topViewController];
-        [favoritesController setFavoritesList:self.favoritesList];
     }
 }
+
 
 #pragma mark - UITableViewDataSource Methods
 

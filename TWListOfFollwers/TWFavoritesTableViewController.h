@@ -10,5 +10,4 @@
 
 @interface TWFavoritesTableViewController : UITableViewController
 
-@property (nonatomic, strong) NSArray *favoritesList;
 @end
