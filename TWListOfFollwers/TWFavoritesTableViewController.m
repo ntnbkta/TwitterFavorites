@@ -10,15 +10,13 @@
 #import "TableViewCell.h"
 #import "TWUserAccount.h"
 #import <SDWebImage/UIImageView+WebCache.h>
-
-#import "TWFavoritesManager.h"
+#import "TwinderEngine.h"
 
 #define CELL_REUSEIDENTIFIER @"TWUserCell"
 
 @interface TWFavoritesTableViewController ()
 
-@property (nonatomic, strong) TWFavoritesManager *favoritesManager;
-@property (nonatomic, strong) NSMutableArray *favoritesList;
+@property (nonatomic, strong) NSMutableArray *unfavoritedList;
 
 @end
 
@@ -30,14 +28,19 @@
     if (!_favoritesList) {
         _favoritesList = [NSMutableArray new];
     }
+    _favoritesList = [[[TwinderEngine sharedManager] getUpdatedFavoritesHandlerList] mutableCopy];
+
     
-    self.favoritesManager = [TWFavoritesManager sharedManager];
-    self.favoritesList = [[self.favoritesManager getFavoritesList] mutableCopy];
+    if (!_unfavoritedList) {
+        _unfavoritedList = [NSMutableArray new];
+    }
 }
 
 - (IBAction)doneButtonTapped:(id)sender
 {
-    [self.favoritesManager saveChanges];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(favoritesViewController:didFinishUnfavoriting:)]) {
+        [self.delegate favoritesViewController:self didFinishUnfavoriting:self.unfavoritedList];
+    }
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -75,7 +78,7 @@
         TWUserAccount *favorite = [self.favoritesList objectAtIndex:indexPath.row];
         [self.favoritesList removeObject:favorite];
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationTop];
-        [self.favoritesManager unfavoriteObject:favorite];
+        [self.unfavoritedList addObject:favorite];
     }
 }
 

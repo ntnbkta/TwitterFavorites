@@ -12,6 +12,7 @@
 #import <Accounts/Accounts.h>
 
 #import "TWAccountManager.h"
+#import "TWFavoritesManager.h"
 
 @interface TwinderEngine ()
 
@@ -19,6 +20,7 @@
 @property (nonatomic, strong) ACAccount *twitterAccount;
 
 @property (nonatomic, strong) TWAccountManager *accountManager;
+@property (nonatomic, strong) TWFavoritesManager *favoritesManager;
 
 @end
 
@@ -56,6 +58,8 @@
     if (!_accountManager) {
         _accountManager = [TWAccountManager new];
     }
+    
+    _favoritesManager = [TWFavoritesManager sharedManager];
 }
 
 
@@ -121,6 +125,25 @@
         completionBlock(nil,NO,error);
     }];
 }
+
+
+#pragma mark - TWFavorite Manager Methods
+
+- (void)addFollowingsToFavoritesList:(NSArray *)favoritesList
+{
+    [self.favoritesManager addToFavorites:favoritesList];
+}
+
+- (void)removeAccountsFromFavorites:(NSArray *)unfavoritedList
+{
+    [self.favoritesManager removeAccountsFromFavorites:unfavoritedList];
+}
+
+- (NSArray *)getUpdatedFavoritesHandlerList
+{
+    return [self.favoritesManager getFavoritesList];
+}
+
 
 #pragma mark - Helper Methods
 

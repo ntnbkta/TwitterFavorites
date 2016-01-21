@@ -13,8 +13,6 @@
 @interface TWFavoritesManager ()
 
 @property (nonatomic, strong) NSMutableArray *favoritesList;
-@property (nonatomic, strong) NSMutableArray *unFavoritedList;
-
 
 @end
 
@@ -38,11 +36,6 @@
         {
             _favoritesList = [NSMutableArray new];
         }
-        
-        if(!_unFavoritedList)
-        {
-            _unFavoritedList = [NSMutableArray new];
-        }
     }
     return self;
 }
@@ -53,24 +46,19 @@
     [self.favoritesList addObjectsFromArray:favList];
 }
 
+
+- (void)removeAccountsFromFavorites:(NSArray *)unfavoritedList;
+{
+    [self.favoritesList removeObjectsInArray:unfavoritedList];
+    //Send out UnfavoritedList
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTWFavoritesListUpdated object:self userInfo:@{@"unfavoritedList":unfavoritedList}];
+
+}
+
+
 - (NSArray *)getFavoritesList
 {
     return self.favoritesList;
-}
-
-
-- (void)unfavoriteObject:(TWUserAccount *)favorite
-{
-    [self.favoritesList removeObject:favorite];
-    [self.unFavoritedList addObject:favorite];
-}
-
-
-- (void)saveChanges
-{
-    //Send out UnfavoritedList
-    [[NSNotificationCenter defaultCenter] postNotificationName:kTWFavoritesListUpdated object:self userInfo:@{@"unfavoritedList":self.unFavoritedList}];
-    [self.unFavoritedList removeAllObjects];
 }
 
 @end

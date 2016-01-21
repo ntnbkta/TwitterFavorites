@@ -12,7 +12,6 @@
 #import "TableViewCell.h"
 #import "TWResultsTableViewController.h"
 #import "TWFavoritesTableViewController.h"
-#import "TWFavoritesManager.h"
 
 #import <SDWebImage/UIImageView+WebCache.h>
 
@@ -21,7 +20,7 @@
 #define CELL_REUSEIDENTIFIER @"TWUserCell"
 #define kTWFavoritesListUpdated @"TWFavoritesListUpdated"
 
-@interface ViewController () <UISearchResultsUpdating>
+@interface ViewController () <UISearchResultsUpdating, FavoriteAccountsDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *friendsTableView;
 @property (strong, nonatomic) UISearchController *searchController;
@@ -29,7 +28,6 @@
 @property (nonatomic, strong) NSMutableArray *followingsList;
 @property (nonatomic, strong) NSArray *searchedList;
 @property (nonatomic, strong) NSMutableArray *favoritesList;
-@property (nonatomic, strong) TWFavoritesManager *favoritesManager;
 @property (nonatomic, strong) TWResultsTableViewController *resultsTVController;
 
 @property (nonatomic, strong) TwinderEngine *twinderEngine;
@@ -68,9 +66,7 @@
     if (!_favoritesList) {
         _favoritesList = [NSMutableArray new];
     }
-    
-    self.favoritesManager = [TWFavoritesManager sharedManager];
-    
+        
     [self loadFollowingsList];
 }
 
@@ -185,8 +181,8 @@
         NSIndexPath *indexPath = (NSIndexPath *)obj;
         [self.favoritesList addObject:[self.followingsList objectAtIndex:indexPath.row]];
     }];
-    
-    [self.favoritesManager addToFavorites:self.favoritesList];
+
+    [self.twinderEngine addFollowingsToFavoritesList:self.favoritesList];
     [self.followingsList removeObjectsInArray:self.favoritesList];
     [self.favoritesList removeAllObjects];
     
@@ -200,7 +196,18 @@
 {
     if([[segue identifier] isEqualToString:@"showFavorites"])
     {
+        UINavigationController *navController = (UINavigationController *)[segue destinationViewController];
+        TWFavoritesTableViewController *favoritesViewController = (TWFavoritesTableViewController *)[navController topViewController];
+        [favoritesViewController setDelegate:self];
     }
+}
+
+#pragma  mark - FavoritesViewController Delegate Methods
+
+- (void)favoritesViewController:(TWFavoritesTableViewController *)favoritesVC didFinishUnfavoriting:(NSArray *)unfavoritedList
+{
+    //Pass this message to Twinder Engine
+    [self.twinderEngine removeAccountsFromFavorites:unfavoritedList];
 }
 
 

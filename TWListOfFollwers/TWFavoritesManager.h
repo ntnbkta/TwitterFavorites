@@ -8,13 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@class TWUserAccount;
 @interface TWFavoritesManager : NSObject
 
 + (TWFavoritesManager *)sharedManager;
 
-- (void)addToFavorites:(NSArray *)favList;
 - (NSArray *)getFavoritesList;
-- (void)unfavoriteObject:(TWUserAccount *)favorite;
-- (void)saveChanges;
+
+- (void)addToFavorites:(NSArray *)favList;
+- (void)removeAccountsFromFavorites:(NSArray *)unfavoritedList;
+
 @end
