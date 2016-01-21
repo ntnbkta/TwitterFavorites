@@ -59,7 +59,7 @@
         _accountManager = [TWAccountManager new];
     }
     
-    _favoritesManager = [TWFavoritesManager sharedManager];
+    _favoritesManager = [TWFavoritesManager new];
 }
 
 

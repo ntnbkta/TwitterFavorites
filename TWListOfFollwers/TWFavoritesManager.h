@@ -10,10 +10,7 @@
 
 @interface TWFavoritesManager : NSObject
 
-+ (TWFavoritesManager *)sharedManager;
-
 - (NSArray *)getFavoritesList;
-
 - (void)addToFavorites:(NSArray *)favList;
 - (void)removeAccountsFromFavorites:(NSArray *)unfavoritedList;
 

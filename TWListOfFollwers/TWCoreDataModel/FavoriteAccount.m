@@ -1,0 +1,15 @@
+//
+//  FavoriteAccount.m
+//  
+//
+//  Created by Nithin Bhaktha on 1/21/16.
+//
+//
+
+#import "FavoriteAccount.h"
+
+@implementation FavoriteAccount
+
+// Insert code here to add functionality to your managed object subclass
+
+@end

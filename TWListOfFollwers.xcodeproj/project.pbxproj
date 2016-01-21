@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		760BF9F61C50F0F100E06366 /* TwinderFavorites.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 760BF9F41C50F0F100E06366 /* TwinderFavorites.xcdatamodeld */; };
+		760BFA0B1C50F1EC00E06366 /* FavoriteAccount+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 760BFA081C50F1EC00E06366 /* FavoriteAccount+CoreDataProperties.m */; };
+		760BFA0C1C50F1EC00E06366 /* FavoriteAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 760BFA0A1C50F1EC00E06366 /* FavoriteAccount.m */; };
+		760BFA0E1C50F2EE00E06366 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 760BFA0D1C50F2EE00E06366 /* CoreData.framework */; };
+		760BFA111C50F31200E06366 /* TWCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 760BFA101C50F31200E06366 /* TWCoreDataManager.m */; };
 		760FE8021C477891008F131F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 760FE8011C477891008F131F /* main.m */; };
 		760FE8051C477891008F131F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 760FE8041C477891008F131F /* AppDelegate.m */; };
 		760FE8081C477891008F131F /* TWFollowingsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 760FE8071C477891008F131F /* TWFollowingsListViewController.m */; };
@@ -28,6 +33,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		760BF9F51C50F0F100E06366 /* TwinderFavorites.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TwinderFavorites.xcdatamodel; sourceTree = "<group>"; };
+		760BFA071C50F1EC00E06366 /* FavoriteAccount+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FavoriteAccount+CoreDataProperties.h"; sourceTree = "<group>"; };
+		760BFA081C50F1EC00E06366 /* FavoriteAccount+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FavoriteAccount+CoreDataProperties.m"; sourceTree = "<group>"; };
+		760BFA091C50F1EC00E06366 /* FavoriteAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoriteAccount.h; sourceTree = "<group>"; };
+		760BFA0A1C50F1EC00E06366 /* FavoriteAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoriteAccount.m; sourceTree = "<group>"; };
+		760BFA0D1C50F2EE00E06366 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		760BFA0F1C50F31200E06366 /* TWCoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWCoreDataManager.h; sourceTree = "<group>"; };
+		760BFA101C50F31200E06366 /* TWCoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWCoreDataManager.m; sourceTree = "<group>"; };
+		760BFA141C50F5FA00E06366 /* TWListOfFollwers-PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "TWListOfFollwers-PrefixHeader.pch"; path = "../TWListOfFollwers-PrefixHeader.pch"; sourceTree = "<group>"; };
 		760FE7FD1C477891008F131F /* TWListOfFollwers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TWListOfFollwers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		760FE8011C477891008F131F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		760FE8031C477891008F131F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -67,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				760BFA0E1C50F2EE00E06366 /* CoreData.framework in Frameworks */,
 				760FE81A1C477D88008F131F /* Social.framework in Frameworks */,
 				760FE8181C477D83008F131F /* Accounts.framework in Frameworks */,
 				87327EC5F401D708B1D5A16B /* libPods-TWListOfFollwers.a in Frameworks */,
@@ -79,6 +94,9 @@
 		1FE2A9145C7744E85FE85264 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				760FE8191C477D88008F131F /* Social.framework */,
+				760FE8171C477D83008F131F /* Accounts.framework */,
+				760BFA0D1C50F2EE00E06366 /* CoreData.framework */,
 				81E0AF0DC1363F047B0A012F /* libPods-TWListOfFollwers.a */,
 			);
 			name = Frameworks;
@@ -106,11 +124,22 @@
 			name = TWViewControllers;
 			sourceTree = "<group>";
 		};
+		760BFA001C50F1AC00E06366 /* TWCoreDataModel */ = {
+			isa = PBXGroup;
+			children = (
+				760BFA071C50F1EC00E06366 /* FavoriteAccount+CoreDataProperties.h */,
+				760BFA081C50F1EC00E06366 /* FavoriteAccount+CoreDataProperties.m */,
+				760BFA091C50F1EC00E06366 /* FavoriteAccount.h */,
+				760BFA0A1C50F1EC00E06366 /* FavoriteAccount.m */,
+				760BFA0F1C50F31200E06366 /* TWCoreDataManager.h */,
+				760BFA101C50F31200E06366 /* TWCoreDataManager.m */,
+			);
+			path = TWCoreDataModel;
+			sourceTree = "<group>";
+		};
 		760FE7F41C477891008F131F = {
 			isa = PBXGroup;
 			children = (
-				760FE8191C477D88008F131F /* Social.framework */,
-				760FE8171C477D83008F131F /* Accounts.framework */,
 				760FE7FF1C477891008F131F /* TWListOfFollwers */,
 				760FE7FE1C477891008F131F /* Products */,
 				90F9DBF8B5A5C833D6DEBACF /* Pods */,
@@ -129,6 +158,7 @@
 		760FE7FF1C477891008F131F /* TWListOfFollwers */ = {
 			isa = PBXGroup;
 			children = (
+				760BFA001C50F1AC00E06366 /* TWCoreDataModel */,
 				760BF9F31C50EEFB00E06366 /* TWViewControllers */,
 				760BF9F21C50EE0C00E06366 /* TWCustomViews */,
 				761A76D91C4FA2D100007C35 /* TWManagers */,
@@ -141,6 +171,7 @@
 		760FE8001C477891008F131F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				760BF9F41C50F0F100E06366 /* TwinderFavorites.xcdatamodeld */,
 				760FE8031C477891008F131F /* AppDelegate.h */,
 				760FE8041C477891008F131F /* AppDelegate.m */,
 				760FE8091C477891008F131F /* Main.storyboard */,
@@ -149,6 +180,7 @@
 				760FE8111C477891008F131F /* Info.plist */,
 				76CEEAF11C50C17A004A6520 /* iphone5_ios6.jpg */,
 				760FE8011C477891008F131F /* main.m */,
+				760BFA141C50F5FA00E06366 /* TWListOfFollwers-PrefixHeader.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -313,10 +345,14 @@
 				760FE82B1C47D13C008F131F /* TWFollowingTableViewCell.m in Sources */,
 				760FE8081C477891008F131F /* TWFollowingsListViewController.m in Sources */,
 				760FE81D1C479D66008F131F /* TWAPIManager.m in Sources */,
+				760BFA0B1C50F1EC00E06366 /* FavoriteAccount+CoreDataProperties.m in Sources */,
+				760BFA0C1C50F1EC00E06366 /* FavoriteAccount.m in Sources */,
 				761A76DC1C4FA2EB00007C35 /* TWFavoritesManager.m in Sources */,
+				760BF9F61C50F0F100E06366 /* TwinderFavorites.xcdatamodeld in Sources */,
 				760FE8281C47C245008F131F /* TWAccountManager.m in Sources */,
 				760FE8051C477891008F131F /* AppDelegate.m in Sources */,
 				76CEEAF01C50A4B4004A6520 /* TWTwinderEngine.m in Sources */,
+				760BFA111C50F31200E06366 /* TWCoreDataManager.m in Sources */,
 				7684FC461C4E0D8100E3A1C3 /* TWResultsTableViewController.m in Sources */,
 				760FE8021C477891008F131F /* main.m in Sources */,
 				760FE8251C47C1CC008F131F /* TWTwitterAccount.m in Sources */,
@@ -432,6 +468,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TWListOfFollwers-PrefixHeader.pch";
 				INFOPLIST_FILE = TWListOfFollwers/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.AirWatch.TWListOfFollwers;
@@ -447,6 +485,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TWListOfFollwers-PrefixHeader.pch";
 				INFOPLIST_FILE = TWListOfFollwers/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.AirWatch.TWListOfFollwers;
@@ -477,6 +517,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		760BF9F41C50F0F100E06366 /* TwinderFavorites.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				760BF9F51C50F0F100E06366 /* TwinderFavorites.xcdatamodel */,
+			);
+			currentVersion = 760BF9F51C50F0F100E06366 /* TwinderFavorites.xcdatamodel */;
+			name = TwinderFavorites.xcdatamodeld;
+			path = ../TwinderFavorites.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 760FE7F51C477891008F131F /* Project object */;
 }

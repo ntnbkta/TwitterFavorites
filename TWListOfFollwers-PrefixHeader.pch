@@ -1,0 +1,19 @@
+//
+//  TWListOfFollwers-PrefixHeader.pch
+//  TWListOfFollwers
+//
+//  Created by Nithin Bhaktha on 1/21/16.
+//  Copyright © 2016 Nithin Bhaktha. All rights reserved.
+//
+
+
+#ifndef TWListOfFollwers_PrefixHeader_pch
+#define TWListOfFollwers_PrefixHeader_pch
+
+
+#import <CoreData/CoreData.h>
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* TWListOfFollwers_PrefixHeader_pch */

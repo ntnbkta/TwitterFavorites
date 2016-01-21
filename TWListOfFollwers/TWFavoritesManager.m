@@ -18,16 +18,6 @@
 
 @implementation TWFavoritesManager
 
-+ (TWFavoritesManager *)sharedManager
-{
-    static dispatch_once_t onceToken;
-    static TWFavoritesManager *sharedManager = nil;
-    
-    dispatch_once(&onceToken, ^{
-        sharedManager = [[TWFavoritesManager alloc] init];
-    });
-    return sharedManager;
-}
 
 - (instancetype)init
 {
