@@ -7,11 +7,8 @@
 //
 
 #import "ViewController.h"
-#import <Social/Social.h>
-#import <Accounts/Accounts.h>
 
 #import "TWUserAccount.h"
-#import "TWAccountManager.h"
 #import "TableViewCell.h"
 #import "TWResultsTableViewController.h"
 #import "TWFavoritesTableViewController.h"
@@ -19,24 +16,24 @@
 
 #import <SDWebImage/UIImageView+WebCache.h>
 
+#import "TwinderEngine.h"
+
 #define CELL_REUSEIDENTIFIER @"TWUserCell"
 #define kTWFavoritesListUpdated @"TWFavoritesListUpdated"
 
 @interface ViewController () <UISearchResultsUpdating>
+
 @property (weak, nonatomic) IBOutlet UITableView *friendsTableView;
 @property (strong, nonatomic) UISearchController *searchController;
-
-@property (nonatomic, strong) ACAccountStore *accountStore;
-@property (nonatomic, strong) ACAccount *twitterAccount;
-
 
 @property (nonatomic, strong) NSMutableArray *followingsList;
 @property (nonatomic, strong) NSArray *searchedList;
 @property (nonatomic, strong) NSMutableArray *favoritesList;
-@property (nonatomic, assign) BOOL shouldStopFetchingNextPage;
-@property (nonatomic, strong) TWAccountManager *accountManager;
 @property (nonatomic, strong) TWFavoritesManager *favoritesManager;
 @property (nonatomic, strong) TWResultsTableViewController *resultsTVController;
+
+@property (nonatomic, strong) TwinderEngine *twinderEngine;
+@property (nonatomic, assign) BOOL shouldStopFetchingNextPage;
 
 
 @end
@@ -73,10 +70,91 @@
     }
     
     self.favoritesManager = [TWFavoritesManager sharedManager];
-    [self setUpAccountStore];
-    [self requestAccessforTwitterAccount];
     
+    [self loadFollowingsList];
 }
+
+- (void)loadFollowingsList
+{
+    self.twinderEngine = [TwinderEngine sharedManager];
+    BOOL isAccessGranted = [self.twinderEngine accessGranted];
+    
+    if (isAccessGranted) {
+        [self fetchFollowingsOfCurrentTwitterAccount];
+    }
+    else {
+        NSLog(@"****** ACCESS NOT GRANTED **** ");
+        [self.twinderEngine requestAccessToTwitterAccountWithCompletionBlock:^(BOOL granted, NSError *error) {
+            if (granted) {
+                [self fetchFollowingsOfCurrentTwitterAccount];
+            }
+            else
+            {
+                NSLog(@"********* ERROR : %@ ****** ", [error localizedDescription]);
+            }
+        }];
+    }
+
+}
+
+- (void)fetchFollowingsOfCurrentTwitterAccount
+{
+    __weak typeof(self) weakSelf = self;
+    
+    [[TwinderEngine sharedManager] fetchFollowingsOfCurrentTwitterAccountWithCompletionBlock:^(NSArray *followingsList, BOOL isFetching, NSError *error)
+     {
+         if (error) {
+             NSLog(@"****** ERROR FETCHING FOLLOWINGS : %@",[error localizedDescription]);
+             return;
+         }
+         
+         if (isFetching)
+         {
+             _shouldStopFetchingNextPage = NO;
+             NSLog(@"****** FriendsList Count = %ld", followingsList.count);
+             self.followingsList = [followingsList mutableCopy];
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 [weakSelf.friendsTableView setHidden:NO];
+                 [weakSelf.friendsTableView reloadData];
+             });
+         }
+         else
+         {
+             _shouldStopFetchingNextPage = YES;
+             [[self.friendsTableView footerViewForSection:1] setHidden:YES];
+         }
+         
+     }];
+
+}
+
+- (void)loadNextFriendsList
+{
+    __weak typeof(self) weakSelf = self;
+    
+    [[TwinderEngine sharedManager] fetchNextSetOfFollowingsOfCurrentTwitterAccountWithCompletionBlock:^(NSArray *followingsList, BOOL isFetching, NSError *error) {
+        
+        if (error) {
+            NSLog(@"********* ERROR FETCHING NEXT SET OF FOLLOWINGS LIST ********");
+            return ;
+        }
+        
+        if (isFetching)
+        {
+            _shouldStopFetchingNextPage = NO;
+            NSLog(@"****** FriendsList Count = %ld", followingsList.count);
+            weakSelf.followingsList = [followingsList mutableCopy];
+            [weakSelf.friendsTableView reloadData];
+        }
+        else
+        {
+            _shouldStopFetchingNextPage = YES;
+            [[weakSelf.friendsTableView viewWithTag:123] setHidden:YES];
+        }
+        
+    }];
+}
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -96,115 +174,6 @@
     [self.friendsTableView reloadData];
 }
 
-- (void)setUpAccountStore
-{
-    if(!_accountStore)
-    {
-        _accountStore = [ACAccountStore new];
-    }
-}
-
-- (void)requestAccessforTwitterAccount
-{
-    ACAccountType *twitterAccountType = [self getAccountTypeFor:@"Twitter"];
-    
-    __weak typeof(self) weakSelf = self;
-    if(twitterAccountType)
-    {
-        [self.accountStore requestAccessToAccountsWithType:twitterAccountType options:nil
-                                                completion:^(BOOL granted, NSError *error) {
-                                                    if (granted) {
-                                                        //Fetch Account information
-                                                        weakSelf.twitterAccount = [weakSelf fetchAccountInformationForAccountType:twitterAccountType];
-                                                        [weakSelf fetchFreiendsOfSourceTwitterAccount];
-                                                    }
-                                                    else
-                                                    {
-                                                        NSLog(@"******** ERROR : %@ **********",[error localizedDescription]);
-                                                    }
-                                                }];
-    }
-
-}
-- (ACAccountType *)getAccountTypeFor:(NSString *)socialNetwork
-{
-    ACAccountType *accountType; //Default implementation
-    if([socialNetwork isEqualToString:@"Twitter"])
-    {
-        accountType = [self.accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
-    }
-    return accountType;
-}
-
-
-- (ACAccount *)fetchAccountInformationForAccountType:(ACAccountType *)accountType
-{
-    ACAccount *account;
-    NSArray *accountsArray = [self.accountStore accountsWithAccountType:accountType];
-
-    if([accountsArray count])
-    {
-        account = [accountsArray objectAtIndex:0];
-    }
-    
-    return account;
-}
-
-
-- (void)fetchFreiendsOfSourceTwitterAccount
-{
-    if (!_accountManager) {
-        self.accountManager = [[TWAccountManager alloc] init];
-    }
-    
-    __weak typeof(self) weakSelf = self;
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        [weakSelf.accountManager getFriendsOf:self.twitterAccount onCompletion:^(NSArray *friendsList,BOOL isFetching) {
-
-            if (isFetching) {
-                _shouldStopFetchingNextPage = NO;
-                NSLog(@"****** FriendsList Count = %ld", friendsList.count);
-                self.followingsList = [friendsList mutableCopy];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [weakSelf.friendsTableView setHidden:NO];
-                    [weakSelf.friendsTableView reloadData];
-                });
-            }
-            else
-            {
-                _shouldStopFetchingNextPage = YES;
-                [[self.friendsTableView footerViewForSection:1] setHidden:YES];
-            }
-            
-        } error:^(NSError *error) {
-            
-            NSLog(@"Error : %@", [error localizedDescription]);
-        }];
-        
-    });
-}
-
-
-- (void)loadNextFriendsList
-{
-    //Get the next cursor id and fetch the followings list from that ID.
-    [self.accountManager getNextPageFriendsListWithCompletion:^(NSArray *friendsList, BOOL isFetching) {
-
-        if (isFetching) {
-            _shouldStopFetchingNextPage = NO;
-            NSLog(@"****** FriendsList Count = %ld", friendsList.count);
-            [self.friendsTableView reloadData];
-        }
-        else
-        {
-            _shouldStopFetchingNextPage = YES;
-            [[self.friendsTableView viewWithTag:123] setHidden:YES];
-        }
-
-    } error:^(NSError *error) {
-        NSLog(@"****** Next Page MediaList error = %@", [error localizedDescription]);
-    }];
-}
 
 #pragma mark - IBAction Methods
 

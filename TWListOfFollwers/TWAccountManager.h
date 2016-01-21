@@ -14,6 +14,7 @@
 @property (nonatomic, strong) NSMutableArray *friendsList;
 
 - (void)getFriendsOf:(ACAccount *)userAccount onCompletion:(void (^)(NSArray *friendsList,BOOL isFetching))completionBlock error:(void (^)(NSError *error))errorBlock;
+
 - (void)getNextPageFriendsListWithCompletion:(void (^)(NSArray *friendsList, BOOL isFetching))completionBlock error:(void (^)(NSError *error))errorBlock;
 
 @end
