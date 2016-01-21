@@ -9,20 +9,20 @@
 /* Begin PBXBuildFile section */
 		760FE8021C477891008F131F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 760FE8011C477891008F131F /* main.m */; };
 		760FE8051C477891008F131F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 760FE8041C477891008F131F /* AppDelegate.m */; };
-		760FE8081C477891008F131F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 760FE8071C477891008F131F /* ViewController.m */; };
+		760FE8081C477891008F131F /* TWFollowingsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 760FE8071C477891008F131F /* TWFollowingsListViewController.m */; };
 		760FE80B1C477891008F131F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 760FE8091C477891008F131F /* Main.storyboard */; };
 		760FE80D1C477891008F131F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 760FE80C1C477891008F131F /* Assets.xcassets */; };
 		760FE8101C477891008F131F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 760FE80E1C477891008F131F /* LaunchScreen.storyboard */; };
 		760FE8181C477D83008F131F /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 760FE8171C477D83008F131F /* Accounts.framework */; };
 		760FE81A1C477D88008F131F /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 760FE8191C477D88008F131F /* Social.framework */; };
 		760FE81D1C479D66008F131F /* TWAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 760FE81C1C479D66008F131F /* TWAPIManager.m */; };
-		760FE8251C47C1CC008F131F /* TWUserAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 760FE8241C47C1CC008F131F /* TWUserAccount.m */; };
+		760FE8251C47C1CC008F131F /* TWTwitterAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 760FE8241C47C1CC008F131F /* TWTwitterAccount.m */; };
 		760FE8281C47C245008F131F /* TWAccountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 760FE8271C47C245008F131F /* TWAccountManager.m */; };
-		760FE82B1C47D13C008F131F /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 760FE82A1C47D13C008F131F /* TableViewCell.m */; };
+		760FE82B1C47D13C008F131F /* TWFollowingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 760FE82A1C47D13C008F131F /* TWFollowingTableViewCell.m */; };
 		761A76D81C4F851700007C35 /* TWFavoritesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 761A76D71C4F851700007C35 /* TWFavoritesTableViewController.m */; };
 		761A76DC1C4FA2EB00007C35 /* TWFavoritesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 761A76DB1C4FA2EB00007C35 /* TWFavoritesManager.m */; };
 		7684FC461C4E0D8100E3A1C3 /* TWResultsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7684FC451C4E0D8100E3A1C3 /* TWResultsTableViewController.m */; };
-		76CEEAF01C50A4B4004A6520 /* TwinderEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 76CEEAEF1C50A4B4004A6520 /* TwinderEngine.m */; };
+		76CEEAF01C50A4B4004A6520 /* TWTwinderEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 76CEEAEF1C50A4B4004A6520 /* TWTwinderEngine.m */; };
 		76CEEAF21C50C17A004A6520 /* iphone5_ios6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 76CEEAF11C50C17A004A6520 /* iphone5_ios6.jpg */; };
 		87327EC5F401D708B1D5A16B /* libPods-TWListOfFollwers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81E0AF0DC1363F047B0A012F /* libPods-TWListOfFollwers.a */; };
 /* End PBXBuildFile section */
@@ -32,8 +32,8 @@
 		760FE8011C477891008F131F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		760FE8031C477891008F131F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		760FE8041C477891008F131F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		760FE8061C477891008F131F /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		760FE8071C477891008F131F /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		760FE8061C477891008F131F /* TWFollowingsListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TWFollowingsListViewController.h; sourceTree = "<group>"; };
+		760FE8071C477891008F131F /* TWFollowingsListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TWFollowingsListViewController.m; sourceTree = "<group>"; };
 		760FE80A1C477891008F131F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		760FE80C1C477891008F131F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		760FE80F1C477891008F131F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -42,20 +42,20 @@
 		760FE8191C477D88008F131F /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		760FE81B1C479D66008F131F /* TWAPIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWAPIManager.h; sourceTree = "<group>"; };
 		760FE81C1C479D66008F131F /* TWAPIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWAPIManager.m; sourceTree = "<group>"; };
-		760FE8231C47C1CC008F131F /* TWUserAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWUserAccount.h; sourceTree = "<group>"; };
-		760FE8241C47C1CC008F131F /* TWUserAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWUserAccount.m; sourceTree = "<group>"; };
+		760FE8231C47C1CC008F131F /* TWTwitterAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWTwitterAccount.h; sourceTree = "<group>"; };
+		760FE8241C47C1CC008F131F /* TWTwitterAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWTwitterAccount.m; sourceTree = "<group>"; };
 		760FE8261C47C245008F131F /* TWAccountManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWAccountManager.h; sourceTree = "<group>"; };
 		760FE8271C47C245008F131F /* TWAccountManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWAccountManager.m; sourceTree = "<group>"; };
-		760FE8291C47D13C008F131F /* TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewCell.h; sourceTree = "<group>"; };
-		760FE82A1C47D13C008F131F /* TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewCell.m; sourceTree = "<group>"; };
+		760FE8291C47D13C008F131F /* TWFollowingTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWFollowingTableViewCell.h; sourceTree = "<group>"; };
+		760FE82A1C47D13C008F131F /* TWFollowingTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWFollowingTableViewCell.m; sourceTree = "<group>"; };
 		761A76D61C4F851700007C35 /* TWFavoritesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWFavoritesTableViewController.h; sourceTree = "<group>"; };
 		761A76D71C4F851700007C35 /* TWFavoritesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWFavoritesTableViewController.m; sourceTree = "<group>"; };
 		761A76DA1C4FA2EB00007C35 /* TWFavoritesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWFavoritesManager.h; sourceTree = "<group>"; };
 		761A76DB1C4FA2EB00007C35 /* TWFavoritesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWFavoritesManager.m; sourceTree = "<group>"; };
 		7684FC441C4E0D8100E3A1C3 /* TWResultsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWResultsTableViewController.h; sourceTree = "<group>"; };
 		7684FC451C4E0D8100E3A1C3 /* TWResultsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWResultsTableViewController.m; sourceTree = "<group>"; };
-		76CEEAEE1C50A4B4004A6520 /* TwinderEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwinderEngine.h; sourceTree = "<group>"; };
-		76CEEAEF1C50A4B4004A6520 /* TwinderEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwinderEngine.m; sourceTree = "<group>"; };
+		76CEEAEE1C50A4B4004A6520 /* TWTwinderEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWTwinderEngine.h; sourceTree = "<group>"; };
+		76CEEAEF1C50A4B4004A6520 /* TWTwinderEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWTwinderEngine.m; sourceTree = "<group>"; };
 		76CEEAF11C50C17A004A6520 /* iphone5_ios6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = iphone5_ios6.jpg; sourceTree = "<group>"; };
 		81E0AF0DC1363F047B0A012F /* libPods-TWListOfFollwers.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TWListOfFollwers.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B965451E1E7D52E195D1A174 /* Pods-TWListOfFollwers.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TWListOfFollwers.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TWListOfFollwers/Pods-TWListOfFollwers.debug.xcconfig"; sourceTree = "<group>"; };
@@ -84,6 +84,28 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		760BF9F21C50EE0C00E06366 /* TWCustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				760FE8291C47D13C008F131F /* TWFollowingTableViewCell.h */,
+				760FE82A1C47D13C008F131F /* TWFollowingTableViewCell.m */,
+			);
+			name = TWCustomViews;
+			sourceTree = "<group>";
+		};
+		760BF9F31C50EEFB00E06366 /* TWViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				760FE8061C477891008F131F /* TWFollowingsListViewController.h */,
+				760FE8071C477891008F131F /* TWFollowingsListViewController.m */,
+				7684FC441C4E0D8100E3A1C3 /* TWResultsTableViewController.h */,
+				7684FC451C4E0D8100E3A1C3 /* TWResultsTableViewController.m */,
+				761A76D61C4F851700007C35 /* TWFavoritesTableViewController.h */,
+				761A76D71C4F851700007C35 /* TWFavoritesTableViewController.m */,
+			);
+			name = TWViewControllers;
+			sourceTree = "<group>";
+		};
 		760FE7F41C477891008F131F = {
 			isa = PBXGroup;
 			children = (
@@ -107,23 +129,11 @@
 		760FE7FF1C477891008F131F /* TWListOfFollwers */ = {
 			isa = PBXGroup;
 			children = (
+				760BF9F31C50EEFB00E06366 /* TWViewControllers */,
+				760BF9F21C50EE0C00E06366 /* TWCustomViews */,
 				761A76D91C4FA2D100007C35 /* TWManagers */,
-				7684FC3A1C4CC0A400E3A1C3 /* TWControllers */,
-				760FE8031C477891008F131F /* AppDelegate.h */,
-				760FE8041C477891008F131F /* AppDelegate.m */,
-				760FE8061C477891008F131F /* ViewController.h */,
-				760FE8071C477891008F131F /* ViewController.m */,
-				760FE8091C477891008F131F /* Main.storyboard */,
-				760FE80C1C477891008F131F /* Assets.xcassets */,
-				760FE80E1C477891008F131F /* LaunchScreen.storyboard */,
-				760FE8111C477891008F131F /* Info.plist */,
+				7684FC3A1C4CC0A400E3A1C3 /* TWModel */,
 				760FE8001C477891008F131F /* Supporting Files */,
-				760FE8291C47D13C008F131F /* TableViewCell.h */,
-				760FE82A1C47D13C008F131F /* TableViewCell.m */,
-				7684FC441C4E0D8100E3A1C3 /* TWResultsTableViewController.h */,
-				7684FC451C4E0D8100E3A1C3 /* TWResultsTableViewController.m */,
-				761A76D61C4F851700007C35 /* TWFavoritesTableViewController.h */,
-				761A76D71C4F851700007C35 /* TWFavoritesTableViewController.m */,
 			);
 			path = TWListOfFollwers;
 			sourceTree = "<group>";
@@ -131,6 +141,12 @@
 		760FE8001C477891008F131F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				760FE8031C477891008F131F /* AppDelegate.h */,
+				760FE8041C477891008F131F /* AppDelegate.m */,
+				760FE8091C477891008F131F /* Main.storyboard */,
+				760FE80C1C477891008F131F /* Assets.xcassets */,
+				760FE80E1C477891008F131F /* LaunchScreen.storyboard */,
+				760FE8111C477891008F131F /* Info.plist */,
 				76CEEAF11C50C17A004A6520 /* iphone5_ios6.jpg */,
 				760FE8011C477891008F131F /* main.m */,
 			);
@@ -140,25 +156,25 @@
 		761A76D91C4FA2D100007C35 /* TWManagers */ = {
 			isa = PBXGroup;
 			children = (
+				76CEEAEE1C50A4B4004A6520 /* TWTwinderEngine.h */,
+				76CEEAEF1C50A4B4004A6520 /* TWTwinderEngine.m */,
 				760FE8261C47C245008F131F /* TWAccountManager.h */,
 				760FE8271C47C245008F131F /* TWAccountManager.m */,
 				761A76DA1C4FA2EB00007C35 /* TWFavoritesManager.h */,
 				761A76DB1C4FA2EB00007C35 /* TWFavoritesManager.m */,
 				760FE81B1C479D66008F131F /* TWAPIManager.h */,
 				760FE81C1C479D66008F131F /* TWAPIManager.m */,
-				76CEEAEE1C50A4B4004A6520 /* TwinderEngine.h */,
-				76CEEAEF1C50A4B4004A6520 /* TwinderEngine.m */,
 			);
 			name = TWManagers;
 			sourceTree = "<group>";
 		};
-		7684FC3A1C4CC0A400E3A1C3 /* TWControllers */ = {
+		7684FC3A1C4CC0A400E3A1C3 /* TWModel */ = {
 			isa = PBXGroup;
 			children = (
-				760FE8231C47C1CC008F131F /* TWUserAccount.h */,
-				760FE8241C47C1CC008F131F /* TWUserAccount.m */,
+				760FE8231C47C1CC008F131F /* TWTwitterAccount.h */,
+				760FE8241C47C1CC008F131F /* TWTwitterAccount.m */,
 			);
-			name = TWControllers;
+			name = TWModel;
 			sourceTree = "<group>";
 		};
 		90F9DBF8B5A5C833D6DEBACF /* Pods */ = {
@@ -294,16 +310,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				761A76D81C4F851700007C35 /* TWFavoritesTableViewController.m in Sources */,
-				760FE82B1C47D13C008F131F /* TableViewCell.m in Sources */,
-				760FE8081C477891008F131F /* ViewController.m in Sources */,
+				760FE82B1C47D13C008F131F /* TWFollowingTableViewCell.m in Sources */,
+				760FE8081C477891008F131F /* TWFollowingsListViewController.m in Sources */,
 				760FE81D1C479D66008F131F /* TWAPIManager.m in Sources */,
 				761A76DC1C4FA2EB00007C35 /* TWFavoritesManager.m in Sources */,
 				760FE8281C47C245008F131F /* TWAccountManager.m in Sources */,
 				760FE8051C477891008F131F /* AppDelegate.m in Sources */,
-				76CEEAF01C50A4B4004A6520 /* TwinderEngine.m in Sources */,
+				76CEEAF01C50A4B4004A6520 /* TWTwinderEngine.m in Sources */,
 				7684FC461C4E0D8100E3A1C3 /* TWResultsTableViewController.m in Sources */,
 				760FE8021C477891008F131F /* main.m in Sources */,
-				760FE8251C47C1CC008F131F /* TWUserAccount.m in Sources */,
+				760FE8251C47C1CC008F131F /* TWTwitterAccount.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

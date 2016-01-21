@@ -7,10 +7,10 @@
 //
 
 #import "TWFavoritesTableViewController.h"
-#import "TableViewCell.h"
-#import "TWUserAccount.h"
+#import "TWFollowingTableViewCell.h"
+#import "TWTwitterAccount.h"
 #import <SDWebImage/UIImageView+WebCache.h>
-#import "TwinderEngine.h"
+#import "TWTwinderEngine.h"
 
 #define CELL_REUSEIDENTIFIER @"TWUserCell"
 
@@ -28,7 +28,7 @@
     if (!_favoritesList) {
         _favoritesList = [NSMutableArray new];
     }
-    _favoritesList = [[[TwinderEngine sharedManager] getUpdatedFavoritesHandlerList] mutableCopy];
+    _favoritesList = [[[TWTwinderEngine sharedManager] getUpdatedFavoritesHandlerList] mutableCopy];
 
     
     if (!_unfavoritedList) {
@@ -56,9 +56,9 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TableViewCell *cell = (TableViewCell *)[tableView dequeueReusableCellWithIdentifier:CELL_REUSEIDENTIFIER forIndexPath:indexPath];
+    TWFollowingTableViewCell *cell = (TWFollowingTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CELL_REUSEIDENTIFIER forIndexPath:indexPath];
     
-    TWUserAccount *friend = [self.favoritesList objectAtIndex:indexPath.row];
+    TWTwitterAccount *friend = [self.favoritesList objectAtIndex:indexPath.row];
     [cell.userName setText:[friend username]];
     [cell.handlerName setText:[friend handlerName]];
     [cell.userProfilePic sd_setImageWithURL:friend.profileImageURL placeholderImage:[UIImage imageNamed:@"placeholderImage"]];
@@ -75,7 +75,7 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         //Remove From Favorites and Add them back in Friends
-        TWUserAccount *favorite = [self.favoritesList objectAtIndex:indexPath.row];
+        TWTwitterAccount *favorite = [self.favoritesList objectAtIndex:indexPath.row];
         [self.favoritesList removeObject:favorite];
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationTop];
         [self.unfavoritedList addObject:favorite];

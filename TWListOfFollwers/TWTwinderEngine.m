@@ -1,12 +1,12 @@
 //
-//  TwinderEngine.m
+//  TWTwinderEngine.m
 //  TWListOfFollwers
 //
 //  Created by Nithin Bhaktha on 1/21/16.
 //  Copyright © 2016 Nithin Bhaktha. All rights reserved.
 //
 
-#import "TwinderEngine.h"
+#import "TWTwinderEngine.h"
 
 #import <Social/Social.h>
 #import <Accounts/Accounts.h>
@@ -14,7 +14,7 @@
 #import "TWAccountManager.h"
 #import "TWFavoritesManager.h"
 
-@interface TwinderEngine ()
+@interface TWTwinderEngine ()
 
 @property (nonatomic, strong) ACAccountStore *accountStore;
 @property (nonatomic, strong) ACAccount *twitterAccount;
@@ -24,7 +24,7 @@
 
 @end
 
-@implementation TwinderEngine
+@implementation TWTwinderEngine
 
 - (instancetype)init
 {
@@ -36,13 +36,13 @@
     return  self;
 }
 
-+ (TwinderEngine *)sharedManager
++ (TWTwinderEngine *)sharedManager
 {
     static dispatch_once_t onceToken;
-    static TwinderEngine *sharedManager = nil;
+    static TWTwinderEngine *sharedManager = nil;
     
     dispatch_once(&onceToken, ^{
-        sharedManager = [[TwinderEngine alloc] init];
+        sharedManager = [[TWTwinderEngine alloc] init];
     });
     return sharedManager;
 

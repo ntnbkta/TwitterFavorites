@@ -1,5 +1,5 @@
 //
-//  TwinderEngine.h
+//  TWTwinderEngine.h
 //  TWListOfFollwers
 //
 //  Created by Nithin Bhaktha on 1/21/16.
@@ -12,11 +12,11 @@
 
 typedef void(^ListOfFriendsCompletionBlock)(NSArray *followingsList, BOOL isFetching, NSError *error);
 
-@interface TwinderEngine : NSObject
+@interface TWTwinderEngine : NSObject
 
 @property (nonatomic, assign) BOOL accessGranted;
 
-+ (TwinderEngine *)sharedManager;
++ (TWTwinderEngine *)sharedManager;
 - (void)requestAccessToTwitterAccountWithCompletionBlock:(void(^)(BOOL granted, NSError *error))completionBlock;
 - (void)fetchFollowingsOfCurrentTwitterAccountWithCompletionBlock:(ListOfFriendsCompletionBlock)completionBlock;
 - (void)fetchNextSetOfFollowingsOfCurrentTwitterAccountWithCompletionBlock:(ListOfFriendsCompletionBlock)completionBlock;

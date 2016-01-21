@@ -1,5 +1,5 @@
 //
-//  TableViewCell.h
+//  TWFollowingTableViewCell.h
 //  TWListOfFollwers
 //
 //  Created by Nithin Bhaktha on 1/14/16.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TableViewCell : UITableViewCell
+@interface TWFollowingTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *userProfilePic;
 @property (weak, nonatomic) IBOutlet UILabel *userName;

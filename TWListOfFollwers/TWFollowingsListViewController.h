@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  TWFollowingsListViewController.h
 //  TWListOfFollwers
 //
 //  Created by Nithin Bhaktha on 1/14/16.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface TWFollowingsListViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 
 @end

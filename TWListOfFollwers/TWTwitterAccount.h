@@ -1,5 +1,5 @@
 //
-//  TWUserAccount.h
+//  TWTwitterAccount.h
 //  TWListOfFollwers
 //
 //  Created by Nithin Bhaktha on 1/14/16.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TWUserAccount : NSObject
+@interface TWTwitterAccount : NSObject
 
 @property (nonatomic, strong) NSString *userID;
 @property (nonatomic, strong) NSString *username;

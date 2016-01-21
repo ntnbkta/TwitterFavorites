@@ -8,7 +8,7 @@
 
 #import "TWAPIManager.h"
 #import "TWAccountManager.h"
-#import "TWUserAccount.h"
+#import "TWTwitterAccount.h"
 
 #define BASE_API @"https://api.twitter.com/1.1/"
 
@@ -101,7 +101,7 @@
     NSArray *listOfUsers = serviceResponse[@"users"];
     
     [listOfUsers enumerateObjectsUsingBlock:^(NSDictionary *userDictionary, NSUInteger idx, BOOL * _Nonnull stop) {
-        TWUserAccount *user = [TWUserAccount new];
+        TWTwitterAccount *user = [TWTwitterAccount new];
         user.userID = userDictionary[@"id"];
         user.username = userDictionary[@"name"];
         user.handlerName = [NSString stringWithFormat:@"@%@",userDictionary[@"screen_name"]];

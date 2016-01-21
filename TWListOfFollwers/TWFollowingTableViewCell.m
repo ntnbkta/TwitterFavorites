@@ -1,14 +1,14 @@
 //
-//  TableViewCell.m
+//  TWFollowingTableViewCell.m
 //  TWListOfFollwers
 //
 //  Created by Nithin Bhaktha on 1/14/16.
 //  Copyright © 2016 Nithin Bhaktha. All rights reserved.
 //
 
-#import "TableViewCell.h"
+#import "TWFollowingTableViewCell.h"
 
-@implementation TableViewCell
+@implementation TWFollowingTableViewCell
 
 - (void)awakeFromNib {
     // Initialization code

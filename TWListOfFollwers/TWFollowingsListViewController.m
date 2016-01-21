@@ -1,26 +1,26 @@
 //
-//  ViewController.m
+//  TWFollowingsListViewController.m
 //  TWListOfFollwers
 //
 //  Created by Nithin Bhaktha on 1/14/16.
 //  Copyright © 2016 Nithin Bhaktha. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "TWFollowingsListViewController.h"
 
-#import "TWUserAccount.h"
-#import "TableViewCell.h"
+#import "TWTwitterAccount.h"
+#import "TWFollowingTableViewCell.h"
 #import "TWResultsTableViewController.h"
 #import "TWFavoritesTableViewController.h"
 
 #import <SDWebImage/UIImageView+WebCache.h>
 
-#import "TwinderEngine.h"
+#import "TWTwinderEngine.h"
 
 #define CELL_REUSEIDENTIFIER @"TWUserCell"
 #define kTWFavoritesListUpdated @"TWFavoritesListUpdated"
 
-@interface ViewController () <UISearchResultsUpdating, FavoriteAccountsDelegate>
+@interface TWFollowingsListViewController () <UISearchResultsUpdating, FavoriteAccountsDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *friendsTableView;
 @property (strong, nonatomic) UISearchController *searchController;
@@ -30,13 +30,13 @@
 @property (nonatomic, strong) NSMutableArray *favoritesList;
 @property (nonatomic, strong) TWResultsTableViewController *resultsTVController;
 
-@property (nonatomic, strong) TwinderEngine *twinderEngine;
+@property (nonatomic, strong) TWTwinderEngine *twinderEngine;
 @property (nonatomic, assign) BOOL shouldStopFetchingNextPage;
 
 
 @end
 
-@implementation ViewController
+@implementation TWFollowingsListViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -72,7 +72,7 @@
 
 - (void)loadFollowingsList
 {
-    self.twinderEngine = [TwinderEngine sharedManager];
+    self.twinderEngine = [TWTwinderEngine sharedManager];
     BOOL isAccessGranted = [self.twinderEngine accessGranted];
     
     if (isAccessGranted) {
@@ -97,7 +97,7 @@
 {
     __weak typeof(self) weakSelf = self;
     
-    [[TwinderEngine sharedManager] fetchFollowingsOfCurrentTwitterAccountWithCompletionBlock:^(NSArray *followingsList, BOOL isFetching, NSError *error)
+    [[TWTwinderEngine sharedManager] fetchFollowingsOfCurrentTwitterAccountWithCompletionBlock:^(NSArray *followingsList, BOOL isFetching, NSError *error)
      {
          if (error) {
              NSLog(@"****** ERROR FETCHING FOLLOWINGS : %@",[error localizedDescription]);
@@ -128,7 +128,7 @@
 {
     __weak typeof(self) weakSelf = self;
     
-    [[TwinderEngine sharedManager] fetchNextSetOfFollowingsOfCurrentTwitterAccountWithCompletionBlock:^(NSArray *followingsList, BOOL isFetching, NSError *error) {
+    [[TWTwinderEngine sharedManager] fetchNextSetOfFollowingsOfCurrentTwitterAccountWithCompletionBlock:^(NSArray *followingsList, BOOL isFetching, NSError *error) {
         
         if (error) {
             NSLog(@"********* ERROR FETCHING NEXT SET OF FOLLOWINGS LIST ********");
@@ -221,9 +221,9 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TableViewCell *cell = (TableViewCell *)[tableView dequeueReusableCellWithIdentifier:CELL_REUSEIDENTIFIER forIndexPath:indexPath];
+    TWFollowingTableViewCell *cell = (TWFollowingTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CELL_REUSEIDENTIFIER forIndexPath:indexPath];
         
-    TWUserAccount *friend = [self.followingsList objectAtIndex:indexPath.row];
+    TWTwitterAccount *friend = [self.followingsList objectAtIndex:indexPath.row];
     [cell.userName setText:[friend username]];
     [cell.handlerName setText:[friend handlerName]];
     [cell.userProfilePic sd_setImageWithURL:friend.profileImageURL placeholderImage:[UIImage imageNamed:@"placeholderImage"]];
