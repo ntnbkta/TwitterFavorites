@@ -2,7 +2,7 @@
 //  FavoriteAccount+CoreDataProperties.m
 //  
 //
-//  Created by Nithin Bhaktha on 1/21/16.
+//  Created by Nithin Bhaktha on 1/22/16.
 //
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -15,5 +15,7 @@
 
 @dynamic accountID;
 @dynamic screenName;
+@dynamic userName;
+@dynamic profileImageURL;
 
 @end

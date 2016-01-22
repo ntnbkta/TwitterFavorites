@@ -19,8 +19,6 @@
 @property (nonatomic, strong) ACAccountStore *accountStore;
 @property (nonatomic, strong) ACAccount *twitterAccount;
 
-@property (nonatomic, strong) TWAccountManager *accountManager;
-@property (nonatomic, strong) TWFavoritesManager *favoritesManager;
 
 @end
 

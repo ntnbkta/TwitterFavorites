@@ -11,12 +11,16 @@
 #import "TWTwitterAccount.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "TWTwinderEngine.h"
+#import "TWFavoritesManager.h"
 
 #define CELL_REUSEIDENTIFIER @"TWUserCell"
 
+
 @interface TWFavoritesTableViewController ()
 
+@property (nonatomic, strong) NSMutableArray *favoritesList;
 @property (nonatomic, strong) NSMutableArray *unfavoritedList;
+@property (nonatomic, strong) TWFavoritesManager *favoritesManager;
 
 @end
 
@@ -25,10 +29,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    if(!_favoritesManager)
+    {
+        _favoritesManager = [[TWTwinderEngine sharedManager] favoritesManager];
+    }
+    
     if (!_favoritesList) {
         _favoritesList = [NSMutableArray new];
     }
-    _favoritesList = [[[TWTwinderEngine sharedManager] getUpdatedFavoritesHandlerList] mutableCopy];
+    _favoritesList = [[_favoritesManager getFavoritesList] mutableCopy];
 
     
     if (!_unfavoritedList) {
@@ -38,6 +47,8 @@
 
 - (IBAction)doneButtonTapped:(id)sender
 {
+    [self.favoritesManager saveFavoriteAccountsInDatabase];
+    
     if (self.delegate && [self.delegate respondsToSelector:@selector(favoritesViewController:didFinishUnfavoriting:)]) {
         [self.delegate favoritesViewController:self didFinishUnfavoriting:self.unfavoritedList];
     }

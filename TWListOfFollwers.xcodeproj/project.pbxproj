@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		760BF9F61C50F0F100E06366 /* TwinderFavorites.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 760BF9F41C50F0F100E06366 /* TwinderFavorites.xcdatamodeld */; };
-		760BFA0B1C50F1EC00E06366 /* FavoriteAccount+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 760BFA081C50F1EC00E06366 /* FavoriteAccount+CoreDataProperties.m */; };
-		760BFA0C1C50F1EC00E06366 /* FavoriteAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 760BFA0A1C50F1EC00E06366 /* FavoriteAccount.m */; };
 		760BFA0E1C50F2EE00E06366 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 760BFA0D1C50F2EE00E06366 /* CoreData.framework */; };
 		760BFA111C50F31200E06366 /* TWCoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 760BFA101C50F31200E06366 /* TWCoreDataManager.m */; };
 		760FE8021C477891008F131F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 760FE8011C477891008F131F /* main.m */; };
@@ -26,6 +24,11 @@
 		760FE82B1C47D13C008F131F /* TWFollowingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 760FE82A1C47D13C008F131F /* TWFollowingTableViewCell.m */; };
 		761A76D81C4F851700007C35 /* TWFavoritesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 761A76D71C4F851700007C35 /* TWFavoritesTableViewController.m */; };
 		761A76DC1C4FA2EB00007C35 /* TWFavoritesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 761A76DB1C4FA2EB00007C35 /* TWFavoritesManager.m */; };
+		766348191C5135FE00E8F287 /* NSManagedObjectContext+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 766348161C5135FE00E8F287 /* NSManagedObjectContext+Extensions.m */; };
+		7663481A1C5135FE00E8F287 /* TTController.m in Sources */ = {isa = PBXBuildFile; fileRef = 766348181C5135FE00E8F287 /* TTController.m */; };
+		7663481E1C51372800E8F287 /* TTController+FavoriteAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 7663481D1C51372800E8F287 /* TTController+FavoriteAccount.m */; };
+		766348231C51F4B200E8F287 /* FavoriteAccount+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 766348201C51F4B200E8F287 /* FavoriteAccount+CoreDataProperties.m */; };
+		766348241C51F4B200E8F287 /* FavoriteAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 766348221C51F4B200E8F287 /* FavoriteAccount.m */; };
 		7684FC461C4E0D8100E3A1C3 /* TWResultsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7684FC451C4E0D8100E3A1C3 /* TWResultsTableViewController.m */; };
 		76CEEAF01C50A4B4004A6520 /* TWTwinderEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 76CEEAEF1C50A4B4004A6520 /* TWTwinderEngine.m */; };
 		76CEEAF21C50C17A004A6520 /* iphone5_ios6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 76CEEAF11C50C17A004A6520 /* iphone5_ios6.jpg */; };
@@ -34,10 +37,6 @@
 
 /* Begin PBXFileReference section */
 		760BF9F51C50F0F100E06366 /* TwinderFavorites.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TwinderFavorites.xcdatamodel; sourceTree = "<group>"; };
-		760BFA071C50F1EC00E06366 /* FavoriteAccount+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FavoriteAccount+CoreDataProperties.h"; sourceTree = "<group>"; };
-		760BFA081C50F1EC00E06366 /* FavoriteAccount+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FavoriteAccount+CoreDataProperties.m"; sourceTree = "<group>"; };
-		760BFA091C50F1EC00E06366 /* FavoriteAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoriteAccount.h; sourceTree = "<group>"; };
-		760BFA0A1C50F1EC00E06366 /* FavoriteAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoriteAccount.m; sourceTree = "<group>"; };
 		760BFA0D1C50F2EE00E06366 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		760BFA0F1C50F31200E06366 /* TWCoreDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWCoreDataManager.h; sourceTree = "<group>"; };
 		760BFA101C50F31200E06366 /* TWCoreDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWCoreDataManager.m; sourceTree = "<group>"; };
@@ -66,6 +65,15 @@
 		761A76D71C4F851700007C35 /* TWFavoritesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWFavoritesTableViewController.m; sourceTree = "<group>"; };
 		761A76DA1C4FA2EB00007C35 /* TWFavoritesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWFavoritesManager.h; sourceTree = "<group>"; };
 		761A76DB1C4FA2EB00007C35 /* TWFavoritesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWFavoritesManager.m; sourceTree = "<group>"; };
+		766348151C5135FE00E8F287 /* NSManagedObjectContext+Extensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectContext+Extensions.h"; sourceTree = "<group>"; };
+		766348161C5135FE00E8F287 /* NSManagedObjectContext+Extensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+Extensions.m"; sourceTree = "<group>"; };
+		766348171C5135FE00E8F287 /* TTController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTController.h; sourceTree = "<group>"; };
+		766348181C5135FE00E8F287 /* TTController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTController.m; sourceTree = "<group>"; };
+		7663481D1C51372800E8F287 /* TTController+FavoriteAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TTController+FavoriteAccount.m"; sourceTree = "<group>"; };
+		7663481F1C51F4B200E8F287 /* FavoriteAccount+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FavoriteAccount+CoreDataProperties.h"; sourceTree = "<group>"; };
+		766348201C51F4B200E8F287 /* FavoriteAccount+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FavoriteAccount+CoreDataProperties.m"; sourceTree = "<group>"; };
+		766348211C51F4B200E8F287 /* FavoriteAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoriteAccount.h; sourceTree = "<group>"; };
+		766348221C51F4B200E8F287 /* FavoriteAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoriteAccount.m; sourceTree = "<group>"; };
 		7684FC441C4E0D8100E3A1C3 /* TWResultsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWResultsTableViewController.h; sourceTree = "<group>"; };
 		7684FC451C4E0D8100E3A1C3 /* TWResultsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWResultsTableViewController.m; sourceTree = "<group>"; };
 		76CEEAEE1C50A4B4004A6520 /* TWTwinderEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWTwinderEngine.h; sourceTree = "<group>"; };
@@ -127,10 +135,15 @@
 		760BFA001C50F1AC00E06366 /* TWCoreDataModel */ = {
 			isa = PBXGroup;
 			children = (
-				760BFA071C50F1EC00E06366 /* FavoriteAccount+CoreDataProperties.h */,
-				760BFA081C50F1EC00E06366 /* FavoriteAccount+CoreDataProperties.m */,
-				760BFA091C50F1EC00E06366 /* FavoriteAccount.h */,
-				760BFA0A1C50F1EC00E06366 /* FavoriteAccount.m */,
+				7663481F1C51F4B200E8F287 /* FavoriteAccount+CoreDataProperties.h */,
+				766348201C51F4B200E8F287 /* FavoriteAccount+CoreDataProperties.m */,
+				766348211C51F4B200E8F287 /* FavoriteAccount.h */,
+				766348221C51F4B200E8F287 /* FavoriteAccount.m */,
+				766348151C5135FE00E8F287 /* NSManagedObjectContext+Extensions.h */,
+				766348161C5135FE00E8F287 /* NSManagedObjectContext+Extensions.m */,
+				766348171C5135FE00E8F287 /* TTController.h */,
+				766348181C5135FE00E8F287 /* TTController.m */,
+				7663481D1C51372800E8F287 /* TTController+FavoriteAccount.m */,
 				760BFA0F1C50F31200E06366 /* TWCoreDataManager.h */,
 				760BFA101C50F31200E06366 /* TWCoreDataManager.m */,
 			);
@@ -345,13 +358,16 @@
 				760FE82B1C47D13C008F131F /* TWFollowingTableViewCell.m in Sources */,
 				760FE8081C477891008F131F /* TWFollowingsListViewController.m in Sources */,
 				760FE81D1C479D66008F131F /* TWAPIManager.m in Sources */,
-				760BFA0B1C50F1EC00E06366 /* FavoriteAccount+CoreDataProperties.m in Sources */,
-				760BFA0C1C50F1EC00E06366 /* FavoriteAccount.m in Sources */,
+				766348231C51F4B200E8F287 /* FavoriteAccount+CoreDataProperties.m in Sources */,
+				766348241C51F4B200E8F287 /* FavoriteAccount.m in Sources */,
+				7663481A1C5135FE00E8F287 /* TTController.m in Sources */,
 				761A76DC1C4FA2EB00007C35 /* TWFavoritesManager.m in Sources */,
 				760BF9F61C50F0F100E06366 /* TwinderFavorites.xcdatamodeld in Sources */,
 				760FE8281C47C245008F131F /* TWAccountManager.m in Sources */,
 				760FE8051C477891008F131F /* AppDelegate.m in Sources */,
 				76CEEAF01C50A4B4004A6520 /* TWTwinderEngine.m in Sources */,
+				766348191C5135FE00E8F287 /* NSManagedObjectContext+Extensions.m in Sources */,
+				7663481E1C51372800E8F287 /* TTController+FavoriteAccount.m in Sources */,
 				760BFA111C50F31200E06366 /* TWCoreDataManager.m in Sources */,
 				7684FC461C4E0D8100E3A1C3 /* TWResultsTableViewController.m in Sources */,
 				760FE8021C477891008F131F /* main.m in Sources */,

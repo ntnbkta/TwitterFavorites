@@ -13,5 +13,6 @@
 - (NSArray *)getFavoritesList;
 - (void)addToFavorites:(NSArray *)favList;
 - (void)removeAccountsFromFavorites:(NSArray *)unfavoritedList;
+- (void)saveFavoriteAccountsInDatabase;
 
 @end

@@ -18,7 +18,6 @@
 
 @interface TWFavoritesTableViewController : UITableViewController
 
-@property (nonatomic, strong) NSMutableArray *favoritesList;
 @property (nonatomic, weak) id<FavoriteAccountsDelegate> delegate;
 
 @end
