@@ -14,13 +14,14 @@
 #import "TWAccountManager.h"
 #import "TWFavoritesManager.h"
 #import "TWAPIManager.h"
+#import "TWTweetFactory.h"
 
 @interface TWTwinderEngine ()
 
 @property (nonatomic, strong) ACAccountStore *accountStore;
 @property (nonatomic, strong) ACAccount *twitterAccount;
 
-@property (nonatomic, strong) TWAPIManager *apiManager;
+@property (nonatomic, strong) TWTweetFactory *tweetFactory;
 @end
 
 @implementation TWTwinderEngine
@@ -57,6 +58,10 @@
     _accountManager = [TWAccountManager new];
     _favoritesManager = [TWFavoritesManager new];
     _apiManager = [TWAPIManager new];
+    _tweetFactory = [TWTweetFactory new];
+    
+    [_tweetFactory setApiManager:_apiManager];
+    [_accountManager setApiManager:_apiManager];
 }
 
 
@@ -73,7 +78,16 @@
 {
     ACAccountType *twitterAccountType = [self getAccountTypeFor:@"Twitter"];
     self.twitterAccount = [self fetchAccountInformationForAccountType:twitterAccountType];
-    [self.apiManager setAuthenticatedAccount:self.twitterAccount];
+
+    if (!self.twitterAccount) {
+        [self requestAccessToTwitterAccountWithCompletionBlock:^(BOOL granted, NSError *error) {
+            self.accessGranted = granted;
+        }];
+    }
+    else
+    {
+        [self.apiManager setAuthenticatedAccount:self.twitterAccount];
+    }
 }
 
 
@@ -102,18 +116,16 @@
 
 - (void)fetchTweetsOfFavoritesWithCompletionBlock:(void(^)(NSArray *tweetsList))completionBlock errorBlock:(void(^)(NSError *error))errorBlock
 {
-    //TODO : Fetch the list of favorites and enumerate to get screenName to be passed in the below method :fetchRecentTweetsOfScreenName
-    [self.apiManager fetchRecentTweetsOfScreenName:@"livemint" withCompletionBlock:^(id response, NSString *nextMaxTagID, NSError *error) {
-        
-        if (!error) {
-            if ([response isKindOfClass:[NSArray class]]) {
-                completionBlock(response);
-            }
-        }
-        else {
-            errorBlock(error);
-        }
-    }];
+    NSArray *favoritesList = [self getUpdatedFavoritesHandlerList];
+    
+    [self.tweetFactory fetchTweetsOfFavorites:favoritesList
+                             withSuccessBlock:^(NSArray *tweetsList) {
+                                 NSLog(@"*********** TWEETS FETCHED : %@ ********** ",tweetsList);
+                                 completionBlock(tweetsList);
+                             } failureBlock:^(NSError *error) {
+                                 NSLog(@"*********** TWEETS FETCHED ERROR : %@ ********** ",[error localizedDescription]);
+                                 errorBlock(error);
+                             }];
 }
 
 #pragma mark - Twitter Account Manager Methods

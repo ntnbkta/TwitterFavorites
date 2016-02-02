@@ -12,7 +12,7 @@
 
 @property (nonatomic, strong) NSNumber *tweetID;
 @property (nonatomic, strong) NSString *tweetAuthorHandler;
-@property (nonatomic, strong) NSString *tweetCreatedAt;
+@property (nonatomic, strong) NSDate *tweetCreatedAt;
 @property (nonatomic, strong) NSString *tweetText;
 @property (nonatomic, strong) NSNumber *tweetRetweetCount;
 @property (nonatomic, strong) NSNumber *tweetFavoriteCount;

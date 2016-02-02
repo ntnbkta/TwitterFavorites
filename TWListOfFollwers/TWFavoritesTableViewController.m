@@ -14,7 +14,7 @@
 #import "TWFavoritesManager.h"
 
 #define CELL_REUSEIDENTIFIER @"TWUserCell"
-
+#define kTWFavoritesListUpdated @"TWFavoritesListUpdated"
 
 @interface TWFavoritesTableViewController ()
 
@@ -91,6 +91,8 @@
 
 - (IBAction)done:(id)sender
 {
+    //Send notification of updated Favorites list
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTWFavoritesListUpdated object:self userInfo:nil];
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 

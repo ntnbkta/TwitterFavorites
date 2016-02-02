@@ -7,7 +7,6 @@
 //
 
 #import "TWAPIManager.h"
-#import "TWAccountManager.h"
 #import "TWTwitterAccount.h"
 #import "TWTweet.h"
 
@@ -18,17 +17,6 @@
 
 
 @implementation TWAPIManager
-
-+ (TWAPIManager *)sharedManager
-{
-    static dispatch_once_t onceToken;
-    static TWAPIManager *sharedManager = nil;
-    
-    dispatch_once(&onceToken, ^{
-        sharedManager = [[TWAPIManager alloc] init];
-    });
-    return sharedManager;
-}
 
 - (void)fetchListOfFollowingForTwitterAccount:(ACAccount *)account withNextCursor:(NSString *)nextCursor withCompletionBlock:(TwitterWebServiceCompletionBlock)completionBlock
 {
@@ -120,7 +108,7 @@
             return;
         }
         
-        NSLog(@"URL RESPONSE : %@",urlResponse);
+        NSLog(@"URL RESPONSE : %@",responseJSON);
         
         id processedResponse = [self getTweetsFromWebResponse:responseJSON];
 //        NSString *nextMaxTagID = [self getMaxTagIDFromResponse:responseJSON];
@@ -163,7 +151,6 @@
 
 - (id)getTweetsFromWebResponse:(id)responseJSON
 {
-    NSLog(@"RESPONSE JSON : %@",responseJSON);
     NSMutableArray *returnArray = [NSMutableArray new];
     
     NSMutableArray *tweetsArray = [NSMutableArray array];
@@ -176,7 +163,7 @@
         newTweet.tweetID = tweetDictionary[@"id"];
         NSDictionary *user = tweetDictionary[@"user"];
         newTweet.tweetAuthorHandler = [NSString stringWithFormat:@"@%@",user[@"screen_name"]];
-        newTweet.tweetCreatedAt = tweetDictionary[@"created_at"];
+        newTweet.tweetCreatedAt = [self getTweetCreatedAt:tweetDictionary[@"created_at"]];
         newTweet.tweetText = tweetDictionary[@"text"];
         newTweet.tweetRetweetCount = [NSNumber numberWithInteger:(int)tweetDictionary[@"retweet_count"]];
         newTweet.tweetFavoriteCount = [NSNumber numberWithInteger:(int)tweetDictionary[@"favorite_count"]];
@@ -188,6 +175,15 @@
     }];
     
     return returnArray;
+}
+
+- (NSDate *)getTweetCreatedAt:(NSString *)createdAt
+{
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    
+    [dateFormatter setDateFormat:@"eee MMM dd HH:mm:ss ZZZZ yyyy"];
+    NSDate *tweetDate = [dateFormatter dateFromString:createdAt];
+    return tweetDate;
 }
 
 @end

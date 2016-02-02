@@ -37,6 +37,7 @@
 		7684FC461C4E0D8100E3A1C3 /* TWResultsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7684FC451C4E0D8100E3A1C3 /* TWResultsTableViewController.m */; };
 		76CEEAF01C50A4B4004A6520 /* TWTwinderEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 76CEEAEF1C50A4B4004A6520 /* TWTwinderEngine.m */; };
 		76CEEAF21C50C17A004A6520 /* iphone5_ios6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 76CEEAF11C50C17A004A6520 /* iphone5_ios6.jpg */; };
+		76E728EA1C60827A00B51422 /* TWTweetFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 76E728E91C60827A00B51422 /* TWTweetFactory.m */; };
 		87327EC5F401D708B1D5A16B /* libPods-TWListOfFollwers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 81E0AF0DC1363F047B0A012F /* libPods-TWListOfFollwers.a */; };
 /* End PBXBuildFile section */
 
@@ -93,6 +94,8 @@
 		76CEEAEE1C50A4B4004A6520 /* TWTwinderEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWTwinderEngine.h; sourceTree = "<group>"; };
 		76CEEAEF1C50A4B4004A6520 /* TWTwinderEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWTwinderEngine.m; sourceTree = "<group>"; };
 		76CEEAF11C50C17A004A6520 /* iphone5_ios6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = iphone5_ios6.jpg; sourceTree = "<group>"; };
+		76E728E81C60827A00B51422 /* TWTweetFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWTweetFactory.h; sourceTree = "<group>"; };
+		76E728E91C60827A00B51422 /* TWTweetFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWTweetFactory.m; sourceTree = "<group>"; };
 		81E0AF0DC1363F047B0A012F /* libPods-TWListOfFollwers.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TWListOfFollwers.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B965451E1E7D52E195D1A174 /* Pods-TWListOfFollwers.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TWListOfFollwers.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TWListOfFollwers/Pods-TWListOfFollwers.debug.xcconfig"; sourceTree = "<group>"; };
 		D5DB594CE9AF2C06AEF002A7 /* Pods-TWListOfFollwers.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TWListOfFollwers.release.xcconfig"; path = "Pods/Target Support Files/Pods-TWListOfFollwers/Pods-TWListOfFollwers.release.xcconfig"; sourceTree = "<group>"; };
@@ -230,6 +233,8 @@
 				761A76DB1C4FA2EB00007C35 /* TWFavoritesManager.m */,
 				760FE81B1C479D66008F131F /* TWAPIManager.h */,
 				760FE81C1C479D66008F131F /* TWAPIManager.m */,
+				76E728E81C60827A00B51422 /* TWTweetFactory.h */,
+				76E728E91C60827A00B51422 /* TWTweetFactory.m */,
 			);
 			name = TWManagers;
 			sourceTree = "<group>";
@@ -378,6 +383,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				76E728EA1C60827A00B51422 /* TWTweetFactory.m in Sources */,
 				761A76D81C4F851700007C35 /* TWFavoritesTableViewController.m in Sources */,
 				760FE82B1C47D13C008F131F /* TWFollowingTableViewCell.m in Sources */,
 				766348271C51FBC900E8F287 /* TWTweetCardViewController.m in Sources */,

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class ACAccount, TWAccountManager, TWFavoritesManager;
+@class ACAccount, TWAccountManager, TWFavoritesManager, TWAPIManager;
 
 typedef void(^ListOfFriendsCompletionBlock)(NSArray *followingsList, BOOL isFetching, NSError *error);
 
@@ -17,15 +17,15 @@ typedef void(^ListOfFriendsCompletionBlock)(NSArray *followingsList, BOOL isFetc
 @property (nonatomic, assign) BOOL accessGranted;
 @property (nonatomic, strong) TWAccountManager *accountManager;
 @property (nonatomic, strong) TWFavoritesManager *favoritesManager;
+@property (nonatomic, strong) TWAPIManager *apiManager;
 
 
 + (TWTwinderEngine *)sharedManager;
 - (void)requestAccessToTwitterAccountWithCompletionBlock:(void(^)(BOOL granted, NSError *error))completionBlock;
 - (void)fetchFollowingsOfCurrentTwitterAccountWithCompletionBlock:(ListOfFriendsCompletionBlock)completionBlock;
 - (void)fetchNextSetOfFollowingsOfCurrentTwitterAccountWithCompletionBlock:(ListOfFriendsCompletionBlock)completionBlock;
+- (void)fetchTweetsOfFavoritesWithCompletionBlock:(void(^)(NSArray *tweetsList))completionBlock errorBlock:(void(^)(NSError *error))errorBlock;
 
 - (void)removeAccountsFromFavorites:(NSArray *)unfavoritedList;
-- (NSArray *)getUpdatedFavoritesHandlerList;
 
-- (void)fetchTweetsOfFavoritesWithCompletionBlock:(void(^)(NSArray *tweetsList))completionBlock errorBlock:(void(^)(NSError *error))errorBlock;
 @end

@@ -11,6 +11,8 @@
 #import "TWTweet.h"
 #import <MDCSwipeToChoose/MDCSwipeToChoose.h>
 
+#define kTWFavoritesListUpdated @"TWFavoritesListUpdated"
+
 static const CGFloat ChoosePersonButtonHorizontalPadding = 80.f;
 static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 
@@ -32,6 +34,23 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
         _tweetsArray = [NSMutableArray new];
     }
     self.twinderEngine = [TWTwinderEngine sharedManager];
+    
+    [self favoritesListUpdated:nil];
+
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(favoritesListUpdated:) name:kTWFavoritesListUpdated object:nil];
+
+
+}
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+}
+
+- (void)favoritesListUpdated:(NSNotification *)notif
+{
     [self.twinderEngine fetchTweetsOfFavoritesWithCompletionBlock:^(NSArray *tweetsList) {
         self.tweetsArray = [tweetsList mutableCopy];
         // Display the first ChoosePersonView in front. Users can swipe to indicate
@@ -49,12 +68,13 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
         // See the `nopeFrontCardView` and `likeFrontCardView` methods.
         [self constructNopeButton];
         [self constructLikedButton];
-
+        
     } errorBlock:^(NSError *error) {
         NSLog(@"********** %s ERROR : %@ **********", __PRETTY_FUNCTION__, [error localizedDescription]);
     }];
-    
+
 }
+
 
 #pragma mark - MDCSwipeToChooseDelegate Protocol Methods
 
@@ -126,7 +146,7 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
     
     TWTweetView *tweetView = [TWTweetView newTweetView];
     [tweetView setFrame:frame tweet:self.tweetsArray[0] options:options];
-    [tweetView setBackgroundColor:[UIColor colorWithRed:41.0/255.0 green:161.0/255.0 blue:236.0/255.0 alpha:0.98]];
+    [tweetView setBackgroundColor:[UIColor colorWithRed:41.0/255.0 green:161.0/255.0 blue:236.0/255.0 alpha:1.0]];
     [self.tweetsArray removeObjectAtIndex:0];
     return tweetView;
 }

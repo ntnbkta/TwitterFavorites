@@ -10,10 +10,10 @@
 #import "TWImageLabelView.h"
 #import "TWTweet.h"
 
-static const CGFloat ChooseTweetViewImageLabelWidth = 42.f;
 
 @interface TWTweetView ()
 
+@property (weak, nonatomic) IBOutlet UILabel *screenName;
 @property (weak, nonatomic) IBOutlet UILabel *handlerName;
 @property (weak, nonatomic) IBOutlet UITextView *tweetTextView;
 @property (weak, nonatomic) IBOutlet UILabel *createdAtLabel;
@@ -39,9 +39,20 @@ static const CGFloat ChooseTweetViewImageLabelWidth = 42.f;
 - (void)setTweet:(TWTweet *)tweet
 {
     _tweet = tweet;
+    [self.screenName setText:_tweet.tweetAuthorHandler];
     [self.handlerName setText:_tweet.tweetAuthorHandler];
-    [self.createdAtLabel setText:_tweet.tweetCreatedAt];
+    [self.createdAtLabel setText:[self getTweetCreatedAtStringFromDate:_tweet.tweetCreatedAt]];
     [self.tweetTextView setText:_tweet.tweetText];
-    
 }
+
+- (NSString *)getTweetCreatedAtStringFromDate:(NSDate *)tweetDate
+{    
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    
+    [dateFormatter setDateFormat:@"M/d/yy h:mm a"];
+    NSString *createdAtString = [dateFormatter stringFromDate:tweetDate];
+    
+    return createdAtString;
+}
+
 @end
