@@ -9,10 +9,13 @@
 #import "TWAPIManager.h"
 #import "TWAccountManager.h"
 #import "TWTwitterAccount.h"
+#import "TWTweet.h"
 
 #define BASE_API @"https://api.twitter.com/1.1/"
 
 #define FRIENDS_API @"friends/list.json"
+#define GET_TWEETS_API @"statuses/user_timeline.json"
+
 
 @implementation TWAPIManager
 
@@ -29,6 +32,8 @@
 
 - (void)fetchListOfFollowingForTwitterAccount:(ACAccount *)account withNextCursor:(NSString *)nextCursor withCompletionBlock:(TwitterWebServiceCompletionBlock)completionBlock
 {
+    
+    self.authenticatedAccount = account;
     NSString *nextCursorId = nextCursor;
     if (!nextCursorId) {
         nextCursorId = @"-1";
@@ -81,6 +86,48 @@
     
 }
 
+- (void)fetchRecentTweetsOfScreenName:(NSString *)screenName withCompletionBlock:(TwitterWebServiceCompletionBlock)completionBlock
+{
+    
+    if (!completionBlock)
+    {
+        completionBlock = ^(id response, NSString *nextMaxTagID, NSError *error)
+        {
+            
+        };
+    }
+
+    NSMutableString *requestURLString = [[BASE_API stringByAppendingString:GET_TWEETS_API] mutableCopy];
+    [requestURLString appendFormat:@"?screen_name=%@",screenName]; //&since_id=692677494827323392
+    NSURL *getTweetsURL = [NSURL URLWithString:requestURLString];
+    SLRequest* request = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodGET URL:getTweetsURL parameters:nil];
+    request.account = self.authenticatedAccount;
+    
+    [request performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
+
+        if (error)
+        {
+            NSError *returnError = [self errorFromNetworkError:error];
+            dispatch_async(dispatch_get_main_queue(), ^{completionBlock(nil,nil,returnError);});
+            return;
+        }
+        NSError *jsonError = nil;
+        id responseJSON = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingAllowFragments error:&jsonError];
+        if (jsonError)
+        {
+            NSError *returnError = [self errorFromNetworkError:error];
+            dispatch_async(dispatch_get_main_queue(), ^{completionBlock(nil,nil,returnError);});
+            return;
+        }
+        
+        NSLog(@"URL RESPONSE : %@",urlResponse);
+        
+        id processedResponse = [self getTweetsFromWebResponse:responseJSON];
+//        NSString *nextMaxTagID = [self getMaxTagIDFromResponse:responseJSON];
+        dispatch_async(dispatch_get_main_queue(), ^{completionBlock(processedResponse,nil,nil);});
+    }];
+}
+
 #pragma mark - Networking
 
 -(NSError *)errorFromNetworkError:(NSError *)error
@@ -113,5 +160,34 @@
     return returnArray;
 }
 
+
+- (id)getTweetsFromWebResponse:(id)responseJSON
+{
+    NSLog(@"RESPONSE JSON : %@",responseJSON);
+    NSMutableArray *returnArray = [NSMutableArray new];
+    
+    NSMutableArray *tweetsArray = [NSMutableArray array];
+    if ([responseJSON isKindOfClass:[NSArray class]]) {
+        tweetsArray = [(NSArray *)responseJSON mutableCopy];
+    }
+    
+    [tweetsArray enumerateObjectsUsingBlock:^(NSDictionary *tweetDictionary, NSUInteger idx, BOOL * _Nonnull stop) {
+        TWTweet *newTweet = [TWTweet new];
+        newTweet.tweetID = tweetDictionary[@"id"];
+        NSDictionary *user = tweetDictionary[@"user"];
+        newTweet.tweetAuthorHandler = [NSString stringWithFormat:@"@%@",user[@"screen_name"]];
+        newTweet.tweetCreatedAt = tweetDictionary[@"created_at"];
+        newTweet.tweetText = tweetDictionary[@"text"];
+        newTweet.tweetRetweetCount = [NSNumber numberWithInteger:(int)tweetDictionary[@"retweet_count"]];
+        newTweet.tweetFavoriteCount = [NSNumber numberWithInteger:(int)tweetDictionary[@"favorite_count"]];
+        newTweet.tweetFavorited = [[tweetDictionary objectForKey:@"favorited"] boolValue];
+        newTweet.tweetRetweeted = [[tweetDictionary objectForKey:@"retweeted"] boolValue];
+        NSLog(@"************** Tweet : %@ *************", newTweet);
+
+        [returnArray addObject:newTweet];
+    }];
+    
+    return returnArray;
+}
 
 @end

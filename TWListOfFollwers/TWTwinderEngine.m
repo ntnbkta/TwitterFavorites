@@ -13,13 +13,14 @@
 
 #import "TWAccountManager.h"
 #import "TWFavoritesManager.h"
+#import "TWAPIManager.h"
 
 @interface TWTwinderEngine ()
 
 @property (nonatomic, strong) ACAccountStore *accountStore;
 @property (nonatomic, strong) ACAccount *twitterAccount;
 
-
+@property (nonatomic, strong) TWAPIManager *apiManager;
 @end
 
 @implementation TWTwinderEngine
@@ -53,11 +54,9 @@
         _accountStore = [ACAccountStore new];
     }
     
-    if (!_accountManager) {
-        _accountManager = [TWAccountManager new];
-    }
-    
+    _accountManager = [TWAccountManager new];
     _favoritesManager = [TWFavoritesManager new];
+    _apiManager = [TWAPIManager new];
 }
 
 
@@ -74,6 +73,7 @@
 {
     ACAccountType *twitterAccountType = [self getAccountTypeFor:@"Twitter"];
     self.twitterAccount = [self fetchAccountInformationForAccountType:twitterAccountType];
+    [self.apiManager setAuthenticatedAccount:self.twitterAccount];
 }
 
 
@@ -86,6 +86,7 @@
                                                 if (granted) {
                                                     //Fetch Account information
                                                     weakSelf.twitterAccount = [weakSelf fetchAccountInformationForAccountType:twitterAccountType];
+                                                    [weakSelf.apiManager setAuthenticatedAccount:weakSelf.twitterAccount];
                                                     weakSelf.accessGranted = granted;
                                                 }
                                                 else
@@ -94,6 +95,25 @@
                                                 }
                                                 completionBlock(granted,error);
                                             }];
+}
+
+
+#pragma mark - APIManager Methods
+
+- (void)fetchTweetsOfFavoritesWithCompletionBlock:(void(^)(NSArray *tweetsList))completionBlock errorBlock:(void(^)(NSError *error))errorBlock
+{
+    //TODO : Fetch the list of favorites and enumerate to get screenName to be passed in the below method :fetchRecentTweetsOfScreenName
+    [self.apiManager fetchRecentTweetsOfScreenName:@"livemint" withCompletionBlock:^(id response, NSString *nextMaxTagID, NSError *error) {
+        
+        if (!error) {
+            if ([response isKindOfClass:[NSArray class]]) {
+                completionBlock(response);
+            }
+        }
+        else {
+            errorBlock(error);
+        }
+    }];
 }
 
 #pragma mark - Twitter Account Manager Methods
@@ -127,10 +147,6 @@
 
 #pragma mark - TWFavorite Manager Methods
 
-- (void)addFollowingsToFavoritesList:(NSArray *)favoritesList
-{
-    [self.favoritesManager addToFavorites:favoritesList];
-}
 
 - (void)removeAccountsFromFavorites:(NSArray *)unfavoritedList
 {

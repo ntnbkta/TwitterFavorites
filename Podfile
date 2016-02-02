@@ -6,6 +6,7 @@
 target 'TWListOfFollwers' do
 
 pod 'SDWebImage', '~>3.7'
+pod "MDCSwipeToChoose"
 
 end
 

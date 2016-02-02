@@ -8,16 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@class TWFavoritesTableViewController;
-
-@protocol FavoriteAccountsDelegate <NSObject>
-
-- (void)favoritesViewController:(TWFavoritesTableViewController *)favoritesVC didFinishUnfavoriting:(NSArray *)unfavoritedList;
-
-@end
 
 @interface TWFavoritesTableViewController : UITableViewController
 
-@property (nonatomic, weak) id<FavoriteAccountsDelegate> delegate;
 
 @end

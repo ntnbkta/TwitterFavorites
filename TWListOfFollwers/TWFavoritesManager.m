@@ -67,15 +67,8 @@
 
 - (NSArray *)getFavoritesList
 {
-    NSMutableArray *favoriteTwitterAccount = [NSMutableArray new];
     NSArray *favoritesList = [self.favoritesManagerController allFavoriteAccounts];
-    [favoritesList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        //Create TWTwitterAccount of each account
-        FavoriteAccount *favoriteAccount = (FavoriteAccount *)obj;
-        TWTwitterAccount *twitterAccount = [self getTwitterAccountForFavoriteAccount:favoriteAccount];
-        [favoriteTwitterAccount addObject:twitterAccount];
-    }];
-    return favoriteTwitterAccount;
+    return favoritesList;
 }
 
 - (TWTwitterAccount *)getTwitterAccountForFavoriteAccount:(FavoriteAccount *)favoriteAccount
@@ -88,28 +81,23 @@
     return twitterAccount;
 }
 
+- (void)deleteFavoriteAccount:(FavoriteAccount *)favorite;
+{
+    [self.favoritesManagerController deleteFavoriteAccount:favorite];
+    [self.favoritesList removeObject:favorite];
+
+}
 
 - (void)saveFavoriteAccountsInDatabase
 {
     //Save the favorite account list in coreData
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-//        [self.favoritesList enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-//            
-//            __block TWTwitterAccount *twitterAccount = (TWTwitterAccount *)obj;
-//            
-//            FavoriteAccount *newFavoriteAccount = [self.favoritesManagerController insertOrUpdateFavoriteAccountWithUnmanagedTwitterAccount:twitterAccount];
-//            
-//            NSLog(@"**** NEW FAVORITE ACCOUNT : %@ *** ",newFavoriteAccount);
-//        }];
-//        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            [self.favoritesManagerWorkerContext saveAndPropagateToStoreWithCompletion:^(BOOL success, NSError *error) {
-                NSLog(@"Error while saving core data %@",error);
-                NSLog(@"SUCCESS : %@", success ? @"Yes" : @"No");
-            }];
-            
-        });
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [self.favoritesManagerWorkerContext saveAndPropagateToStoreWithCompletion:^(BOOL success, NSError *error) {
+            NSLog(@"Error while saving core data %@",error);
+            NSLog(@"SUCCESS : %@", success ? @"Yes" : @"No");
+        }];
+        
     });
 }
 

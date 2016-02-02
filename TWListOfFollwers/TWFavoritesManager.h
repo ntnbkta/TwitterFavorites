@@ -8,10 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+@class FavoriteAccount;
 @interface TWFavoritesManager : NSObject
 
 - (NSArray *)getFavoritesList;
 - (void)addToFavorites:(NSArray *)favList;
+- (void)deleteFavoriteAccount:(FavoriteAccount *)favorite;
 - (void)removeAccountsFromFavorites:(NSArray *)unfavoritedList;
 - (void)saveFavoriteAccountsInDatabase;
 

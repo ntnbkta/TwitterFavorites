@@ -14,9 +14,11 @@ typedef void(^TwitterWebServiceCompletionBlock)(id response, NSString *nextMaxTa
 
 @interface TWAPIManager : NSObject
 
+@property (nonatomic, strong) ACAccount *authenticatedAccount;
+
 + (TWAPIManager *)sharedManager;
 - (void)fetchListOfFollowingForTwitterAccount:(ACAccount *)account withNextCursor:(NSString *)nextCursor withCompletionBlock:(TwitterWebServiceCompletionBlock)completionBlock;
 
 - (NSArray *)parseResponseFromWebService:(NSDictionary *)serviceResponse;
-
+- (void)fetchRecentTweetsOfScreenName:(NSString *)screenName withCompletionBlock:(TwitterWebServiceCompletionBlock)completionBlock;
 @end

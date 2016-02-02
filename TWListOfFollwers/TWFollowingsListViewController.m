@@ -12,6 +12,7 @@
 #import "TWFollowingTableViewCell.h"
 #import "TWResultsTableViewController.h"
 #import "TWFavoritesTableViewController.h"
+#import "TWFavoritesManager.h"
 
 #import <SDWebImage/UIImageView+WebCache.h>
 
@@ -20,13 +21,12 @@
 #define CELL_REUSEIDENTIFIER @"TWUserCell"
 #define kTWFavoritesListUpdated @"TWFavoritesListUpdated"
 
-@interface TWFollowingsListViewController () <UISearchResultsUpdating, FavoriteAccountsDelegate>
+@interface TWFollowingsListViewController () <UISearchResultsUpdating>
 
 @property (weak, nonatomic) IBOutlet UITableView *friendsTableView;
 @property (strong, nonatomic) UISearchController *searchController;
 
 @property (nonatomic, strong) NSMutableArray *followingsList;
-@property (nonatomic, strong) NSArray *searchedList;
 @property (nonatomic, strong) NSMutableArray *favoritesList;
 @property (nonatomic, strong) TWResultsTableViewController *resultsTVController;
 
@@ -182,7 +182,7 @@
         [self.favoritesList addObject:[self.followingsList objectAtIndex:indexPath.row]];
     }];
 
-    [self.twinderEngine addFollowingsToFavoritesList:self.favoritesList];
+    [self.twinderEngine.favoritesManager addToFavorites:self.favoritesList];
     [self.followingsList removeObjectsInArray:self.favoritesList];
     [self.favoritesList removeAllObjects];
     
@@ -196,9 +196,8 @@
 {
     if([[segue identifier] isEqualToString:@"showFavorites"])
     {
-        UINavigationController *navController = (UINavigationController *)[segue destinationViewController];
-        TWFavoritesTableViewController *favoritesViewController = (TWFavoritesTableViewController *)[navController topViewController];
-        [favoritesViewController setDelegate:self];
+//        UINavigationController *navController = (UINavigationController *)[segue destinationViewController];
+//        TWFavoritesTableViewController *favoritesViewController = (TWFavoritesTableViewController *)[navController topViewController];
     }
 }
 
