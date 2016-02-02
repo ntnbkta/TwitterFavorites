@@ -42,7 +42,6 @@
         return;
     }
 
-    NSLog(@"****** NEXT CURSOR : %@",nextCursorId);
     NSMutableString *requestURLString = [[BASE_API stringByAppendingString:FRIENDS_API] mutableCopy];
     [requestURLString appendFormat:@"?cursor=%@&screen_name=%@&skip_status=true&include_user_entities=false&count=200",nextCursorId,[account username]];
     NSURL *followingURL = [NSURL URLWithString:requestURLString];
@@ -141,7 +140,6 @@
         user.username = userDictionary[@"name"];
         user.handlerName = [NSString stringWithFormat:@"@%@",userDictionary[@"screen_name"]];
         user.profileImageURL = [NSURL URLWithString:userDictionary[@"profile_image_url"]];
-        
         [returnArray addObject:user];
     }];
     
@@ -162,6 +160,7 @@
         TWTweet *newTweet = [TWTweet new];
         newTweet.tweetID = tweetDictionary[@"id"];
         NSDictionary *user = tweetDictionary[@"user"];
+        newTweet.tweetAuthorScreenName = [NSString stringWithFormat:@"%@",user[@"name"]];
         newTweet.tweetAuthorHandler = [NSString stringWithFormat:@"@%@",user[@"screen_name"]];
         newTweet.tweetCreatedAt = [self getTweetCreatedAt:tweetDictionary[@"created_at"]];
         newTweet.tweetText = tweetDictionary[@"text"];
@@ -169,6 +168,7 @@
         newTweet.tweetFavoriteCount = [NSNumber numberWithInteger:(int)tweetDictionary[@"favorite_count"]];
         newTweet.tweetFavorited = [[tweetDictionary objectForKey:@"favorited"] boolValue];
         newTweet.tweetRetweeted = [[tweetDictionary objectForKey:@"retweeted"] boolValue];
+        newTweet.profileImageURL = [NSURL URLWithString:user[@"profile_image_url"]];
         NSLog(@"************** Tweet : %@ *************", newTweet);
 
         [returnArray addObject:newTweet];

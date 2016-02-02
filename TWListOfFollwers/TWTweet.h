@@ -11,11 +11,13 @@
 @interface TWTweet : NSObject
 
 @property (nonatomic, strong) NSNumber *tweetID;
+@property (nonatomic, strong) NSString *tweetAuthorScreenName;
 @property (nonatomic, strong) NSString *tweetAuthorHandler;
 @property (nonatomic, strong) NSDate *tweetCreatedAt;
 @property (nonatomic, strong) NSString *tweetText;
 @property (nonatomic, strong) NSNumber *tweetRetweetCount;
 @property (nonatomic, strong) NSNumber *tweetFavoriteCount;
+@property (nonatomic, strong) NSURL *profileImageURL;
 @property (nonatomic, assign) BOOL tweetRetweeted;
 @property (nonatomic, assign) BOOL tweetFavorited;
 

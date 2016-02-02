@@ -30,7 +30,6 @@
 {
     if (self == [super init]) {
         [self setUpAccountStore];
-        [self setAccessGranted:NO];
         [self fetchTwitterAccountFromAccountStore];
     }
     return  self;
@@ -64,16 +63,6 @@
     [_accountManager setApiManager:_apiManager];
 }
 
-
-- (BOOL)accessGranted
-{
-    if (self.twitterAccount) {
-        return YES;
-    }
-    else
-        return NO;
-}
-
 - (void)fetchTwitterAccountFromAccountStore
 {
     ACAccountType *twitterAccountType = [self getAccountTypeFor:@"Twitter"];
@@ -81,7 +70,12 @@
 
     if (!self.twitterAccount) {
         [self requestAccessToTwitterAccountWithCompletionBlock:^(BOOL granted, NSError *error) {
-            self.accessGranted = granted;
+            if (granted) {
+                NSLog(@"******** ACCOUNT ACCESS GRANTED ********");
+            }
+            else{
+                NSLog(@"******** ACCESS GRANT ERROR : %@ ********", [error localizedDescription]);
+            }
         }];
     }
     else
@@ -101,7 +95,6 @@
                                                     //Fetch Account information
                                                     weakSelf.twitterAccount = [weakSelf fetchAccountInformationForAccountType:twitterAccountType];
                                                     [weakSelf.apiManager setAuthenticatedAccount:weakSelf.twitterAccount];
-                                                    weakSelf.accessGranted = granted;
                                                 }
                                                 else
                                                 {

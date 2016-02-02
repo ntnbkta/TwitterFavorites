@@ -73,24 +73,7 @@
 - (void)loadFollowingsList
 {
     self.twinderEngine = [TWTwinderEngine sharedManager];
-    BOOL isAccessGranted = [self.twinderEngine accessGranted];
-    
-    if (isAccessGranted) {
-        [self fetchFollowingsOfCurrentTwitterAccount];
-    }
-    else {
-        NSLog(@"****** ACCESS NOT GRANTED **** ");
-        [self.twinderEngine requestAccessToTwitterAccountWithCompletionBlock:^(BOOL granted, NSError *error) {
-            if (granted) {
-                [self fetchFollowingsOfCurrentTwitterAccount];
-            }
-            else
-            {
-                NSLog(@"********* ERROR : %@ ****** ", [error localizedDescription]);
-            }
-        }];
-    }
-
+    [self fetchFollowingsOfCurrentTwitterAccount];
 }
 
 - (void)fetchFollowingsOfCurrentTwitterAccount
