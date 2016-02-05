@@ -9,18 +9,19 @@
 #import "TWAPIManager.h"
 #import "TWTwitterAccount.h"
 #import "TWTweet.h"
+#import "FavoriteAccount.h"
 
 #define BASE_API @"https://api.twitter.com/1.1/"
 
 #define FRIENDS_API @"friends/list.json"
 #define GET_TWEETS_API @"statuses/user_timeline.json"
 
+#define kFavoritesSinceMaxIDUpdated @"FavoritesSinceMaxIDUpdated"
 
 @implementation TWAPIManager
 
 - (void)fetchListOfFollowingForTwitterAccount:(ACAccount *)account withNextCursor:(NSString *)nextCursor withCompletionBlock:(TwitterWebServiceCompletionBlock)completionBlock
 {
-    
     self.authenticatedAccount = account;
     NSString *nextCursorId = nextCursor;
     if (!nextCursorId) {
@@ -73,9 +74,8 @@
     
 }
 
-- (void)fetchRecentTweetsOfScreenName:(NSString *)screenName withCompletionBlock:(TwitterWebServiceCompletionBlock)completionBlock
+- (void)fetchRecentTweetsOfFavoriteAccount:(FavoriteAccount *)favorite withCompletionBlock:(TwitterWebServiceCompletionBlock)completionBlock
 {
-    
     if (!completionBlock)
     {
         completionBlock = ^(id response, NSString *nextMaxTagID, NSError *error)
@@ -84,8 +84,19 @@
         };
     }
 
+    NSString *screenName = [favorite screenName];
     NSMutableString *requestURLString = [[BASE_API stringByAppendingString:GET_TWEETS_API] mutableCopy];
-    [requestURLString appendFormat:@"?screen_name=%@",screenName]; //&since_id=692677494827323392
+    [requestURLString appendFormat:@"?screen_name=%@",screenName];
+    
+//    if ([[favorite sinceID] integerValue] > 0) {
+//        [requestURLString appendFormat:@"&since_id=%@",[favorite sinceID]];
+//    }
+    
+    if ([[favorite maxID] integerValue] > 0) {
+        [requestURLString appendFormat:@"&max_id=%@",[favorite maxID]];
+    }
+
+
     NSURL *getTweetsURL = [NSURL URLWithString:requestURLString];
     SLRequest* request = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodGET URL:getTweetsURL parameters:nil];
     request.account = self.authenticatedAccount;
@@ -107,10 +118,10 @@
             return;
         }
         
-        NSLog(@"URL RESPONSE : %@",responseJSON);
+//        NSLog(@"URL RESPONSE : %@",responseJSON);
         
         id processedResponse = [self getTweetsFromWebResponse:responseJSON];
-//        NSString *nextMaxTagID = [self getMaxTagIDFromResponse:responseJSON];
+        [self getMaxAndSinceIDForResponse:processedResponse favoriteAccount:favorite];
         dispatch_async(dispatch_get_main_queue(), ^{completionBlock(processedResponse,nil,nil);});
     }];
 }
@@ -127,6 +138,31 @@
 {
     return [(NSDictionary *)serviceResponse objectForKey:@"next_cursor"];
 }
+
+- (void)getMaxAndSinceIDForResponse:(id)processedResponse favoriteAccount:(FavoriteAccount *)favorite
+{
+    if ([processedResponse isKindOfClass:[NSArray class]]) {
+        NSArray *tweetsArray = (NSArray *)processedResponse;
+        
+        if ([tweetsArray count] > 0) {
+            //For since_id
+            TWTweet *recentTweet = (TWTweet *)[tweetsArray objectAtIndex:0];
+            [favorite setSinceID:[recentTweet tweetID]];
+            NSLog(@"************ SINCE_ID %@ *************** ",[favorite sinceID]);
+            
+            //for max_id
+            TWTweet * oldestTweet = (TWTweet *)[tweetsArray lastObject];
+            NSInteger numberID = [[oldestTweet tweetID] integerValue];
+            numberID--;
+            [favorite setMaxID:[NSString stringWithFormat:@"%ld",numberID]];
+            NSLog(@"************ MAX_ID %@ *************** ",[favorite maxID]);
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kFavoritesSinceMaxIDUpdated object:nil];
+        }
+    }
+}
+
+
 
 - (NSMutableArray *)parseResponseFromWebService:(NSDictionary *)serviceResponse
 {
@@ -158,14 +194,14 @@
     
     [tweetsArray enumerateObjectsUsingBlock:^(NSDictionary *tweetDictionary, NSUInteger idx, BOOL * _Nonnull stop) {
         TWTweet *newTweet = [TWTweet new];
-        newTweet.tweetID = tweetDictionary[@"id"];
+        newTweet.tweetID = tweetDictionary[@"id_str"];
         NSDictionary *user = tweetDictionary[@"user"];
         newTweet.tweetAuthorScreenName = [NSString stringWithFormat:@"%@",user[@"name"]];
         newTweet.tweetAuthorHandler = [NSString stringWithFormat:@"@%@",user[@"screen_name"]];
         newTweet.tweetCreatedAt = [self getTweetCreatedAt:tweetDictionary[@"created_at"]];
         newTweet.tweetText = tweetDictionary[@"text"];
-        newTweet.tweetRetweetCount = [NSNumber numberWithInteger:(int)tweetDictionary[@"retweet_count"]];
-        newTweet.tweetFavoriteCount = [NSNumber numberWithInteger:(int)tweetDictionary[@"favorite_count"]];
+        newTweet.tweetRetweetCount = tweetDictionary[@"retweet_count"];
+        newTweet.tweetFavoriteCount = tweetDictionary[@"favorite_count"];
         newTweet.tweetFavorited = [[tweetDictionary objectForKey:@"favorited"] boolValue];
         newTweet.tweetRetweeted = [[tweetDictionary objectForKey:@"retweeted"] boolValue];
         newTweet.profileImageURL = [NSURL URLWithString:user[@"profile_image_url"]];

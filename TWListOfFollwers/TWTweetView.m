@@ -18,6 +18,8 @@
 @property (weak, nonatomic) IBOutlet UITextView *tweetTextView;
 @property (weak, nonatomic) IBOutlet UILabel *createdAtLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
+@property (weak, nonatomic) IBOutlet UILabel *retweetedCountLabel;
+@property (weak, nonatomic) IBOutlet UILabel *favoritedCountLabel;
 
 @end
 
@@ -32,7 +34,11 @@
 
 - (void)setFrame:(CGRect)frame tweet:(TWTweet *)tweet options:(MDCSwipeToChooseViewOptions *)options
 {
+    [super setFrame:frame];
     [self setFrame:frame];
+    
+    [self setBackgroundColor:[UIColor colorWithRed:41.0/255.0 green:161.0/255.0 blue:236.0/255.0 alpha:1.0]];
+
     [self.profileImageView.layer setCornerRadius:3.0f];
     [self.profileImageView.layer setMasksToBounds:YES];
 
@@ -47,6 +53,9 @@
     [self.handlerName setText:_tweet.tweetAuthorHandler];
     [self.createdAtLabel setText:[self getTweetCreatedAtStringFromDate:_tweet.tweetCreatedAt]];
     [self.tweetTextView setText:_tweet.tweetText];
+    [self.retweetedCountLabel setText:[NSString stringWithFormat:@"%@",_tweet.tweetRetweetCount]];
+    [self.favoritedCountLabel setText:[NSString stringWithFormat:@"%@",_tweet.tweetFavoriteCount]];
+
     [self.profileImageView sd_setImageWithURL:_tweet.profileImageURL placeholderImage:[UIImage imageNamed:@"placeholderImage"]];
 }
 

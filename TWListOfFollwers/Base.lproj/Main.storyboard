@@ -121,15 +121,15 @@
             <objects>
                 <tableViewController storyboardIdentifier="FavoritesTableViewController" id="ojh-U6-wfz" customClass="TWFavoritesTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="95j-Pc-hBh">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="TWUserCell" rowHeight="50" id="vJO-Ha-tJu" customClass="TWFollowingTableViewCell">
-                                <rect key="frame" x="0.0" y="92" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="92" width="600" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vJO-Ha-tJu" id="5pJ-Gs-A0H">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="49.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="49.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" tag="101" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j4X-UH-VLV">
@@ -208,16 +208,41 @@
                     <view key="view" contentMode="scaleToFill" id="KIs-8d-r4V">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qKo-Wm-adF">
+                                <rect key="frame" x="0.0" y="512" width="375" height="100"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cK6-7f-z2b" userLabel="heart">
+                                        <rect key="frame" x="224" y="19" width="60" height="60"/>
+                                        <state key="normal" title="Button" image="heart_small.png"/>
+                                        <connections>
+                                            <action selector="favoriteTweet:" destination="n9K-ea-Ni4" eventType="touchUpInside" id="uxI-Vg-3xF"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tLF-ZF-XCY" userLabel="retweet">
+                                        <rect key="frame" x="98" y="24" width="50" height="50"/>
+                                        <state key="normal" title="Button" image="retweet2.png"/>
+                                        <connections>
+                                            <action selector="retweetTweet:" destination="n9K-ea-Ni4" eventType="touchUpInside" id="Tny-IQ-bgL"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aN6-fg-AYl" userLabel="okDone">
+                                        <rect key="frame" x="145" y="7" width="85" height="85"/>
+                                        <state key="normal" title="Button" image="taskos.png"/>
+                                        <connections>
+                                            <action selector="tweetRead:" destination="n9K-ea-Ni4" eventType="touchUpInside" id="bWw-Bb-A7z"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Tweets" id="j9R-n4-vAS">
-                        <barButtonItem key="rightBarButtonItem" title="Lists" id="L0U-Pd-9TC">
-                            <connections>
-                                <segue destination="EPh-4c-6Sm" kind="presentation" id="PLl-NX-Yd1"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Tweets" id="j9R-n4-vAS"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="optionsContainerView" destination="qKo-Wm-adF" id="NnP-eB-NeE"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LWi-o2-YLn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -226,7 +251,7 @@
         <!--Navigation Controller-->
         <scene sceneID="ZKa-nC-Vzv">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="EPh-4c-6Sm" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="TWFavoritesNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="EPh-4c-6Sm" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="LfK-rG-NzG">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -239,7 +264,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aRR-bL-aHW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1266.5" y="1187.5"/>
+            <point key="canvasLocation" x="1072" y="1187"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="heart_small.png" width="512" height="512"/>
+        <image name="retweet2.png" width="204" height="204"/>
+        <image name="taskos.png" width="256" height="256"/>
+    </resources>
 </document>

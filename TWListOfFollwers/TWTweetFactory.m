@@ -32,16 +32,17 @@
 
 - (void)fetchTweetsOfFavorites:(NSArray *)favorites withSuccessBlock:(void (^)(NSArray *tweetsList))successBlock  failureBlock:(void (^)(NSError *error))failureBlock
 {
-
-    [favorites enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        FavoriteAccount *favorite = (FavoriteAccount *)obj;
-        [self.apiManager fetchRecentTweetsOfScreenName:[favorite screenName] withCompletionBlock:^(id response, NSString *nextMaxTagID, NSError *error) {
+    for (FavoriteAccount *favorite in favorites)
+    {
+        [self.apiManager fetchRecentTweetsOfFavoriteAccount:favorite withCompletionBlock:^(id response, NSString *nextMaxTagID, NSError *error) {
             
             if (!error) {
                 if ([response isKindOfClass:[NSArray class]]) {
                     [self.allFavoritesTweets addObjectsFromArray:response];
-                    if (stop) {
+                    
+                    if (favorite == [favorites lastObject]) {
                         [self sortTweetsForReverseChrnologicalOrderWithSuccessBlock:successBlock];
+                        [self.allFavoritesTweets removeAllObjects];
                     }
                 }
             }
@@ -49,9 +50,8 @@
                 failureBlock(error);
             }
         }];
-
-    }];
-    
+        
+    }
 }
 
 - (void)sortTweetsForReverseChrnologicalOrderWithSuccessBlock:(void (^)(NSArray *tweetsList))successBlock

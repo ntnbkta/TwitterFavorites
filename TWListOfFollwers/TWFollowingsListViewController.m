@@ -80,8 +80,10 @@
 {
     __weak typeof(self) weakSelf = self;
     
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [[TWTwinderEngine sharedManager] fetchFollowingsOfCurrentTwitterAccountWithCompletionBlock:^(NSArray *followingsList, BOOL isFetching, NSError *error)
      {
+         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
          if (error) {
              NSLog(@"****** ERROR FETCHING FOLLOWINGS : %@",[error localizedDescription]);
              return;
@@ -110,9 +112,9 @@
 - (void)loadNextFriendsList
 {
     __weak typeof(self) weakSelf = self;
-    
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [[TWTwinderEngine sharedManager] fetchNextSetOfFollowingsOfCurrentTwitterAccountWithCompletionBlock:^(NSArray *followingsList, BOOL isFetching, NSError *error) {
-        
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         if (error) {
             NSLog(@"********* ERROR FETCHING NEXT SET OF FOLLOWINGS LIST ********");
             return ;
@@ -183,15 +185,6 @@
 //        TWFavoritesTableViewController *favoritesViewController = (TWFavoritesTableViewController *)[navController topViewController];
     }
 }
-
-#pragma  mark - FavoritesViewController Delegate Methods
-
-- (void)favoritesViewController:(TWFavoritesTableViewController *)favoritesVC didFinishUnfavoriting:(NSArray *)unfavoritedList
-{
-    //Pass this message to Twinder Engine
-    [self.twinderEngine removeAccountsFromFavorites:unfavoritedList];
-}
-
 
 #pragma mark - UITableViewDataSource Methods
 

@@ -12,6 +12,7 @@
 
 typedef void(^TwitterWebServiceCompletionBlock)(id response, NSString *nextMaxTagID, NSError *error);
 
+@class FavoriteAccount;
 @interface TWAPIManager : NSObject
 
 @property (nonatomic, strong) ACAccount *authenticatedAccount;
@@ -19,5 +20,5 @@ typedef void(^TwitterWebServiceCompletionBlock)(id response, NSString *nextMaxTa
 - (void)fetchListOfFollowingForTwitterAccount:(ACAccount *)account withNextCursor:(NSString *)nextCursor withCompletionBlock:(TwitterWebServiceCompletionBlock)completionBlock;
 
 - (NSArray *)parseResponseFromWebService:(NSDictionary *)serviceResponse;
-- (void)fetchRecentTweetsOfScreenName:(NSString *)screenName withCompletionBlock:(TwitterWebServiceCompletionBlock)completionBlock;
+- (void)fetchRecentTweetsOfFavoriteAccount:(FavoriteAccount *)favorite withCompletionBlock:(TwitterWebServiceCompletionBlock)completionBlock;
 @end

@@ -7,22 +7,24 @@
 //
 
 #import "TWTweetCardViewController.h"
+#import "TWFavoritesTableViewController.h"
 #import "TWTwinderEngine.h"
 #import "TWTweet.h"
 #import <MDCSwipeToChoose/MDCSwipeToChoose.h>
+#import "MMPulseView.h"
+#import "UIView+Toast.h"
 
 #define kTWFavoritesListUpdated @"TWFavoritesListUpdated"
-
-static const CGFloat ChoosePersonButtonHorizontalPadding = 80.f;
-static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 
 @interface TWTweetCardViewController ()
 
 @property (nonatomic, strong) TWTwinderEngine *twinderEngine;
 @property (nonatomic, strong) NSMutableArray *tweetsArray;
 @property (nonatomic, strong) TWTweet *currentTweet;
-@end
+@property (nonatomic, strong) MMPulseView *pulseView;
+@property (weak, nonatomic) IBOutlet UIView *optionsContainerView;
 
+@end
 
 @implementation TWTweetCardViewController
 
@@ -35,44 +37,106 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
     }
     self.twinderEngine = [TWTwinderEngine sharedManager];
     
-    [self favoritesListUpdated:nil];
+    [self setUpBarButtonItem];
+    [self setUpPulseLoadingView];
+    [self fetchTweetsOfFavorites:nil];
 
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(favoritesListUpdated:) name:kTWFavoritesListUpdated object:nil];
-
-
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchTweetsOfFavorites:) name:kTWFavoritesListUpdated object:nil];
 }
-
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self setUpBarButtonItem];
+
+    [self.pulseView startAnimation];
 }
 
-- (void)favoritesListUpdated:(NSNotification *)notif
-{
-    [self.twinderEngine fetchTweetsOfFavoritesWithCompletionBlock:^(NSArray *tweetsList) {
-        self.tweetsArray = [tweetsList mutableCopy];
-        // Display the first ChoosePersonView in front. Users can swipe to indicate
-        // whether they like or dislike the person displayed.
-        self.frontCardView = [self popPersonViewWithFrame:[self frontCardViewFrame]];
-        [self.view addSubview:self.frontCardView];
-        
-        // Display the second ChoosePersonView in back. This view controller uses
-        // the MDCSwipeToChooseDelegate protocol methods to update the front and
-        // back views after each user swipe.
-        self.backCardView = [self popPersonViewWithFrame:[self backCardViewFrame]];
-        [self.view insertSubview:self.backCardView belowSubview:self.frontCardView];
-        
-        // Add buttons to programmatically swipe the view left or right.
-        // See the `nopeFrontCardView` and `likeFrontCardView` methods.
-        [self constructNopeButton];
-        [self constructLikedButton];
-        
-    } errorBlock:^(NSError *error) {
-        NSLog(@"********** %s ERROR : %@ **********", __PRETTY_FUNCTION__, [error localizedDescription]);
-    }];
 
+- (void)setUpBarButtonItem
+{
+    UIImage *buttonImage = [UIImage imageNamed:@"favorites.png"];
+    UIButton *aButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [aButton setImage:buttonImage forState:UIControlStateNormal];
+    aButton.frame = CGRectMake(0.0, 0.0, buttonImage.size.width, buttonImage.size.height);
+    
+    // Initialize the UIBarButtonItem
+    UIBarButtonItem *aBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:aButton];
+    
+    // Set the Target and Action for aButton
+    [aButton addTarget:self action:@selector(showFavorites:) forControlEvents:UIControlEventTouchUpInside];
+    
+    // Then you can add the aBarButtonItem to the UIToolbar
+    [self.navigationItem setRightBarButtonItem:aBarButtonItem];
+}
+
+- (void)setUpPulseLoadingView
+{
+    CGRect screenRect = [UIScreen mainScreen].bounds;
+    
+    if(!_pulseView)
+    {
+        _pulseView = [[MMPulseView alloc] init];
+        _pulseView.frame = CGRectMake(CGRectGetWidth(screenRect)/1,
+                                     CGRectGetHeight(screenRect)/2*0,
+                                     CGRectGetWidth(screenRect)/1,
+                                     CGRectGetHeight(screenRect)/1);
+        
+        _pulseView.center = self.view.center;
+        [self.view insertSubview:_pulseView belowSubview:_optionsContainerView];
+        
+        _pulseView.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+        
+        _pulseView.colors = @[(__bridge id)[UIColor colorWithRed:0.996 green:0.647 blue:0.008 alpha:1].CGColor,(__bridge id)[UIColor colorWithRed:1 green:0.31 blue:0.349 alpha:1].CGColor,(__bridge id)[UIColor colorWithRed:41.0/255.0 green:161.0/255.0 blue:236.0/255.0 alpha:1.0].CGColor];
+        
+        CGFloat posY = (CGRectGetHeight(screenRect)-320)/2/CGRectGetHeight(screenRect);
+        _pulseView.startPoint = CGPointMake(0.5, posY);
+        _pulseView.endPoint = CGPointMake(0.5, 1.0f - posY);
+        
+        _pulseView.minRadius = 40;
+        _pulseView.maxRadius = 150;
+        
+        _pulseView.duration = 4;
+        _pulseView.count = 6;
+        _pulseView.lineWidth = 2.0f;
+    }
+}
+
+- (void)fetchTweetsOfFavorites:(NSNotification *)notif
+{
+    [self.optionsContainerView setHidden:YES];
+    [self.pulseView startAnimation];
+    [self.twinderEngine fetchTweetsOfFavoritesWithCompletionBlock:^(NSArray *tweetsList)
+     {
+         if (!tweetsList) {
+             [self.view makeToast:@"Add Favorites to Lists."];
+             return ;
+         }
+         if (self.tweetsArray) {
+             [self.tweetsArray addObjectsFromArray:tweetsList];
+         }
+         // Display the first ChoosePersonView in front. Users can swipe to indicate
+         // whether they like or dislike the person displayed.
+         [self.pulseView stopAnimation];
+
+         if (!self.frontCardView) {
+             self.frontCardView = [self popPersonViewWithFrame:[self frontCardViewFrame]];
+             [self.view addSubview:self.frontCardView];
+             
+             // Display the second ChoosePersonView in back. This view controller uses
+             // the MDCSwipeToChooseDelegate protocol methods to update the front and
+             // back views after each user swipe.
+             self.backCardView = [self popPersonViewWithFrame:[self backCardViewFrame]];
+             [self.view insertSubview:self.backCardView belowSubview:self.frontCardView];
+
+         }
+         
+         [self.optionsContainerView setHidden:NO];
+     } errorBlock:^(NSError *error) {
+         [self.optionsContainerView setHidden:YES];
+         
+         NSLog(@"********** %s ERROR : %@ **********", __PRETTY_FUNCTION__, [error localizedDescription]);
+     }];
 }
 
 
@@ -80,17 +144,22 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
 
 // This is called when a user didn't fully swipe left or right.
 - (void)viewDidCancelSwipe:(UIView *)view {
-    NSLog(@"You couldn't decide on %@.", self.currentTweet.tweetText);
+//    NSLog(@"You couldn't decide on %@.", self.currentTweet.tweetText);
 }
 
 // This is called then a user swipes the view fully left or right.
 - (void)view:(UIView *)view wasChosenWithDirection:(MDCSwipeDirection)direction {
     // MDCSwipeToChooseView shows "NOPE" on swipes to the left,
     // and "LIKED" on swipes to the right.
+    
+    if ([self.tweetsArray count]==0 && !self.backCardView) {
+        [self.optionsContainerView setHidden:YES];
+        [self fetchTweetsOfFavorites:nil];
+    }
     if (direction == MDCSwipeDirectionLeft) {
-        NSLog(@"You noped %@.", self.currentTweet.tweetID);
+//        NSLog(@"You noped %@.", self.currentTweet.tweetID);
     } else {
-        NSLog(@"You liked %@.", self.currentTweet.tweetID);
+//        NSLog(@"You liked %@.", self.currentTweet.tweetID);
     }
     
     // MDCSwipeToChooseView removes the view from the view hierarchy
@@ -131,6 +200,8 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
     // a delegate, and provide a custom callback that moves the back card view
     // based on how far the user has panned the front card view.
     MDCSwipeToChooseViewOptions *options = [MDCSwipeToChooseViewOptions new];
+    options.likedText = @"Favorited";
+    options.nopeText = @"Retweeted";
     options.delegate = self;
     options.threshold = 160.f;
     options.onPan = ^(MDCPanState *state){
@@ -146,8 +217,8 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
     
     TWTweetView *tweetView = [TWTweetView newTweetView];
     [tweetView setFrame:frame tweet:self.tweetsArray[0] options:options];
-    [tweetView setBackgroundColor:[UIColor colorWithRed:41.0/255.0 green:161.0/255.0 blue:236.0/255.0 alpha:1.0]];
     [self.tweetsArray removeObjectAtIndex:0];
+    
     return tweetView;
 }
 
@@ -171,55 +242,40 @@ static const CGFloat ChoosePersonButtonVerticalPadding = 20.f;
                       CGRectGetHeight(frontFrame));
 }
 
-// Create and add the "nope" button.
-- (void)constructNopeButton {
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    UIImage *image = [UIImage imageNamed:@"nope"];
-    button.frame = CGRectMake(ChoosePersonButtonHorizontalPadding,
-                              CGRectGetMaxY(self.frontCardView.frame) + ChoosePersonButtonVerticalPadding,
-                              image.size.width,
-                              image.size.height);
-    [button setImage:image forState:UIControlStateNormal];
-    [button setTintColor:[UIColor colorWithRed:247.f/255.f
-                                         green:91.f/255.f
-                                          blue:37.f/255.f
-                                         alpha:1.f]];
-    [button addTarget:self
-               action:@selector(nopeFrontCardView)
-     forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button];
-}
-
-// Create and add the "like" button.
-- (void)constructLikedButton {
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    UIImage *image = [UIImage imageNamed:@"liked"];
-    button.frame = CGRectMake(CGRectGetMaxX(self.view.frame) - image.size.width - ChoosePersonButtonHorizontalPadding,
-                              CGRectGetMaxY(self.frontCardView.frame) + ChoosePersonButtonVerticalPadding,
-                              image.size.width,
-                              image.size.height);
-    [button setImage:image forState:UIControlStateNormal];
-    [button setTintColor:[UIColor colorWithRed:29.f/255.f
-                                         green:245.f/255.f
-                                          blue:106.f/255.f
-                                         alpha:1.f]];
-    [button addTarget:self
-               action:@selector(likeFrontCardView)
-     forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button];
-}
-
 
 #pragma mark Control Events
 
-// Programmatically "nopes" the front card view.
-- (void)nopeFrontCardView {
-    [self.frontCardView mdc_swipe:MDCSwipeDirectionLeft];
+- (IBAction)showFavorites:(id)sender
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UINavigationController *favoritesViewController = [storyboard instantiateViewControllerWithIdentifier:@"TWFavoritesNavigationController"];
+    
+    [self.navigationController presentViewController:favoritesViewController animated:YES completion:nil];
+
 }
 
-// Programmatically "likes" the front card view.
-- (void)likeFrontCardView {
+- (IBAction)tweetRead:(id)sender
+{
+    [UIView animateWithDuration:0.2
+                          delay:0.0
+                        options:UIViewAnimationOptionTransitionCrossDissolve
+                     animations:^{
+                         [self.frontCardView setHidden:YES];
+                         [self.frontCardView mdc_swipe:MDCSwipeDirectionRight];
+                     } completion:nil];
+}
+
+
+- (IBAction)retweetTweet:(id)sender
+{
+    [self.frontCardView mdc_swipe:MDCSwipeDirectionLeft];
+
+}
+
+- (IBAction)favoriteTweet:(id)sender
+{
     [self.frontCardView mdc_swipe:MDCSwipeDirectionRight];
+
 }
 
 @end

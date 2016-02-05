@@ -10,7 +10,7 @@
 
 @interface TWTweet : NSObject
 
-@property (nonatomic, strong) NSNumber *tweetID;
+@property (nonatomic, strong) NSString *tweetID;
 @property (nonatomic, strong) NSString *tweetAuthorScreenName;
 @property (nonatomic, strong) NSString *tweetAuthorHandler;
 @property (nonatomic, strong) NSDate *tweetCreatedAt;

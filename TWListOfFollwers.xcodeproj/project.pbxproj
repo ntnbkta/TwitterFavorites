@@ -24,6 +24,18 @@
 		760FE82B1C47D13C008F131F /* TWFollowingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 760FE82A1C47D13C008F131F /* TWFollowingTableViewCell.m */; };
 		761A76D81C4F851700007C35 /* TWFavoritesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 761A76D71C4F851700007C35 /* TWFavoritesTableViewController.m */; };
 		761A76DC1C4FA2EB00007C35 /* TWFavoritesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 761A76DB1C4FA2EB00007C35 /* TWFavoritesManager.m */; };
+		762E85671C62514200578CB7 /* FavoriteAccount+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 762E85641C62514200578CB7 /* FavoriteAccount+CoreDataProperties.m */; };
+		762E85681C62514200578CB7 /* FavoriteAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 762E85661C62514200578CB7 /* FavoriteAccount.m */; };
+		762E856D1C63361F00578CB7 /* cross.png in Resources */ = {isa = PBXBuildFile; fileRef = 762E856C1C63361F00578CB7 /* cross.png */; };
+		762E856F1C63535B00578CB7 /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 762E856E1C63535B00578CB7 /* heart.png */; };
+		762E85711C6353CE00578CB7 /* retweet.png in Resources */ = {isa = PBXBuildFile; fileRef = 762E85701C6353CE00578CB7 /* retweet.png */; };
+		762E85781C6367E200578CB7 /* cross2.png in Resources */ = {isa = PBXBuildFile; fileRef = 762E85771C6367E200578CB7 /* cross2.png */; };
+		762E857A1C63689700578CB7 /* cross3.png in Resources */ = {isa = PBXBuildFile; fileRef = 762E85791C63689700578CB7 /* cross3.png */; };
+		762E857C1C63693100578CB7 /* taskos.png in Resources */ = {isa = PBXBuildFile; fileRef = 762E857B1C63693100578CB7 /* taskos.png */; };
+		762E857E1C6369AC00578CB7 /* retweet2.png in Resources */ = {isa = PBXBuildFile; fileRef = 762E857D1C6369AC00578CB7 /* retweet2.png */; };
+		762E85801C636AB000578CB7 /* retweet_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 762E857F1C636AB000578CB7 /* retweet_small.png */; };
+		762E85821C636BEB00578CB7 /* heart_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 762E85811C636BEB00578CB7 /* heart_small.png */; };
+		762E85841C6377BD00578CB7 /* favorites.png in Resources */ = {isa = PBXBuildFile; fileRef = 762E85831C6377BD00578CB7 /* favorites.png */; };
 		7662C89C1C5A3CC800544150 /* TWTweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 7662C89B1C5A3CC800544150 /* TWTweet.m */; };
 		7662C89F1C5B3CB800544150 /* TWTweetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7662C89E1C5B3CB800544150 /* TWTweetView.m */; };
 		7662C8A21C5B3D8F00544150 /* TWImageLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7662C8A11C5B3D8F00544150 /* TWImageLabelView.m */; };
@@ -31,8 +43,6 @@
 		766348191C5135FE00E8F287 /* NSManagedObjectContext+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 766348161C5135FE00E8F287 /* NSManagedObjectContext+Extensions.m */; };
 		7663481A1C5135FE00E8F287 /* TTController.m in Sources */ = {isa = PBXBuildFile; fileRef = 766348181C5135FE00E8F287 /* TTController.m */; };
 		7663481E1C51372800E8F287 /* TTController+FavoriteAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 7663481D1C51372800E8F287 /* TTController+FavoriteAccount.m */; };
-		766348231C51F4B200E8F287 /* FavoriteAccount+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 766348201C51F4B200E8F287 /* FavoriteAccount+CoreDataProperties.m */; };
-		766348241C51F4B200E8F287 /* FavoriteAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 766348221C51F4B200E8F287 /* FavoriteAccount.m */; };
 		766348271C51FBC900E8F287 /* TWTweetCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 766348261C51FBC900E8F287 /* TWTweetCardViewController.m */; };
 		7684FC461C4E0D8100E3A1C3 /* TWResultsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7684FC451C4E0D8100E3A1C3 /* TWResultsTableViewController.m */; };
 		76CEEAF01C50A4B4004A6520 /* TWTwinderEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 76CEEAEF1C50A4B4004A6520 /* TWTwinderEngine.m */; };
@@ -71,6 +81,20 @@
 		761A76D71C4F851700007C35 /* TWFavoritesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWFavoritesTableViewController.m; sourceTree = "<group>"; };
 		761A76DA1C4FA2EB00007C35 /* TWFavoritesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWFavoritesManager.h; sourceTree = "<group>"; };
 		761A76DB1C4FA2EB00007C35 /* TWFavoritesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWFavoritesManager.m; sourceTree = "<group>"; };
+		762E85631C62514200578CB7 /* FavoriteAccount+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FavoriteAccount+CoreDataProperties.h"; sourceTree = "<group>"; };
+		762E85641C62514200578CB7 /* FavoriteAccount+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FavoriteAccount+CoreDataProperties.m"; sourceTree = "<group>"; };
+		762E85651C62514200578CB7 /* FavoriteAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoriteAccount.h; sourceTree = "<group>"; };
+		762E85661C62514200578CB7 /* FavoriteAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoriteAccount.m; sourceTree = "<group>"; };
+		762E856C1C63361F00578CB7 /* cross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cross.png; sourceTree = "<group>"; };
+		762E856E1C63535B00578CB7 /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
+		762E85701C6353CE00578CB7 /* retweet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retweet.png; sourceTree = "<group>"; };
+		762E85771C6367E200578CB7 /* cross2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cross2.png; sourceTree = "<group>"; };
+		762E85791C63689700578CB7 /* cross3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cross3.png; sourceTree = "<group>"; };
+		762E857B1C63693100578CB7 /* taskos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = taskos.png; sourceTree = "<group>"; };
+		762E857D1C6369AC00578CB7 /* retweet2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retweet2.png; sourceTree = "<group>"; };
+		762E857F1C636AB000578CB7 /* retweet_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retweet_small.png; sourceTree = "<group>"; };
+		762E85811C636BEB00578CB7 /* heart_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart_small.png; sourceTree = "<group>"; };
+		762E85831C6377BD00578CB7 /* favorites.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = favorites.png; sourceTree = "<group>"; };
 		7662C89A1C5A3CC800544150 /* TWTweet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWTweet.h; sourceTree = "<group>"; };
 		7662C89B1C5A3CC800544150 /* TWTweet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWTweet.m; sourceTree = "<group>"; };
 		7662C89D1C5B3CB800544150 /* TWTweetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWTweetView.h; sourceTree = "<group>"; };
@@ -83,10 +107,6 @@
 		766348171C5135FE00E8F287 /* TTController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TTController.h; sourceTree = "<group>"; };
 		766348181C5135FE00E8F287 /* TTController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTController.m; sourceTree = "<group>"; };
 		7663481D1C51372800E8F287 /* TTController+FavoriteAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "TTController+FavoriteAccount.m"; sourceTree = "<group>"; };
-		7663481F1C51F4B200E8F287 /* FavoriteAccount+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FavoriteAccount+CoreDataProperties.h"; sourceTree = "<group>"; };
-		766348201C51F4B200E8F287 /* FavoriteAccount+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FavoriteAccount+CoreDataProperties.m"; sourceTree = "<group>"; };
-		766348211C51F4B200E8F287 /* FavoriteAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoriteAccount.h; sourceTree = "<group>"; };
-		766348221C51F4B200E8F287 /* FavoriteAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoriteAccount.m; sourceTree = "<group>"; };
 		766348251C51FBC900E8F287 /* TWTweetCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWTweetCardViewController.h; sourceTree = "<group>"; };
 		766348261C51FBC900E8F287 /* TWTweetCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWTweetCardViewController.m; sourceTree = "<group>"; };
 		7684FC441C4E0D8100E3A1C3 /* TWResultsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWResultsTableViewController.h; sourceTree = "<group>"; };
@@ -158,10 +178,10 @@
 		760BFA001C50F1AC00E06366 /* TWCoreDataModel */ = {
 			isa = PBXGroup;
 			children = (
-				7663481F1C51F4B200E8F287 /* FavoriteAccount+CoreDataProperties.h */,
-				766348201C51F4B200E8F287 /* FavoriteAccount+CoreDataProperties.m */,
-				766348211C51F4B200E8F287 /* FavoriteAccount.h */,
-				766348221C51F4B200E8F287 /* FavoriteAccount.m */,
+				762E85631C62514200578CB7 /* FavoriteAccount+CoreDataProperties.h */,
+				762E85641C62514200578CB7 /* FavoriteAccount+CoreDataProperties.m */,
+				762E85651C62514200578CB7 /* FavoriteAccount.h */,
+				762E85661C62514200578CB7 /* FavoriteAccount.m */,
 				766348151C5135FE00E8F287 /* NSManagedObjectContext+Extensions.h */,
 				766348161C5135FE00E8F287 /* NSManagedObjectContext+Extensions.m */,
 				766348171C5135FE00E8F287 /* TTController.h */,
@@ -207,6 +227,7 @@
 		760FE8001C477891008F131F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				762E85691C6335D500578CB7 /* Images */,
 				760BF9F41C50F0F100E06366 /* TwinderFavorites.xcdatamodeld */,
 				760FE8031C477891008F131F /* AppDelegate.h */,
 				760FE8041C477891008F131F /* AppDelegate.m */,
@@ -237,6 +258,23 @@
 				76E728E91C60827A00B51422 /* TWTweetFactory.m */,
 			);
 			name = TWManagers;
+			sourceTree = "<group>";
+		};
+		762E85691C6335D500578CB7 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				762E85831C6377BD00578CB7 /* favorites.png */,
+				762E85811C636BEB00578CB7 /* heart_small.png */,
+				762E857F1C636AB000578CB7 /* retweet_small.png */,
+				762E857D1C6369AC00578CB7 /* retweet2.png */,
+				762E857B1C63693100578CB7 /* taskos.png */,
+				762E85771C6367E200578CB7 /* cross2.png */,
+				762E85791C63689700578CB7 /* cross3.png */,
+				762E856C1C63361F00578CB7 /* cross.png */,
+				762E85701C6353CE00578CB7 /* retweet.png */,
+				762E856E1C63535B00578CB7 /* heart.png */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 		7684FC3A1C4CC0A400E3A1C3 /* TWModel */ = {
@@ -320,11 +358,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				762E85821C636BEB00578CB7 /* heart_small.png in Resources */,
+				762E857A1C63689700578CB7 /* cross3.png in Resources */,
+				762E856D1C63361F00578CB7 /* cross.png in Resources */,
+				762E85781C6367E200578CB7 /* cross2.png in Resources */,
 				760FE8101C477891008F131F /* LaunchScreen.storyboard in Resources */,
 				760FE80D1C477891008F131F /* Assets.xcassets in Resources */,
+				762E857E1C6369AC00578CB7 /* retweet2.png in Resources */,
+				762E85841C6377BD00578CB7 /* favorites.png in Resources */,
+				762E857C1C63693100578CB7 /* taskos.png in Resources */,
 				760FE80B1C477891008F131F /* Main.storyboard in Resources */,
+				762E856F1C63535B00578CB7 /* heart.png in Resources */,
 				7662C8A41C5B5E1700544150 /* TWTweetView.xib in Resources */,
+				762E85711C6353CE00578CB7 /* retweet.png in Resources */,
 				76CEEAF21C50C17A004A6520 /* iphone5_ios6.jpg in Resources */,
+				762E85801C636AB000578CB7 /* retweet_small.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -390,14 +438,14 @@
 				760FE8081C477891008F131F /* TWFollowingsListViewController.m in Sources */,
 				7662C89C1C5A3CC800544150 /* TWTweet.m in Sources */,
 				760FE81D1C479D66008F131F /* TWAPIManager.m in Sources */,
-				766348231C51F4B200E8F287 /* FavoriteAccount+CoreDataProperties.m in Sources */,
-				766348241C51F4B200E8F287 /* FavoriteAccount.m in Sources */,
 				7662C89F1C5B3CB800544150 /* TWTweetView.m in Sources */,
 				7663481A1C5135FE00E8F287 /* TTController.m in Sources */,
 				761A76DC1C4FA2EB00007C35 /* TWFavoritesManager.m in Sources */,
 				760BF9F61C50F0F100E06366 /* TwinderFavorites.xcdatamodeld in Sources */,
 				760FE8281C47C245008F131F /* TWAccountManager.m in Sources */,
 				760FE8051C477891008F131F /* AppDelegate.m in Sources */,
+				762E85681C62514200578CB7 /* FavoriteAccount.m in Sources */,
+				762E85671C62514200578CB7 /* FavoriteAccount+CoreDataProperties.m in Sources */,
 				76CEEAF01C50A4B4004A6520 /* TWTwinderEngine.m in Sources */,
 				766348191C5135FE00E8F287 /* NSManagedObjectContext+Extensions.m in Sources */,
 				7663481E1C51372800E8F287 /* TTController+FavoriteAccount.m in Sources */,

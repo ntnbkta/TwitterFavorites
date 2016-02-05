@@ -24,6 +24,4 @@ typedef void(^ListOfFriendsCompletionBlock)(NSArray *followingsList, BOOL isFetc
 - (void)fetchNextSetOfFollowingsOfCurrentTwitterAccountWithCompletionBlock:(ListOfFriendsCompletionBlock)completionBlock;
 - (void)fetchTweetsOfFavoritesWithCompletionBlock:(void(^)(NSArray *tweetsList))completionBlock errorBlock:(void(^)(NSError *error))errorBlock;
 
-- (void)removeAccountsFromFavorites:(NSArray *)unfavoritedList;
-
 @end

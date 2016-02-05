@@ -111,14 +111,20 @@
 {
     NSArray *favoritesList = [self getUpdatedFavoritesHandlerList];
     
-    [self.tweetFactory fetchTweetsOfFavorites:favoritesList
-                             withSuccessBlock:^(NSArray *tweetsList) {
-                                 NSLog(@"*********** TWEETS FETCHED : %@ ********** ",tweetsList);
-                                 completionBlock(tweetsList);
-                             } failureBlock:^(NSError *error) {
-                                 NSLog(@"*********** TWEETS FETCHED ERROR : %@ ********** ",[error localizedDescription]);
-                                 errorBlock(error);
-                             }];
+    if ([favoritesList count] == 0) {
+        //No Favorites.
+        completionBlock(nil);
+    }else
+    {
+        [self.tweetFactory fetchTweetsOfFavorites:favoritesList
+                                 withSuccessBlock:^(NSArray *tweetsList) {
+                                     //                                 NSLog(@"*********** TWEETS FETCHED : %@ ********** ",tweetsList);
+                                     completionBlock(tweetsList);
+                                 } failureBlock:^(NSError *error) {
+                                     NSLog(@"*********** TWEETS FETCHED ERROR : %@ ********** ",[error localizedDescription]);
+                                     errorBlock(error);
+                                 }];
+    }
 }
 
 #pragma mark - Twitter Account Manager Methods
@@ -152,11 +158,6 @@
 
 #pragma mark - TWFavorite Manager Methods
 
-
-- (void)removeAccountsFromFavorites:(NSArray *)unfavoritedList
-{
-    [self.favoritesManager removeAccountsFromFavorites:unfavoritedList];
-}
 
 - (NSArray *)getUpdatedFavoritesHandlerList
 {

@@ -6,7 +6,14 @@
 target 'TWListOfFollwers' do
 
 pod 'SDWebImage', '~>3.7'
+
 pod "MDCSwipeToChoose"
+
+pod 'MMPulseView', :head
+
+platform :ios, '7.0'
+pod 'Toast', '~> 3.0'
+
 
 end
 

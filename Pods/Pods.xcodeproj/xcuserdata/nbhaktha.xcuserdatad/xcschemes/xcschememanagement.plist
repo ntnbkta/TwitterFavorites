@@ -9,12 +9,22 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>MMPulseView.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-TWListOfFollwers.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
 		<key>SDWebImage.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Toast.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -27,12 +37,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>45A8FC95884034259298FD1195FCD4AA</key>
+		<key>57B93DE55F5D17D0F4E905D1281A42CF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D4920F84945EABFC17C707E9867E7130</key>
+		<key>819390B9A65F87EC9229DC1FE86BE296</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>93AABAC28F09B220B59CF6E6ED0225EA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C134718E25EFF3CFCABB01E5A841752F</key>
 		<dict>
 			<key>primary</key>
 			<true/>

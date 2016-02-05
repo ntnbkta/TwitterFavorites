@@ -14,6 +14,7 @@
 #import "FavoriteAccount.h"
 
 #define kTWFavoritesListUpdated @"TWFavoritesListUpdated"
+#define kFavoritesSinceMaxIDUpdated @"FavoritesSinceMaxIDUpdated"
 
 @interface TWFavoritesManager ()
 
@@ -37,7 +38,8 @@
 
         _favoritesManagerWorkerContext = [[TWCoreDataManager globalManager] newWorkerManagedObjectContext];
         _favoritesManagerController = [[TTController alloc] initWithManagedObjectContext:self.favoritesManagerWorkerContext];
-
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(favoriteModelUpdated:) name:kFavoritesSinceMaxIDUpdated object:nil];
     }
     return self;
 }
@@ -52,18 +54,6 @@
     [self saveFavoriteAccountsInDatabase];
 }
 
-- (void)removeAccountsFromFavorites:(NSArray *)unfavoritedList;
-{
-    [unfavoritedList enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        FavoriteAccount *favoriteAccount = (FavoriteAccount *)obj;
-        [self.favoritesManagerController deleteFavoriteAccount:favoriteAccount];
-        [self.favoritesList removeObject:favoriteAccount];
-    }];
-    
-    //Send out UnfavoritedList
-    [[NSNotificationCenter defaultCenter] postNotificationName:kTWFavoritesListUpdated object:self userInfo:@{@"unfavoritedList":unfavoritedList}];
-
-}
 
 - (NSArray *)getFavoritesList
 {
@@ -85,6 +75,7 @@
 {
     [self.favoritesManagerController deleteFavoriteAccount:favorite];
     [self.favoritesList removeObject:favorite];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kTWFavoritesListUpdated object:self userInfo:@{@"unfavoritedList":[NSArray arrayWithObject:favorite]}];
 
 }
 
@@ -99,6 +90,12 @@
         }];
         
     });
+}
+
+
+- (void)favoriteModelUpdated:(NSNotification *)notif
+{
+    [self saveFavoriteAccountsInDatabase];
 }
 
 @end
