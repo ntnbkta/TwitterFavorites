@@ -8,7 +8,7 @@
         <!--Friends-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="TWFollowingsListViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -17,11 +17,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mr3-kK-nZa">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mr3-kK-nZa">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <view key="tableFooterView" tag="123" contentMode="scaleToFill" id="vFa-xm-1sU" userLabel="FooterView">
-                                    <rect key="frame" x="0.0" y="136" width="375" height="44"/>
+                                    <rect key="frame" x="0.0" y="142" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="E07-He-YKC">
@@ -32,25 +32,32 @@
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="TWUserCell" id="fWl-Us-53g" customClass="TableViewCell">
-                                        <rect key="frame" x="0.0" y="92" width="375" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="TWUserCell" rowHeight="50" id="fWl-Us-53g" customClass="TWFollowingTableViewCell">
+                                        <rect key="frame" x="0.0" y="92" width="375" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fWl-Us-53g" id="avI-gk-5FQ">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="49.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" tag="101" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lvo-er-hRN">
-                                                    <rect key="frame" x="10" y="1" width="40" height="40"/>
+                                                    <rect key="frame" x="10" y="9" width="30" height="30"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="102" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tdp-HC-i0y" userLabel="UserName">
-                                                    <rect key="frame" x="58" y="11" width="273" height="21"/>
+                                                    <rect key="frame" x="58" y="6" width="273" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="@NSOperation" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bH6-Ew-ZPv">
+                                                    <rect key="frame" x="58" y="25" width="273" height="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="handlerName" destination="bH6-Ew-ZPv" id="neZ-8T-1v6"/>
                                             <outlet property="userName" destination="tdp-HC-i0y" id="9RN-xN-6nz"/>
                                             <outlet property="userProfilePic" destination="lvo-er-hRN" id="PLq-w9-kl4"/>
                                         </connections>
@@ -65,7 +72,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Friends" id="m7D-dR-614">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="FoF-qW-5LS">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" systemItem="add" id="FoF-qW-5LS">
                             <connections>
                                 <action selector="addToFavorites:" destination="BYZ-38-t0r" id="lzw-E8-nQt"/>
                             </connections>
@@ -89,7 +96,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TWUserCell" id="4WY-X7-uvW" customClass="TableViewCell">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TWUserCell" id="4WY-X7-uvW" customClass="TWFollowingTableViewCell">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4WY-X7-uvW" id="pMH-Tn-w5A">
@@ -109,6 +116,69 @@
             </objects>
             <point key="canvasLocation" x="1661.5" y="368.5"/>
         </scene>
+        <!--Favorites-->
+        <scene sceneID="qCa-82-kgy">
+            <objects>
+                <tableViewController storyboardIdentifier="FavoritesTableViewController" id="ojh-U6-wfz" customClass="TWFavoritesTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="95j-Pc-hBh">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="TWUserCell" rowHeight="50" id="vJO-Ha-tJu" customClass="TWFollowingTableViewCell">
+                                <rect key="frame" x="0.0" y="92" width="600" height="50"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vJO-Ha-tJu" id="5pJ-Gs-A0H">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="49.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" tag="101" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j4X-UH-VLV">
+                                            <rect key="frame" x="10" y="9" width="30" height="30"/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="102" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t5W-qq-JWX" userLabel="UserName">
+                                            <rect key="frame" x="58" y="6" width="273" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="@NSOperation" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bI9-Iq-7AA">
+                                            <rect key="frame" x="58" y="25" width="273" height="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="handlerName" destination="bI9-Iq-7AA" id="hcn-8p-qdK"/>
+                                    <outlet property="userName" destination="t5W-qq-JWX" id="Lia-bg-nqW"/>
+                                    <outlet property="userProfilePic" destination="j4X-UH-VLV" id="kTl-Mu-74G"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="ojh-U6-wfz" id="5hW-rU-Ilc"/>
+                            <outlet property="delegate" destination="ojh-U6-wfz" id="zGD-dr-cTY"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Favorites" id="0gm-ja-LDU">
+                        <barButtonItem key="leftBarButtonItem" style="done" systemItem="done" id="TQ5-Rg-VZf">
+                            <connections>
+                                <action selector="done:" destination="ojh-U6-wfz" id="Q8O-F7-c6d"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="C4j-L1-DeP">
+                            <connections>
+                                <action selector="addMoreFavoritesToList:" destination="ojh-U6-wfz" id="Nds-kw-cLe"/>
+                                <segue destination="BYZ-38-t0r" kind="show" id="hhx-Nl-zKZ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oZO-ju-YzP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1686.5" y="1187.5"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="i5S-Tl-bfq">
             <objects>
@@ -120,12 +190,86 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="NP0-Xr-mGo"/>
+                        <segue destination="n9K-ea-Ni4" kind="relationship" relationship="rootViewController" id="KHM-th-LZf"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VlN-Vd-dyZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="454" y="368"/>
         </scene>
+        <!--Tweets-->
+        <scene sceneID="AXW-iG-tJE">
+            <objects>
+                <viewController id="n9K-ea-Ni4" customClass="TWTweetCardViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="WY3-2x-rEx"/>
+                        <viewControllerLayoutGuide type="bottom" id="nu5-Yu-Xse"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="KIs-8d-r4V">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qKo-Wm-adF">
+                                <rect key="frame" x="0.0" y="512" width="375" height="100"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cK6-7f-z2b" userLabel="heart">
+                                        <rect key="frame" x="224" y="19" width="60" height="60"/>
+                                        <state key="normal" title="Button" image="heart_small.png"/>
+                                        <connections>
+                                            <action selector="favoriteTweet:" destination="n9K-ea-Ni4" eventType="touchUpInside" id="uxI-Vg-3xF"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tLF-ZF-XCY" userLabel="retweet">
+                                        <rect key="frame" x="98" y="24" width="50" height="50"/>
+                                        <state key="normal" title="Button" image="retweet2.png"/>
+                                        <connections>
+                                            <action selector="retweetTweet:" destination="n9K-ea-Ni4" eventType="touchUpInside" id="Tny-IQ-bgL"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aN6-fg-AYl" userLabel="okDone">
+                                        <rect key="frame" x="145" y="7" width="85" height="85"/>
+                                        <state key="normal" title="Button" image="taskos.png"/>
+                                        <connections>
+                                            <action selector="tweetRead:" destination="n9K-ea-Ni4" eventType="touchUpInside" id="bWw-Bb-A7z"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Tweets" id="j9R-n4-vAS"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="optionsContainerView" destination="qKo-Wm-adF" id="NnP-eB-NeE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LWi-o2-YLn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="508.5" y="1169.5"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="ZKa-nC-Vzv">
+            <objects>
+                <navigationController storyboardIdentifier="TWFavoritesNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="EPh-4c-6Sm" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="LfK-rG-NzG">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="ojh-U6-wfz" kind="relationship" relationship="rootViewController" id="LsW-BO-u1x"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aRR-bL-aHW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1072" y="1187"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="heart_small.png" width="512" height="512"/>
+        <image name="retweet2.png" width="204" height="204"/>
+        <image name="taskos.png" width="256" height="256"/>
+    </resources>
 </document>

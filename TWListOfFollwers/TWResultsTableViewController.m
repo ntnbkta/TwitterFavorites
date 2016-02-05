@@ -7,8 +7,8 @@
 //
 
 #import "TWResultsTableViewController.h"
-#import "TableViewCell.h"
-#import "TWUserAccount.h"
+#import "TWFollowingTableViewCell.h"
+#import "TWTwitterAccount.h"
 
 #define CELL_REUSEIDENTIFIER @"TWUserCell"
 
@@ -44,12 +44,12 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    TableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CELL_REUSEIDENTIFIER];
+    TWFollowingTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CELL_REUSEIDENTIFIER];
     
     if (cell == nil) {
-        cell = [[TableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CELL_REUSEIDENTIFIER];
+        cell = [[TWFollowingTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CELL_REUSEIDENTIFIER];
     }
-    TWUserAccount *friend = [self.searchedResults objectAtIndex:indexPath.row];
+    TWTwitterAccount *friend = [self.searchedResults objectAtIndex:indexPath.row];
     [cell.textLabel setText:[friend username]];
     
     return cell;

@@ -1,12 +1,21 @@
 PODS:
-  - SDWebImage (3.7.4):
-    - SDWebImage/Core (= 3.7.4)
-  - SDWebImage/Core (3.7.4)
+  - MDCSwipeToChoose (0.2.3)
+  - MMPulseView (HEAD based on 1.0)
+  - SDWebImage (3.7.5):
+    - SDWebImage/Core (= 3.7.5)
+  - SDWebImage/Core (3.7.5)
+  - Toast (3.0)
 
 DEPENDENCIES:
+  - MDCSwipeToChoose
+  - MMPulseView (HEAD)
   - SDWebImage (~> 3.7)
+  - Toast (~> 3.0)
 
 SPEC CHECKSUMS:
-  SDWebImage: 247edd7dd80dd6124197b0d6a17846fe9d1df968
+  MDCSwipeToChoose: 56239d98b4558c66e7c3c9069482befd26092270
+  MMPulseView: 98a050647f83ff7f6dcaccf1c7be638ab01abe60
+  SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
+  Toast: 32c59229abfcf41850162b83bb9259dc84372473
 
 COCOAPODS: 0.39.0

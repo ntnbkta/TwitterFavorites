@@ -13,10 +13,20 @@
 
 @property (nonatomic, strong) NSString *nextCursor;
 @property (nonatomic, strong) ACAccount *currentUserAccount;
+@property (nonatomic, assign) BOOL shouldStopFetchingNextPage;
+
 
 @end
 
 @implementation TWAccountManager
+
+- (instancetype)init
+{
+    if (self == [super init]) {
+        //Initialization code
+    }
+    return self;
+}
 
 - (void)getFriendsOf:(ACAccount *)userAccount onCompletion:(void (^)(NSArray *friendsList,BOOL isFetching))completionBlock error:(void (^)(NSError *error))errorBlock
 {
@@ -40,7 +50,7 @@
 
 - (void)getFriendsForAccount:(ACAccount *)userAccount withNextCursor:(NSString *)nextCursor onCompletion:(void (^)(NSArray *friendsList,BOOL isFetching))completionBlock error:(void (^)(NSError *))errorBlock
 {
-    [[TWAPIManager sharedManager] fetchListOfFollowingForTwitterAccount:userAccount withNextCursor:nextCursor withCompletionBlock:^(id response, NSString *nextCursor, NSError *error) {
+    [self.apiManager fetchListOfFollowingForTwitterAccount:userAccount withNextCursor:nextCursor withCompletionBlock:^(id response, NSString *nextCursor, NSError *error) {
         
         if (!response && !nextCursor && !error) {
             //Stop fetching. End of Results
