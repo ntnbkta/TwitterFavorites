@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '7FA0FD8EEABE76C4FB360131'
+               BlueprintIdentifier = 'ACCDA096613824EDC166793E'
                BlueprintName = 'MMPulseView'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libMMPulseView.a'>
