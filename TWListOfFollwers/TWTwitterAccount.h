@@ -14,5 +14,6 @@
 @property (nonatomic, strong) NSString *username;
 @property (nonatomic, strong) NSString *handlerName;
 @property (nonatomic, strong) NSURL *profileImageURL;
+@property NSInteger sectionNumber;
 
 @end

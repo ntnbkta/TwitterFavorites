@@ -12,7 +12,7 @@
 
 - (NSString *)debugDescription
 {
-    return [NSString stringWithFormat:@"Username : %@",self.username];
+    return [NSString stringWithFormat:@"Username : %@ HandlerName : %@",self.username,self.handlerName];
 }
 
 @end

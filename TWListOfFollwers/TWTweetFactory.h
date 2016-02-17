@@ -13,6 +13,6 @@
 
 @property (nonatomic, strong) TWAPIManager *apiManager;
 
-- (void)fetchTweetsOfFavorites:(NSArray *)favorites withSuccessBlock:(void (^)(NSArray *tweetsList))successBlock  failureBlock:(void (^)(NSError *error))failureBlock;
+- (void)fetchTweetsOfFavorites:(NSArray *)favorites newFetch:(BOOL)newFetch withSuccessBlock:(void (^)(NSArray *tweetsList))successBlock  failureBlock:(void (^)(NSError *error))failureBlock;
 
 @end

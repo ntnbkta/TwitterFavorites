@@ -86,7 +86,7 @@
 
     NSString *screenName = [favorite screenName];
     NSMutableString *requestURLString = [[BASE_API stringByAppendingString:GET_TWEETS_API] mutableCopy];
-    [requestURLString appendFormat:@"?screen_name=%@",screenName];
+    [requestURLString appendFormat:@"?screen_name=%@&exclude_replies=1&count=25",screenName];
     
 //    if ([[favorite sinceID] integerValue] > 0) {
 //        [requestURLString appendFormat:@"&since_id=%@",[favorite sinceID]];
@@ -146,10 +146,10 @@
         
         if ([tweetsArray count] > 0) {
             //For since_id
-            TWTweet *recentTweet = (TWTweet *)[tweetsArray objectAtIndex:0];
-            [favorite setSinceID:[recentTweet tweetID]];
-            NSLog(@"************ SINCE_ID %@ *************** ",[favorite sinceID]);
-            
+//            TWTweet *recentTweet = (TWTweet *)[tweetsArray objectAtIndex:0];
+//            [favorite setSinceID:[recentTweet tweetID]];
+//            NSLog(@"************ SINCE_ID %@ *************** ",[favorite sinceID]);
+//            
             //for max_id
             TWTweet * oldestTweet = (TWTweet *)[tweetsArray lastObject];
             NSInteger numberID = [[oldestTweet tweetID] integerValue];
@@ -205,7 +205,7 @@
         newTweet.tweetFavorited = [[tweetDictionary objectForKey:@"favorited"] boolValue];
         newTweet.tweetRetweeted = [[tweetDictionary objectForKey:@"retweeted"] boolValue];
         newTweet.profileImageURL = [NSURL URLWithString:user[@"profile_image_url"]];
-        NSLog(@"************** Tweet : %@ *************", newTweet);
+        [newTweet setTweetAuthorID:user[@"id"]];
 
         [returnArray addObject:newTweet];
     }];

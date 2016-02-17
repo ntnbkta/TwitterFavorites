@@ -22,6 +22,7 @@
 @property (nonatomic, strong) ACAccount *twitterAccount;
 
 @property (nonatomic, strong) TWTweetFactory *tweetFactory;
+@property (nonatomic, strong) NSMutableArray *friendsList;
 @end
 
 @implementation TWTwinderEngine
@@ -107,7 +108,7 @@
 
 #pragma mark - APIManager Methods
 
-- (void)fetchTweetsOfFavoritesWithCompletionBlock:(void(^)(NSArray *tweetsList))completionBlock errorBlock:(void(^)(NSError *error))errorBlock
+- (void)fetchTweetsOfFavoritesWithNewFetch:(BOOL)newFetch completionBlock:(void(^)(NSArray *tweetsList))completionBlock errorBlock:(void(^)(NSError *error))errorBlock
 {
     NSArray *favoritesList = [self getUpdatedFavoritesHandlerList];
     
@@ -117,8 +118,8 @@
     }else
     {
         [self.tweetFactory fetchTweetsOfFavorites:favoritesList
+                                         newFetch:newFetch
                                  withSuccessBlock:^(NSArray *tweetsList) {
-                                     //                                 NSLog(@"*********** TWEETS FETCHED : %@ ********** ",tweetsList);
                                      completionBlock(tweetsList);
                                  } failureBlock:^(NSError *error) {
                                      NSLog(@"*********** TWEETS FETCHED ERROR : %@ ********** ",[error localizedDescription]);
@@ -129,13 +130,23 @@
 
 #pragma mark - Twitter Account Manager Methods
 
+- (NSArray *)getFriendsList
+{
+    return self.friendsList;
+}
+
 - (void)fetchFollowingsOfCurrentTwitterAccountWithCompletionBlock:(ListOfFriendsCompletionBlock)completionBlock
 {
     if (self.twitterAccount)
     {
         [self.accountManager getFriendsOf:self.twitterAccount onCompletion:^(NSArray *friendsList, BOOL isFetching) {
-            completionBlock(friendsList,isFetching,nil);
+            if (!_friendsList) {
+                _friendsList = [NSMutableArray new];
+            }
+            self.friendsList = [friendsList mutableCopy];
+            completionBlock(self.friendsList,isFetching,nil);
         } error:^(NSError *error) {
+            self.friendsList = nil;
             completionBlock(nil,NO,error);
         }];
     }
@@ -157,7 +168,6 @@
 
 
 #pragma mark - TWFavorite Manager Methods
-
 
 - (NSArray *)getUpdatedFavoritesHandlerList
 {

@@ -9,6 +9,7 @@
 #import "TWTweetCardViewController.h"
 #import "TWFavoritesTableViewController.h"
 #import "TWTwinderEngine.h"
+#import "TWFavoritesManager.h"
 #import "TWTweet.h"
 #import <MDCSwipeToChoose/MDCSwipeToChoose.h>
 #import "MMPulseView.h"
@@ -24,6 +25,8 @@
 @property (nonatomic, strong) MMPulseView *pulseView;
 @property (weak, nonatomic) IBOutlet UIView *optionsContainerView;
 
+@property (nonatomic, assign) BOOL newSession;
+
 @end
 
 @implementation TWTweetCardViewController
@@ -38,20 +41,20 @@
     self.twinderEngine = [TWTwinderEngine sharedManager];
     
     [self setUpBarButtonItem];
-    [self setUpPulseLoadingView];
+    [self setUpPulseLoadingView:nil];
+    self.newSession = YES;
     [self fetchTweetsOfFavorites:nil];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(fetchTweetsOfFavorites:) name:kTWFavoritesListUpdated object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setUpPulseLoadingView:) name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self setUpBarButtonItem];
-
-    [self.pulseView startAnimation];
+    [self setUpPulseLoadingView:nil];
 }
-
 
 - (void)setUpBarButtonItem
 {
@@ -70,7 +73,7 @@
     [self.navigationItem setRightBarButtonItem:aBarButtonItem];
 }
 
-- (void)setUpPulseLoadingView
+- (void)setUpPulseLoadingView:(NSNotification *)notif
 {
     CGRect screenRect = [UIScreen mainScreen].bounds;
     
@@ -100,19 +103,21 @@
         _pulseView.count = 6;
         _pulseView.lineWidth = 2.0f;
     }
+    [self.pulseView startAnimation];
 }
 
 - (void)fetchTweetsOfFavorites:(NSNotification *)notif
 {
     [self.optionsContainerView setHidden:YES];
     [self.pulseView startAnimation];
-    [self.twinderEngine fetchTweetsOfFavoritesWithCompletionBlock:^(NSArray *tweetsList)
+    [self.twinderEngine fetchTweetsOfFavoritesWithNewFetch:self.newSession completionBlock:^(NSArray *tweetsList)
      {
          if (!tweetsList) {
              [self.view makeToast:@"Add Favorites to Lists."];
              return ;
          }
          if (self.tweetsArray) {
+             self.newSession = NO;
              [self.tweetsArray addObjectsFromArray:tweetsList];
          }
          // Display the first ChoosePersonView in front. Users can swipe to indicate
@@ -152,8 +157,12 @@
     // MDCSwipeToChooseView shows "NOPE" on swipes to the left,
     // and "LIKED" on swipes to the right.
     
+    TWTweetView *swipedView = (TWTweetView *)view;
+    [self.twinderEngine.favoritesManager lastReadTweet:swipedView.tweet];
+    
     if ([self.tweetsArray count]==0 && !self.backCardView) {
         [self.optionsContainerView setHidden:YES];
+        self.newSession = NO;
         [self fetchTweetsOfFavorites:nil];
     }
     if (direction == MDCSwipeDirectionLeft) {
@@ -200,8 +209,8 @@
     // a delegate, and provide a custom callback that moves the back card view
     // based on how far the user has panned the front card view.
     MDCSwipeToChooseViewOptions *options = [MDCSwipeToChooseViewOptions new];
-    options.likedText = @"Favorited";
-    options.nopeText = @"Retweeted";
+    options.likedText = @"Favorite";
+    options.nopeText = @"Retweet";
     options.delegate = self;
     options.threshold = 160.f;
     options.onPan = ^(MDCPanState *state){
@@ -262,6 +271,7 @@
                      animations:^{
                          [self.frontCardView setHidden:YES];
                          [self.frontCardView mdc_swipe:MDCSwipeDirectionRight];
+                        
                      } completion:nil];
 }
 

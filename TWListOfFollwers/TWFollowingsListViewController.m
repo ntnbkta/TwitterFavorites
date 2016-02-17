@@ -15,7 +15,7 @@
 #import "TWFavoritesManager.h"
 
 #import <SDWebImage/UIImageView+WebCache.h>
-
+#import "MMPulseView.h"
 #import "TWTwinderEngine.h"
 
 #define CELL_REUSEIDENTIFIER @"TWUserCell"
@@ -27,11 +27,14 @@
 @property (strong, nonatomic) UISearchController *searchController;
 
 @property (nonatomic, strong) NSMutableArray *followingsList;
+@property (nonatomic, strong) NSMutableArray *collatedFollowings;
 @property (nonatomic, strong) NSMutableArray *favoritesList;
 @property (nonatomic, strong) TWResultsTableViewController *resultsTVController;
 
 @property (nonatomic, strong) TWTwinderEngine *twinderEngine;
 @property (nonatomic, assign) BOOL shouldStopFetchingNextPage;
+
+@property (nonatomic, strong) MMPulseView *pulseView;
 
 
 @end
@@ -66,83 +69,139 @@
     if (!_favoritesList) {
         _favoritesList = [NSMutableArray new];
     }
-        
-    [self loadFollowingsList];
-}
-
-- (void)loadFollowingsList
-{
-    self.twinderEngine = [TWTwinderEngine sharedManager];
-    [self fetchFollowingsOfCurrentTwitterAccount];
-}
-
-- (void)fetchFollowingsOfCurrentTwitterAccount
-{
-    __weak typeof(self) weakSelf = self;
     
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    [[TWTwinderEngine sharedManager] fetchFollowingsOfCurrentTwitterAccountWithCompletionBlock:^(NSArray *followingsList, BOOL isFetching, NSError *error)
-     {
-         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-         if (error) {
-             NSLog(@"****** ERROR FETCHING FOLLOWINGS : %@",[error localizedDescription]);
-             return;
-         }
-         
-         if (isFetching)
-         {
-             _shouldStopFetchingNextPage = NO;
-             NSLog(@"****** FriendsList Count = %ld", followingsList.count);
-             self.followingsList = [followingsList mutableCopy];
-             dispatch_async(dispatch_get_main_queue(), ^{
-                 [weakSelf.friendsTableView setHidden:NO];
-                 [weakSelf.friendsTableView reloadData];
-             });
-         }
-         else
-         {
-             _shouldStopFetchingNextPage = YES;
-             [[self.friendsTableView footerViewForSection:1] setHidden:YES];
-         }
-         
-     }];
-
+    self.twinderEngine = [TWTwinderEngine sharedManager];
+    self.followingsList = [[self.twinderEngine getFriendsList] mutableCopy];
+    if (!self.followingsList) {
+        [self fetchFollowingsOfCurrentTwitterAccount];
+    }
+    else
+    {
+        [self.friendsTableView setHidden:NO];
+        [self collateFollowingListAlphabetically];
+        [[self.friendsTableView viewWithTag:123] setHidden:YES];
+        [self.friendsTableView reloadData];
+    }
 }
-
-- (void)loadNextFriendsList
-{
-    __weak typeof(self) weakSelf = self;
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    [[TWTwinderEngine sharedManager] fetchNextSetOfFollowingsOfCurrentTwitterAccountWithCompletionBlock:^(NSArray *followingsList, BOOL isFetching, NSError *error) {
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-        if (error) {
-            NSLog(@"********* ERROR FETCHING NEXT SET OF FOLLOWINGS LIST ********");
-            return ;
-        }
-        
-        if (isFetching)
-        {
-            _shouldStopFetchingNextPage = NO;
-            NSLog(@"****** FriendsList Count = %ld", followingsList.count);
-            weakSelf.followingsList = [followingsList mutableCopy];
-            [weakSelf.friendsTableView reloadData];
-        }
-        else
-        {
-            _shouldStopFetchingNextPage = YES;
-            [[weakSelf.friendsTableView viewWithTag:123] setHidden:YES];
-        }
-        
-    }];
-}
-
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self.navigationItem.rightBarButtonItem setEnabled:NO];
-
+    if (!self.followingsList) {
+        [self setUpPulseLoadingView];
+    }
+    
 }
+
+- (void)fetchFollowingsOfCurrentTwitterAccount
+{
+    __weak typeof(self) weakSelf = self;
+
+    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+    [self.twinderEngine fetchFollowingsOfCurrentTwitterAccountWithCompletionBlock:^(NSArray *followingsList, BOOL isFetching, NSError *error)
+     {
+         if (error) {
+             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+             [self.pulseView stopAnimation];
+             [self.pulseView removeFromSuperview];
+             
+             NSLog(@"****** ERROR FETCHING FOLLOWINGS : %@",[error localizedDescription]);
+             return;
+         }
+         
+         self.followingsList = [followingsList mutableCopy];
+         NSLog(@"****** FriendsList Count = %ld", followingsList.count);
+         if (isFetching)
+         {
+             _shouldStopFetchingNextPage = NO;
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 [weakSelf loadNextFriendsList];
+             });
+         }
+         else
+         {
+             _shouldStopFetchingNextPage = YES;
+             [weakSelf collateFollowingListAlphabetically];
+             [weakSelf.friendsTableView reloadData];
+             [[self.friendsTableView footerViewForSection:1] setHidden:YES];
+         }
+         
+     }];
+}
+
+- (void)loadNextFriendsList
+{
+    __weak typeof(self) weakSelf = self;
+    [[TWTwinderEngine sharedManager] fetchNextSetOfFollowingsOfCurrentTwitterAccountWithCompletionBlock:^(NSArray *followingsList, BOOL isFetching, NSError *error) {
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+        [self.pulseView stopAnimation];
+        [self.pulseView removeFromSuperview];
+        
+        if (error) {
+            NSLog(@"********* ERROR FETCHING NEXT SET OF FOLLOWINGS LIST ********");
+            return ;
+        }
+        
+        weakSelf.followingsList = [followingsList mutableCopy];
+        NSLog(@"****** FriendsList Count = %ld", followingsList.count);
+
+        NSArray *sortedArray;
+        sortedArray = [weakSelf.followingsList sortedArrayUsingComparator:^NSComparisonResult(id a, id b) {
+            NSString *first = [(TWTwitterAccount *)a username];
+            NSString *second = [(TWTwitterAccount *)b username];
+            return [first compare:second];
+        }];
+        weakSelf.followingsList = [sortedArray mutableCopy];
+        [weakSelf.friendsTableView setHidden:NO];
+
+        if (isFetching)
+        {
+            _shouldStopFetchingNextPage = NO;
+            [weakSelf loadNextFriendsList];
+        }
+        else
+        {
+            _shouldStopFetchingNextPage = YES;
+            [weakSelf collateFollowingListAlphabetically];
+            [weakSelf.friendsTableView reloadData];
+            [[weakSelf.friendsTableView viewWithTag:123] setHidden:YES];
+        }
+    }];
+}
+
+- (void)collateFollowingListAlphabetically
+{
+    UILocalizedIndexedCollation *theCollation = [UILocalizedIndexedCollation currentCollation];
+
+    if(!_collatedFollowings)
+        _collatedFollowings = [NSMutableArray new];
+    // (1)
+    for (TWTwitterAccount *account in self.followingsList) {
+        NSInteger sect = [theCollation sectionForObject:account collationStringSelector:@selector(username)];
+        account.sectionNumber = sect;
+    }
+    // (2)
+    NSInteger highSection = [[theCollation sectionTitles] count];
+    NSMutableArray *sectionArrays = [NSMutableArray arrayWithCapacity:highSection];
+    for (int i = 0; i < highSection; i++) {
+        NSMutableArray *sectionArray = [NSMutableArray arrayWithCapacity:1];
+        [sectionArrays addObject:sectionArray];
+    }
+    // (3)
+    for (TWTwitterAccount *account in self.followingsList) {
+        [(NSMutableArray *)[sectionArrays objectAtIndex:account.sectionNumber] addObject:account];
+    }
+    // (4)
+    for (NSMutableArray *sectionArray in sectionArrays) {
+        NSArray *sortedSection = [theCollation sortedArrayFromArray:sectionArray
+                                            collationStringSelector:@selector(username)];
+        [self.collatedFollowings addObject:sortedSection];
+    }
+    NSLog(@"********* COLLATED : %@ *********",self.collatedFollowings);
+}
+
+
 - (void)handleUnfavoritedList:(NSNotification *)notif
 {
     NSDictionary *userInfo = [notif userInfo];
@@ -155,6 +214,39 @@
     [self.friendsTableView reloadData];
 }
 
+- (void)setUpPulseLoadingView
+{
+    CGRect screenRect = [UIScreen mainScreen].bounds;
+    
+    if(!_pulseView)
+    {
+        _pulseView = [[MMPulseView alloc] init];
+        _pulseView.frame = CGRectMake(CGRectGetWidth(screenRect)/1,
+                                      CGRectGetHeight(screenRect)/2*0,
+                                      CGRectGetWidth(screenRect)/1,
+                                      CGRectGetHeight(screenRect)/1);
+        
+        _pulseView.center = self.view.center;
+        [self.view addSubview:_pulseView];
+        
+        _pulseView.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+        
+        _pulseView.colors = @[(__bridge id)[UIColor colorWithRed:0.996 green:0.647 blue:0.008 alpha:1].CGColor,(__bridge id)[UIColor colorWithRed:1 green:0.31 blue:0.349 alpha:1].CGColor,(__bridge id)[UIColor colorWithRed:41.0/255.0 green:161.0/255.0 blue:236.0/255.0 alpha:1.0].CGColor];
+        
+        CGFloat posY = (CGRectGetHeight(screenRect)-320)/2/CGRectGetHeight(screenRect);
+        _pulseView.startPoint = CGPointMake(0.5, posY);
+        _pulseView.endPoint = CGPointMake(0.5, 1.0f - posY);
+        
+        _pulseView.minRadius = 40;
+        _pulseView.maxRadius = 150;
+        
+        _pulseView.duration = 4;
+        _pulseView.count = 6;
+        _pulseView.lineWidth = 2.0f;
+    }
+    [self.pulseView startAnimation];
+}
+
 
 #pragma mark - IBAction Methods
 
@@ -164,11 +256,13 @@
 
     [selectedIndexPaths enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSIndexPath *indexPath = (NSIndexPath *)obj;
-        [self.favoritesList addObject:[self.followingsList objectAtIndex:indexPath.row]];
+        [self.favoritesList addObject:[[self.collatedFollowings objectAtIndex:indexPath.section] objectAtIndex:indexPath.row]];
     }];
 
     [self.twinderEngine.favoritesManager addToFavorites:self.favoritesList];
     [self.followingsList removeObjectsInArray:self.favoritesList];
+    [self.collatedFollowings removeAllObjects];
+    [self collateFollowingListAlphabetically];
     [self.favoritesList removeAllObjects];
     
     [self.friendsTableView deleteRowsAtIndexPaths:selectedIndexPaths withRowAnimation:UITableViewRowAnimationTop];
@@ -188,9 +282,14 @@
 
 #pragma mark - UITableViewDataSource Methods
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return [self.collatedFollowings count];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.followingsList count];
+    return [[self.collatedFollowings objectAtIndex:section] count];
 }
 
 
@@ -198,7 +297,7 @@
 {
     TWFollowingTableViewCell *cell = (TWFollowingTableViewCell *)[tableView dequeueReusableCellWithIdentifier:CELL_REUSEIDENTIFIER forIndexPath:indexPath];
         
-    TWTwitterAccount *friend = [self.followingsList objectAtIndex:indexPath.row];
+    TWTwitterAccount *friend = [[self.collatedFollowings objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     [cell.userName setText:[friend username]];
     [cell.handlerName setText:[friend handlerName]];
     [cell.userProfilePic sd_setImageWithURL:friend.profileImageURL placeholderImage:[UIImage imageNamed:@"placeholderImage"]];
@@ -209,10 +308,10 @@
     else
         [cell setAccessoryType:UITableViewCellAccessoryNone];
 
-    if (indexPath.row >= self.followingsList.count-1 && !_shouldStopFetchingNextPage) {
-        //Get next setOfFriends
-        [self loadNextFriendsList];
-    }
+//    if (indexPath.row >= self.followingsList.count-1 && !_shouldStopFetchingNextPage) {
+//        //Get next setOfFriends
+//        [self loadNextFriendsList];
+//    }
     
     return cell;
 }
@@ -240,6 +339,42 @@
 
 }
 
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
+{
+    return [[UILocalizedIndexedCollation currentCollation] sectionIndexTitles];
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView* headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 22)];
+    
+    // 2. Set a custom background color and a border
+    headerView.backgroundColor = [UIColor whiteColor];
+    headerView.layer.borderColor = [UIColor whiteColor].CGColor;
+    headerView.layer.borderWidth = 1.0;
+    
+    // 3. Add a label
+    UILabel* headerLabel = [[UILabel alloc] init];
+    headerLabel.frame = CGRectMake(5, 2, tableView.frame.size.width - 5, 18);
+    headerLabel.backgroundColor = [UIColor clearColor];
+    headerLabel.textColor = TW_BACKGROUND_COLOR;
+    headerLabel.font = [UIFont boldSystemFontOfSize:16.0];
+    headerLabel.text = ([[self.collatedFollowings objectAtIndex:section] count] > 0)?[[[UILocalizedIndexedCollation currentCollation] sectionTitles] objectAtIndex:section]:nil;
+    headerLabel.textAlignment = NSTextAlignmentLeft;
+    
+    // 4. Add the label to the header view
+    [headerView addSubview:headerLabel];
+    
+    // 5. Finally return
+    return headerView;
+
+}
+
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
+{
+    return [[UILocalizedIndexedCollation currentCollation] sectionForSectionIndexTitleAtIndex:index];
+}
+
 #pragma mark - UISearchResultsUpdating Methods
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController
@@ -249,12 +384,19 @@
     [self.friendsTableView reloadData];
 }
 
-
 - (void)searchForText:(NSString *)searchString scope:(NSString *)scope
 {
-    //Call the Twitter Search API
+    
+    // Search API to Twitter, we have to use the API cos we wont be having all the followings list updated because of pagination
     
     self.resultsTVController = (TWResultsTableViewController *)self.searchController.searchResultsController;
+
+    NSPredicate *searchPredicate1 = [NSPredicate predicateWithFormat:@"username CONTAINS[cd] %@",searchString];
+    NSPredicate *searchPredicate2 = [NSPredicate predicateWithFormat:@"handlerName CONTAINS[cd] %@",searchString];
+
+    NSCompoundPredicate *searchPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[searchPredicate1,searchPredicate2]];
+    NSArray *searchedArray = [self.followingsList filteredArrayUsingPredicate:searchPredicate];
+    [self.resultsTVController setSearchedResults:searchedArray];
     [self.resultsTVController.tableView reloadData];
 }
 @end

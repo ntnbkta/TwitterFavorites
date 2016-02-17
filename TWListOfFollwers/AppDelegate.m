@@ -7,7 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import "TWCoreDataManager.h"
+#import "TWTwinderEngine.h"
+#import "TWFavoritesManager.h"
 
 @interface AppDelegate ()
 
@@ -32,6 +33,10 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    //Save lastReadTweetID in each FavoriteAccount
+    TWTwinderEngine *twinderEngine = [TWTwinderEngine sharedManager];
+    [twinderEngine.favoritesManager saveLastReadTweetIDToFavoriteAccount];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {

@@ -21,4 +21,5 @@
 @property (nonatomic, assign) BOOL tweetRetweeted;
 @property (nonatomic, assign) BOOL tweetFavorited;
 
+@property (nonatomic, strong) NSNumber *tweetAuthorID;
 @end

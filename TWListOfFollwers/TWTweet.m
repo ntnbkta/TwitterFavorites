@@ -12,6 +12,7 @@
 
 - (NSString *)description
 {
-    return  [NSString stringWithFormat:@"ID: %@,\n Author : %@\n Text: %@,\n Favorite Count : %@,\n Retweet Count : %@,\n Favorited : %d,\n Retweeted : %d\n, CreatedAt : %@", self.tweetID,self.tweetAuthorHandler, self.tweetText,self.tweetFavoriteCount,self.tweetRetweetCount,self.tweetFavorited,self.tweetRetweeted, self.tweetCreatedAt];
+    return  [NSString stringWithFormat:@"ID: %@,\n Author : %@\n Text: %@,\n Favorite Count : %@,\n Retweet Count : %@,\n Favorited : %d,\n Retweeted : %d\n, CreatedAt : %@,\n AuthorID : %@", self.tweetID,self.tweetAuthorHandler, self.tweetText,self.tweetFavoriteCount,self.tweetRetweetCount,self.tweetFavorited,self.tweetRetweeted, self.tweetCreatedAt, self.tweetAuthorID];
 }
+
 @end

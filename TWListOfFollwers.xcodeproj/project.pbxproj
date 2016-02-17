@@ -24,8 +24,6 @@
 		760FE82B1C47D13C008F131F /* TWFollowingTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 760FE82A1C47D13C008F131F /* TWFollowingTableViewCell.m */; };
 		761A76D81C4F851700007C35 /* TWFavoritesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 761A76D71C4F851700007C35 /* TWFavoritesTableViewController.m */; };
 		761A76DC1C4FA2EB00007C35 /* TWFavoritesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 761A76DB1C4FA2EB00007C35 /* TWFavoritesManager.m */; };
-		762E85671C62514200578CB7 /* FavoriteAccount+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 762E85641C62514200578CB7 /* FavoriteAccount+CoreDataProperties.m */; };
-		762E85681C62514200578CB7 /* FavoriteAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 762E85661C62514200578CB7 /* FavoriteAccount.m */; };
 		762E856D1C63361F00578CB7 /* cross.png in Resources */ = {isa = PBXBuildFile; fileRef = 762E856C1C63361F00578CB7 /* cross.png */; };
 		762E856F1C63535B00578CB7 /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 762E856E1C63535B00578CB7 /* heart.png */; };
 		762E85711C6353CE00578CB7 /* retweet.png in Resources */ = {isa = PBXBuildFile; fileRef = 762E85701C6353CE00578CB7 /* retweet.png */; };
@@ -36,6 +34,8 @@
 		762E85801C636AB000578CB7 /* retweet_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 762E857F1C636AB000578CB7 /* retweet_small.png */; };
 		762E85821C636BEB00578CB7 /* heart_small.png in Resources */ = {isa = PBXBuildFile; fileRef = 762E85811C636BEB00578CB7 /* heart_small.png */; };
 		762E85841C6377BD00578CB7 /* favorites.png in Resources */ = {isa = PBXBuildFile; fileRef = 762E85831C6377BD00578CB7 /* favorites.png */; };
+		762E85C21C64881B00578CB7 /* FavoriteAccount+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 762E85BF1C64881B00578CB7 /* FavoriteAccount+CoreDataProperties.m */; };
+		762E85C31C64881B00578CB7 /* FavoriteAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 762E85C11C64881B00578CB7 /* FavoriteAccount.m */; };
 		7662C89C1C5A3CC800544150 /* TWTweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 7662C89B1C5A3CC800544150 /* TWTweet.m */; };
 		7662C89F1C5B3CB800544150 /* TWTweetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7662C89E1C5B3CB800544150 /* TWTweetView.m */; };
 		7662C8A21C5B3D8F00544150 /* TWImageLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7662C8A11C5B3D8F00544150 /* TWImageLabelView.m */; };
@@ -81,10 +81,6 @@
 		761A76D71C4F851700007C35 /* TWFavoritesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWFavoritesTableViewController.m; sourceTree = "<group>"; };
 		761A76DA1C4FA2EB00007C35 /* TWFavoritesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWFavoritesManager.h; sourceTree = "<group>"; };
 		761A76DB1C4FA2EB00007C35 /* TWFavoritesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWFavoritesManager.m; sourceTree = "<group>"; };
-		762E85631C62514200578CB7 /* FavoriteAccount+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FavoriteAccount+CoreDataProperties.h"; sourceTree = "<group>"; };
-		762E85641C62514200578CB7 /* FavoriteAccount+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FavoriteAccount+CoreDataProperties.m"; sourceTree = "<group>"; };
-		762E85651C62514200578CB7 /* FavoriteAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoriteAccount.h; sourceTree = "<group>"; };
-		762E85661C62514200578CB7 /* FavoriteAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoriteAccount.m; sourceTree = "<group>"; };
 		762E856C1C63361F00578CB7 /* cross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cross.png; sourceTree = "<group>"; };
 		762E856E1C63535B00578CB7 /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
 		762E85701C6353CE00578CB7 /* retweet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retweet.png; sourceTree = "<group>"; };
@@ -95,6 +91,10 @@
 		762E857F1C636AB000578CB7 /* retweet_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = retweet_small.png; sourceTree = "<group>"; };
 		762E85811C636BEB00578CB7 /* heart_small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart_small.png; sourceTree = "<group>"; };
 		762E85831C6377BD00578CB7 /* favorites.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = favorites.png; sourceTree = "<group>"; };
+		762E85BE1C64881B00578CB7 /* FavoriteAccount+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FavoriteAccount+CoreDataProperties.h"; sourceTree = "<group>"; };
+		762E85BF1C64881B00578CB7 /* FavoriteAccount+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "FavoriteAccount+CoreDataProperties.m"; sourceTree = "<group>"; };
+		762E85C01C64881B00578CB7 /* FavoriteAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoriteAccount.h; sourceTree = "<group>"; };
+		762E85C11C64881B00578CB7 /* FavoriteAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoriteAccount.m; sourceTree = "<group>"; };
 		7662C89A1C5A3CC800544150 /* TWTweet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWTweet.h; sourceTree = "<group>"; };
 		7662C89B1C5A3CC800544150 /* TWTweet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TWTweet.m; sourceTree = "<group>"; };
 		7662C89D1C5B3CB800544150 /* TWTweetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TWTweetView.h; sourceTree = "<group>"; };
@@ -178,10 +178,10 @@
 		760BFA001C50F1AC00E06366 /* TWCoreDataModel */ = {
 			isa = PBXGroup;
 			children = (
-				762E85631C62514200578CB7 /* FavoriteAccount+CoreDataProperties.h */,
-				762E85641C62514200578CB7 /* FavoriteAccount+CoreDataProperties.m */,
-				762E85651C62514200578CB7 /* FavoriteAccount.h */,
-				762E85661C62514200578CB7 /* FavoriteAccount.m */,
+				762E85BE1C64881B00578CB7 /* FavoriteAccount+CoreDataProperties.h */,
+				762E85BF1C64881B00578CB7 /* FavoriteAccount+CoreDataProperties.m */,
+				762E85C01C64881B00578CB7 /* FavoriteAccount.h */,
+				762E85C11C64881B00578CB7 /* FavoriteAccount.m */,
 				766348151C5135FE00E8F287 /* NSManagedObjectContext+Extensions.h */,
 				766348161C5135FE00E8F287 /* NSManagedObjectContext+Extensions.m */,
 				766348171C5135FE00E8F287 /* TTController.h */,
@@ -444,8 +444,8 @@
 				760BF9F61C50F0F100E06366 /* TwinderFavorites.xcdatamodeld in Sources */,
 				760FE8281C47C245008F131F /* TWAccountManager.m in Sources */,
 				760FE8051C477891008F131F /* AppDelegate.m in Sources */,
-				762E85681C62514200578CB7 /* FavoriteAccount.m in Sources */,
-				762E85671C62514200578CB7 /* FavoriteAccount+CoreDataProperties.m in Sources */,
+				762E85C31C64881B00578CB7 /* FavoriteAccount.m in Sources */,
+				762E85C21C64881B00578CB7 /* FavoriteAccount+CoreDataProperties.m in Sources */,
 				76CEEAF01C50A4B4004A6520 /* TWTwinderEngine.m in Sources */,
 				766348191C5135FE00E8F287 /* NSManagedObjectContext+Extensions.m in Sources */,
 				7663481E1C51372800E8F287 /* TTController+FavoriteAccount.m in Sources */,

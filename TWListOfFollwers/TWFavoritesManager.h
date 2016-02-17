@@ -8,12 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
-@class FavoriteAccount;
+@class FavoriteAccount,TWTweet;
 @interface TWFavoritesManager : NSObject
 
 - (NSArray *)getFavoritesList;
 - (void)addToFavorites:(NSArray *)favList;
 - (void)deleteFavoriteAccount:(FavoriteAccount *)favorite;
 - (void)saveFavoriteAccountsInDatabase;
+- (void)lastReadTweet:(TWTweet *)readTweet;
+- (void)saveLastReadTweetIDToFavoriteAccount;
 
 @end

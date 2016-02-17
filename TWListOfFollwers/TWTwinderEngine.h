@@ -20,8 +20,9 @@ typedef void(^ListOfFriendsCompletionBlock)(NSArray *followingsList, BOOL isFetc
 
 
 + (TWTwinderEngine *)sharedManager;
+- (NSArray *)getFriendsList;
 - (void)fetchFollowingsOfCurrentTwitterAccountWithCompletionBlock:(ListOfFriendsCompletionBlock)completionBlock;
 - (void)fetchNextSetOfFollowingsOfCurrentTwitterAccountWithCompletionBlock:(ListOfFriendsCompletionBlock)completionBlock;
-- (void)fetchTweetsOfFavoritesWithCompletionBlock:(void(^)(NSArray *tweetsList))completionBlock errorBlock:(void(^)(NSError *error))errorBlock;
+- (void)fetchTweetsOfFavoritesWithNewFetch:(BOOL)newFetch completionBlock:(void(^)(NSArray *tweetsList))completionBlock errorBlock:(void(^)(NSError *error))errorBlock;
 
 @end

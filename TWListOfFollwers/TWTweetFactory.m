@@ -30,10 +30,19 @@
     return self;
 }
 
-- (void)fetchTweetsOfFavorites:(NSArray *)favorites withSuccessBlock:(void (^)(NSArray *tweetsList))successBlock  failureBlock:(void (^)(NSError *error))failureBlock
+- (void)fetchTweetsOfFavorites:(NSArray *)favorites newFetch:(BOOL)newFetch withSuccessBlock:(void (^)(NSArray *tweetsList))successBlock  failureBlock:(void (^)(NSError *error))failureBlock
 {
     for (FavoriteAccount *favorite in favorites)
     {
+        if ([favorite lastReadTweetID] && newFetch) {
+            
+            //Set Max_ID to lastReadTweetID - 1
+            NSInteger numberID = [[favorite lastReadTweetID] integerValue];
+            numberID--;
+            [favorite setMaxID:[NSString stringWithFormat:@"%ld",numberID]];
+            NSLog(@"************ LAST READ MAX_ID %@ *************** ",[favorite maxID]);
+
+        }
         [self.apiManager fetchRecentTweetsOfFavoriteAccount:favorite withCompletionBlock:^(id response, NSString *nextMaxTagID, NSError *error) {
             
             if (!error) {

@@ -92,6 +92,7 @@
 - (IBAction)done:(id)sender
 {
     //Send notification of updated Favorites list
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kTWFavoritesListUpdated object:self userInfo:nil];
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }

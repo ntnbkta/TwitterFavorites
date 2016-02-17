@@ -12,6 +12,7 @@
 #import "NSManagedObjectContext+Extensions.h"
 #import "TWTwitterAccount.h"
 #import "FavoriteAccount.h"
+#import "TWTweet.h"
 
 #define kTWFavoritesListUpdated @"TWFavoritesListUpdated"
 #define kFavoritesSinceMaxIDUpdated @"FavoritesSinceMaxIDUpdated"
@@ -19,9 +20,9 @@
 @interface TWFavoritesManager ()
 
 @property (nonatomic, strong) NSMutableArray *favoritesList;
+@property (nonatomic, strong) NSMutableDictionary *lastReadTweetDictionary;
 @property (nonatomic, strong) TTController *favoritesManagerController;
 @property (nonatomic, strong) NSManagedObjectContext *favoritesManagerWorkerContext;
-
 
 @end
 
@@ -34,6 +35,7 @@
         if (!_favoritesList)
         {
             _favoritesList = [NSMutableArray new];
+            _lastReadTweetDictionary = [NSMutableDictionary new];
         }
 
         _favoritesManagerWorkerContext = [[TWCoreDataManager globalManager] newWorkerManagedObjectContext];
@@ -54,6 +56,21 @@
     [self saveFavoriteAccountsInDatabase];
 }
 
+- (void)lastReadTweet:(TWTweet *)readTweet
+{
+    [self.lastReadTweetDictionary setObject:[readTweet tweetID] forKey:[NSString stringWithFormat:@"%@",[readTweet tweetAuthorID]]];
+}
+
+- (void)saveLastReadTweetIDToFavoriteAccount
+{
+    NSArray *favoriteAccountIDs = [self.lastReadTweetDictionary allKeys];
+    [favoriteAccountIDs enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        NSString *accountID = (NSString *)obj;
+        FavoriteAccount *account = [self.favoritesManagerController accountWithIdentifier:[accountID integerValue]];
+        [account setLastReadTweetID:[self.lastReadTweetDictionary objectForKey:accountID]];
+    }];
+    [self saveFavoriteAccountsInDatabase];
+}
 
 - (NSArray *)getFavoritesList
 {
@@ -97,5 +114,7 @@
 {
     [self saveFavoriteAccountsInDatabase];
 }
+
+
 
 @end

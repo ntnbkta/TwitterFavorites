@@ -2,7 +2,7 @@
 //  FavoriteAccount+CoreDataProperties.h
 //  
 //
-//  Created by Nithin Bhaktha on 2/3/16.
+//  Created by Nithin Bhaktha on 2/5/16.
 //
 //
 //  Choose "Create NSManagedObject Subclass…" from the Core Data editor menu
@@ -16,11 +16,12 @@ NS_ASSUME_NONNULL_BEGIN
 @interface FavoriteAccount (CoreDataProperties)
 
 @property (nullable, nonatomic, retain) NSNumber *accountID;
+@property (nullable, nonatomic, retain) NSString *maxID;
 @property (nullable, nonatomic, retain) NSString *profileImageURL;
 @property (nullable, nonatomic, retain) NSString *screenName;
-@property (nullable, nonatomic, retain) NSString *userName;
 @property (nullable, nonatomic, retain) NSString *sinceID;
-@property (nullable, nonatomic, retain) NSString *maxID;
+@property (nullable, nonatomic, retain) NSString *userName;
+@property (nullable, nonatomic, retain) NSString *lastReadTweetID;
 
 @end
 
